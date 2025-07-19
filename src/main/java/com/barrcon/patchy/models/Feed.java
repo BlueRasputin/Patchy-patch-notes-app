@@ -9,17 +9,17 @@ import java.time.LocalDateTime;
 public class Feed extends AbstractEntity{
     private User user;
     private PatchNotes patchNote;
-    private LocalDateTime addedtoFleetAt;
+    private LocalDateTime addedToFeedAt;
     private boolean isRead;
 
 
     public Feed() {
         // Default constructor
     }
-    public Feed(User user, PatchNotes patchNote, LocalDateTime addedtoFleetAt, boolean isRead) {
+    public Feed(User user, PatchNotes patchNote, LocalDateTime addedToFeedAttAt, boolean isRead) {
         this.user = user;
         this.patchNote = patchNote;
-        this.addedtoFleetAt = addedtoFleetAt;
+        this.addedToFeedAt = addedToFeedAt;
         this.isRead = isRead;
 
     }
@@ -35,11 +35,11 @@ public class Feed extends AbstractEntity{
     public void setPatchNote(PatchNotes patchNote) {
         this.patchNote = patchNote;
     }
-    public LocalDateTime getAddedtoFleetAt() {
-        return addedtoFleetAt;
+    public LocalDateTime getAddedToFeedAt() {
+        return addedToFeedAt;
     }
-    public void setAddedtoFleetAt(LocalDateTime addedtoFleetAt) {
-        this.addedtoFleetAt = addedtoFleetAt;
+    public void setAddedToFeedAt(LocalDateTime addedToFeedAt) {
+        this.addedToFeedAt = addedToFeedAt;
     }
     public boolean isRead() {
         return isRead;
