@@ -14,8 +14,8 @@ public class Favorites extends AbstractEntity {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "patch_note_id")
-    private PatchNotes patchNote;
+    @JoinColumn(name = "technology_id")
+    private Tech tech;
     private boolean isRead;
 
     public Favorites() {

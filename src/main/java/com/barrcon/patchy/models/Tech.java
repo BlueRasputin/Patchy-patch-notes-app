@@ -1,10 +1,8 @@
 package com.barrcon.patchy.models;
 
 import java.util.ArrayList;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+
+import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
 
 import java.util.HashSet;
@@ -12,17 +10,28 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "techs")
 public class Tech extends AbstractEntity {
 
+    @Column(unique = true, nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String category;
+
+    @Column(name = "official_url")
     private String officialUrl;
 
-    @OneToMany(mappedBy = "technology", cascade = CascadeType.ALL)
-    private List<PatchNotes> patchNotes;
+    private String description;
+
+    @OneToMany(mappedBy = "tech", cascade = CascadeType.ALL)
+    private List<PatchNotes> patchNotes = new ArrayList<>();
 
     @ManyToMany(mappedBy = "followedTechs")
     private Set<User> followers = new HashSet<>();
+
+    @OneToMany(mappedBy = "tech", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Favorites> favorites = new ArrayList<>();
 
     public Tech() {
         // Default constructor
@@ -57,6 +66,13 @@ public class Tech extends AbstractEntity {
     public void setPatchNotes(List<PatchNotes> patchNotes) {
         this.patchNotes = patchNotes;
     }
+    public List<Favorites> getFavorites() {
+        return favorites;
+    }
+    public void setFavorites(List<Favorites> favorites) {
+        this.favorites = favorites;
+    }
+
 
     public Set<User> getFollowers() {
         return followers;

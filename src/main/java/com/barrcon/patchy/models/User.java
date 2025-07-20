@@ -1,20 +1,21 @@
 package com.barrcon.patchy.models;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 
 @Entity
+@Table(name = "users")
 public class User extends AbstractEntity {
+
+   @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(unique = true, nullable = false)
     private String email;
 
     @ManyToMany
@@ -23,7 +24,7 @@ public class User extends AbstractEntity {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "tech_id")
     )
-    private Set<Tech> followedTechs;
+    private Set<Tech> followedTechs = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Favorites> favorites = new ArrayList<>();
