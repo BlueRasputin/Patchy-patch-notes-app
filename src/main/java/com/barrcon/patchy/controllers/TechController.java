@@ -13,20 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@RestController
-//@RequestMapping("api/technologies")
-//
-//public class TechController {
-//
-//    @Autowired
-//    private TechRepository techRepository;
-//
-//    @GetMapping
-//    public List<Tech> getAllTechnologies() {
-//        return techRepository.getallTechnologies();
-//    }
-//
-//    @GetMapping("{id}") public Tech createTechnology(@requestBody Tech tech) {
-//        return techRepository.createTech(tech);
-//    }
-//}
+@RestController
+@RequestMapping("api/technologies") {
+
+
+}

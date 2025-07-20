@@ -14,17 +14,18 @@ public class Favorites extends AbstractEntity {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "technology_id")
+    @JoinColumn(name = "tech_id")
     private Tech tech;
+
     private boolean isRead;
 
     public Favorites() {
         // Default constructor
     }
 
-    public Favorites(User user, PatchNotes patchNote, boolean isRead) {
+    public Favorites(User user, Tech tech, boolean isRead) {
         this.user = user;
-        this.patchNote = patchNote;
+        this.tech = tech;
         this.isRead = isRead;
     }
 
@@ -36,12 +37,12 @@ public class Favorites extends AbstractEntity {
         this.user = user;
     }
 
-    public PatchNotes getPatchNote() {
-        return patchNote;
+    public Tech getTech() {
+        return tech;
     }
 
-    public void setPatchNote(PatchNotes patchNote) {
-        this.patchNote = patchNote;
+    public void setTech(Tech tech) {
+        this.tech = tech;
     }
 
     public boolean isRead() {
