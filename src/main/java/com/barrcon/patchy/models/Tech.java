@@ -1,9 +1,15 @@
 package com.barrcon.patchy.models;
 
-
+import java.util.ArrayList;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import org.hibernate.annotations.Cascade;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Tech extends AbstractEntity {
@@ -11,7 +17,12 @@ public class Tech extends AbstractEntity {
     private String name;
     private String category;
     private String officialUrl;
+
+    @OneToMany(mappedBy = "technology", cascade = CascadeType.ALL)
     private List<PatchNotes> patchNotes;
+
+    @ManyToMany(mappedBy = "followedTechs")
+    private Set<User> followers = new HashSet<>();
 
     public Tech() {
         // Default constructor
@@ -47,4 +58,11 @@ public class Tech extends AbstractEntity {
         this.patchNotes = patchNotes;
     }
 
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
+    }
 }

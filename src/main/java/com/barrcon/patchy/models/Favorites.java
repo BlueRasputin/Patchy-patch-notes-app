@@ -2,12 +2,19 @@ package com.barrcon.patchy.models;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 
 @Entity
 public class Favorites extends AbstractEntity {
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "patch_note_id")
     private PatchNotes patchNote;
     private boolean isRead;
 

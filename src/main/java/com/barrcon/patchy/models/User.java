@@ -1,7 +1,14 @@
 package com.barrcon.patchy.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -9,21 +16,35 @@ import java.util.Set;
 public class User extends AbstractEntity {
     private String username;
     private String email;
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_followed_techs",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "tech_id")
+    )
     private Set<Tech> followedTechs;
-    private Set<Favorites> favorites;
-    private Set<Feed> feed;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Favorites> favorites = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Feed> feeds = new ArrayList<>();
+
 
     public User() {
         // Default constructor
     }
 
-    public User(String username, String email, Set<Tech> followedTechs, Set<Favorites> favorites, Set<Feed> feed) {
+    public User(String username, String email, Set<Tech> followedTechs, List<Favorites> favorites, List<Feed> feeds) {
         this.username = username;
         this.email = email;
         this.followedTechs = followedTechs;
         this.favorites = favorites;
-        this.feed = feed;
+        this.feeds = feeds;
     }
+
+
 
     public String getUsername() {
         return username;
@@ -43,17 +64,16 @@ public class User extends AbstractEntity {
     public void setFollowedTechs(Set<Tech> followedTechs) {
         this.followedTechs = followedTechs;
     }
-    public Set<Favorites> getFavorites() {
+    public List<Favorites> getFavorites() {
         return favorites;
     }
-    public void setFavorites(Set<Favorites> favorites) {
+    public void setFavorites(List<Favorites> favorites) {
         this.favorites = favorites;
     }
-    public Set<Feed> getFleet() {
-        return feed;
+    public List<Feed> getFeeds() {
+        return feeds;
     }
-    public void setFleet(Set<Feed> feed) {
-        this.feed = feed;
+    public void setFeeds(List<Feed> feeds) {
+        this.feeds = feeds;
     }
-
 }
