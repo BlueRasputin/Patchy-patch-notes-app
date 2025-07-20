@@ -13,9 +13,9 @@ public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -24,7 +24,7 @@ public abstract class AbstractEntity {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         AbstractEntity that = (AbstractEntity) obj;
-        return id == that.id;
+        return Objects.equals(id, that.id);
     }
     @Override
     public int hashCode() {

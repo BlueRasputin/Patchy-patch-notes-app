@@ -1,6 +1,8 @@
 package com.barrcon.patchy.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +14,9 @@ public class PatchNotes extends AbstractEntity {
     private String Summary;
     private String originalUrl;
     private LocalDateTime releaseDate;
+
+    @ManyToOne
+    @JoinColumn(name = "technology_id")
     private Tech technology;
 
     public PatchNotes() {

@@ -1,13 +1,21 @@
 package com.barrcon.patchy.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
 
 @Entity
 public class Feed extends AbstractEntity{
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "patch_note_id")
     private PatchNotes patchNote;
     private LocalDateTime addedToFeedAt;
     private boolean isRead;
@@ -16,7 +24,8 @@ public class Feed extends AbstractEntity{
     public Feed() {
         // Default constructor
     }
-    public Feed(User user, PatchNotes patchNote, LocalDateTime addedToFeedAttAt, boolean isRead) {
+    public Feed(User user, PatchNotes patchNote, LocalDateTime addedToFeedAt, boolean isRead) {
+
         this.user = user;
         this.patchNote = patchNote;
         this.addedToFeedAt = addedToFeedAt;
