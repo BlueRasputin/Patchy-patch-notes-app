@@ -11,13 +11,13 @@ public class PatchNotes extends AbstractEntity {
 
     private String version;
     private String title;
-    private String Summary;
+    private String summary;
     private String originalUrl;
     private LocalDateTime releaseDate;
 
     @ManyToOne
-    @JoinColumn(name = "technology_id")
-    private Tech technology;
+    @JoinColumn(name = "tech_id")
+    private Tech tech;
 
     public PatchNotes() {
         // Default constructor
