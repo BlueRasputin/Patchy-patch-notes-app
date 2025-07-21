@@ -22,13 +22,13 @@ public class PatchNotes extends AbstractEntity {
     public PatchNotes() {
         // Default constructor
     }
-    public PatchNotes(String version, String title, String summary, String originalUrl, LocalDateTime releaseDate, Tech technology) {
+    public PatchNotes(String version, String title, String summary, String originalUrl, LocalDateTime releaseDate, Tech tech) {
         this.version = version;
         this.title = title;
-        this.Summary = summary;
+        this.summary = summary;
         this.originalUrl = originalUrl;
         this.releaseDate = releaseDate;
-        this.technology = technology;
+        this.tech = tech;
     }
     public String getVersion() {
         return version;
@@ -47,11 +47,11 @@ public class PatchNotes extends AbstractEntity {
     }
 
     public String getSummary() {
-        return Summary;
+        return summary;
     }
 
     public void setSummary(String summary) {
-        this.Summary = summary;
+        this.summary = summary;
     }
 
     public String getOriginalUrl() {
@@ -70,12 +70,12 @@ public class PatchNotes extends AbstractEntity {
         this.releaseDate = releaseDate;
     }
 
-    public Tech getTechnology() {
-        return technology;
+    public Tech getTech() {
+        return tech;
     }
 
-    public void setTechnology(Tech technology) {
-        this.technology = technology;
+    public void setTech(Tech tech) {
+        this.tech = tech;
     }
 
 
