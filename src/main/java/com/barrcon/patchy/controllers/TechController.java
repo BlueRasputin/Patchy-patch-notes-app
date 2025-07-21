@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -26,7 +27,7 @@ public class TechController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Tech> getTechById(@PathVariable Long id) {
-         Optional<tech> tech = techRepository.findById(id);
+         Optional<Tech> tech = techRepository.findById(id);
          return tech.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
