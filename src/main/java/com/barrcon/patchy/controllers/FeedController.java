@@ -1,6 +1,10 @@
 package com.barrcon.patchy.controllers;
 
-
+import com.barrcon.patchy.models.Feed;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Optional;
 import com.barrcon.patchy.repositories.FeedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -1,6 +1,11 @@
 package com.barrcon.patchy.controllers;
 
-
+import com.barrcon.patchy.models.Favorites;
+import com.barrcon.patchy.models.Feed;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Optional;
 import com.barrcon.patchy.repositories.FavoritesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,21 +27,22 @@ public class FavoritesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PatchNotes> getPatchNoteById(@PathVariable Long id) {
-        Optional<PatchNotes> patchNote = patchNotesRepository.findById(id);
-        return patchNote.map(ResponseEntity::ok)
+    public ResponseEntity<Favorites> getFavoriteById(@PathVariable Long id) {
+        Optional<Favorites> favorite = favoritesRepository.findById(id);
+        return favorite.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<PatchNotes> createPatchNote(@RequestBody PatchNotes patchNote) {
-        return ResponseEntity.ok(patchNotesRepository.save(patchNote));
+    public ResponseEntity<Favorites> createFavorite(@RequestBody Favorites favorite) {
+        return ResponseEntity.ok(favoritesRepository.save(favorite));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePatchNote(@PathVariable Long id) {
-        patchNotesRepository.deleteById(id);
+    public ResponseEntity<Void> deleteFavorite(@PathVariable Long id) {
+        favoritesRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
+}
 
 }
