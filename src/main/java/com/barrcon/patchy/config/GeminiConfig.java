@@ -1,6 +1,7 @@
 package com.barrcon.patchy.config;
 
-
+import com.google.cloud.ai.generativeai.GenerativeModel;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
