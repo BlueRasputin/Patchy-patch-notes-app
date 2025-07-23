@@ -1,20 +1,15 @@
 package com.barrcon.patchy.config;
 
-import com.google.cloud.ai.generativeai.GenerativeModel;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class GeminiConfig {
-    @Value("${gemini.api.key}")
-    private String apiKey;
-
     @Bean
-    public GenerativeModel geminiModel() {
-        return GenerativeModel.builder();
-                .setmodel("gemini-1.5-flash")
-                .setapiKey(apiKey)
+    public WebClient geminiWebClient() {
+        return WebClient.builder()
+                .baseUrl("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent")
                 .build();
     }
 }

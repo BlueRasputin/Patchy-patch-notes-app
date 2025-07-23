@@ -1,10 +1,7 @@
 package com.barrcon.patchy.services;
 
-
-import com.google.genai.Client;
-import com.google.genai.types.GenerateContentResponse;
-import com.google.cloud.ai.generativeai.GenerativeModel;
-import com.google.cloud.ai.generativeai.GenerateContentResponse;
+import com.google.generativeai.GenerativeModel;
+import com.google.generativeai.api.GenerateContentResponse;
 import com.barrcon.patchy.dto.ProcessedPatchNotesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,11 +26,8 @@ public class GeminiPatchNotesService {
                     content
             );
 
-
             GenerateContentResponse response = model.generateContent(prompt);
-            String text = response.getCandidates().get(0)
-                    .getContent().getParts().get(0)
-                    .getText();
+            String text = response.getText();
 
             List<String> bulletPoints = Arrays.stream(text.split("\n"))
                     .map(line -> line.replaceFirst("^[•\\-*]\\s*", "").trim())
@@ -42,7 +36,7 @@ public class GeminiPatchNotesService {
 
             return new ProcessedPatchNotesDTO(version, title, bulletPoints);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to process patch notes: " + e.getMessage());
+            throw new RuntimeException("Failed to process patch notes: " + e.getMessage(), e);
         }
     }
 }
