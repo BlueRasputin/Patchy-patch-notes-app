@@ -1,4 +1,4 @@
-package com.barrcon.patchy.DTO;
+package com.barrcon.patchy.dto;
 
 import java.util.List;
 
