@@ -1,5 +1,6 @@
 package com.barrcon.patchy.controllers;
 
+import com.barrcon.patchy.services.GeminiPatchNotesService;
 import com.barrcon.patchy.models.PatchNotes;
 import com.barrcon.patchy.repositories.PatchNotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;

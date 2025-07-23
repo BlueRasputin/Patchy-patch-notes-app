@@ -13,8 +13,8 @@ public class GeminiConfig {
     @Bean
     public GenerativeModel geminiModel() {
         return GenerativeModel.builder();
-                .model("gemini-1.5-flash")
-                .apiKey(apiKey)
+                .setmodel("gemini-1.5-flash")
+                .setapiKey(apiKey)
                 .build();
     }
 }

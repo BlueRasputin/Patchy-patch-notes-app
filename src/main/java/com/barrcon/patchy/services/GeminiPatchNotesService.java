@@ -1,5 +1,8 @@
 package com.barrcon.patchy.services;
 
+
+import com.google.genai.Client;
+import com.google.genai.types.GenerateContentResponse;
 import com.google.cloud.ai.generativeai.GenerativeModel;
 import com.google.cloud.ai.generativeai.GenerateContentResponse;
 import com.barrcon.patchy.dto.ProcessedPatchNotesDTO;
