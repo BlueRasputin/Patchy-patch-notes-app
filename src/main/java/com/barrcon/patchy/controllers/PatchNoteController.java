@@ -14,6 +14,8 @@ import java.util.Optional;
 @CrossOrigin
 public class PatchNoteController {
 
+
+
     @Autowired
     private PatchNotesRepository patchNotesRepository;
 
@@ -33,6 +35,40 @@ public class PatchNoteController {
     public ResponseEntity<PatchNotes> createPatchNote(@RequestBody PatchNotes patchNote) {
         return ResponseEntity.ok(patchNotesRepository.save(patchNote));
     }
+
+    @PostMapping("/process")
+    public ResponseEntity<com.barrcon.patchy.dto.ProcessedPatchNotesDTO> processPatchNotes(@RequestBody com.barrcon.patchy.dto.PatchNotesProcessingRequest request) {
+        try {
+        ProcessedPatchNotesDTO processed = aiService.processPatchNotes(
+                request.getContent(),
+                request.getVersion(),
+                request.getTitle()
+        );
+        return ResponseEntity.ok(processed);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/{id}/process")
+    public ResponseEntity<ProcessedPatchNotesDTO> processPatchNoteById(@PathVariable Long id) {
+        Optional<PatchNotes> patchNote = patchNotesRepository.findById(id);
+        if (patchNote.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        PatchNotes note = patchNote.get();
+        PatchNotesProcessingRequest request = new PatchNotesProcessingRequest(
+                note.getContent(),
+                note.getVersion(),
+                note.getTitle()
+        );
+
+        return processPatchNotes(request);
+    }
+
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<PatchNotes> updatePatchNote(@PathVariable Long id, @RequestBody PatchNotes patchNote) {
