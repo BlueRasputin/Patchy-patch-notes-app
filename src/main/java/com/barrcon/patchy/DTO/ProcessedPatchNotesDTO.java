@@ -1,5 +1,7 @@
 package com.barrcon.patchy.DTO;
 
+import java.util.List;
+
 public class ProcessedPatchNotesDTO {
 
     private String version;
