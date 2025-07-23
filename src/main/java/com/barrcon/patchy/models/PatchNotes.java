@@ -11,6 +11,7 @@ public class PatchNotes extends AbstractEntity {
 
     private String version;
     private String title;
+    private String content;
     private String summary;
     private String originalUrl;
     private LocalDateTime releaseDate;
@@ -44,6 +45,14 @@ public class PatchNotes extends AbstractEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getSummary() {

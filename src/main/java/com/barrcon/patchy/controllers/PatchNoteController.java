@@ -20,6 +20,9 @@ public class PatchNoteController {
     @Autowired
     private PatchNotesRepository patchNotesRepository;
 
+    @Autowired
+    private GeminiPatchNotesService aiService;
+
     @GetMapping
     public ResponseEntity<List<PatchNotes>> getAllPatchNotes() {
         return ResponseEntity.ok((List<PatchNotes>) patchNotesRepository.findAll());
