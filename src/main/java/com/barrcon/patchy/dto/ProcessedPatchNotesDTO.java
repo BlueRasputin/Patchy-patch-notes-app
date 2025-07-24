@@ -6,14 +6,14 @@ public class ProcessedPatchNotesDTO {
 
     private String version;
     private String title;
-    private List<String> bulletPoints;
+    private String content;
 
     public ProcessedPatchNotesDTO() {}
 
-    public ProcessedPatchNotesDTO(String version, String title, List<String> bulletPoints) {
+    public ProcessedPatchNotesDTO(String version, String title, String content) {
         this.version = version;
         this.title = title;
-        this.bulletPoints = bulletPoints;
+        this.content = content;
     }
 
     // Getters and setters
@@ -33,9 +33,11 @@ public class ProcessedPatchNotesDTO {
         this.title = title;
     }
 
-    public List<String> getBulletPoints() {
-        return bulletPoints;
+    public String getContent() {
+        return content;
     }
 
-    public void setBulletPoints(List<String> bulletPoints) { this.bulletPoints = bulletPoints; }
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

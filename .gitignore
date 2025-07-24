@@ -35,4 +35,4 @@ build/
 
 
 ### environment files ###
-src/app.env
+app.env

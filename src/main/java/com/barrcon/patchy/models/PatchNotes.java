@@ -5,6 +5,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class PatchNotes extends AbstractEntity {
@@ -12,7 +13,6 @@ public class PatchNotes extends AbstractEntity {
     private String version;
     private String title;
     private String content;
-    private String summary;
     private String originalUrl;
     private LocalDateTime releaseDate;
 
@@ -20,13 +20,13 @@ public class PatchNotes extends AbstractEntity {
     @JoinColumn(name = "tech_id")
     private Tech tech;
 
-    public PatchNotes() {
+    public PatchNotes(String content, String version, String title) {
         // Default constructor
     }
-    public PatchNotes(String version, String title, String summary, String originalUrl, LocalDateTime releaseDate, Tech tech) {
+    public PatchNotes(String version, String title, String content, String originalUrl, LocalDateTime releaseDate, Tech tech) {
         this.version = version;
         this.title = title;
-        this.summary = summary;
+        this.content = content;
         this.originalUrl = originalUrl;
         this.releaseDate = releaseDate;
         this.tech = tech;
@@ -53,14 +53,6 @@ public class PatchNotes extends AbstractEntity {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
     }
 
     public String getOriginalUrl() {
