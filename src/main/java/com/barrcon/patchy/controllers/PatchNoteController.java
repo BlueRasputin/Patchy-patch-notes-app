@@ -42,13 +42,15 @@ public class PatchNoteController {
     }
 
     @PostMapping("/process")
-    public ResponseEntity<com.barrcon.patchy.dto.ProcessedPatchNotesDTO> processPatchNotes(@RequestBody com.barrcon.patchy.dto.PatchNotesProcessingRequest request) {
+    public ResponseEntity<ProcessedPatchNotesDTO> processPatchNotes(@RequestBody PatchNotesProcessingRequest request) {
         try {
         ProcessedPatchNotesDTO processed = aiService.processPatchNotes(
-                request.getContent(),
+
                 request.getVersion(),
                 request.getTitle()
         );
+        PatchNotes patchNote = new PatchNotes(processed.getContent(), processed.getVersion(), processed.getTitle());
+        patchNotesRepository.save(patchNote);
         return ResponseEntity.ok(processed);
     } catch (Exception e) {
         return ResponseEntity.badRequest().build();
@@ -65,7 +67,6 @@ public class PatchNoteController {
         PatchNotes note = patchNote.get();
         try {
             ProcessedPatchNotesDTO processed = aiService.processPatchNotes(
-                    note.getContent(),
                     note.getVersion(),
                     note.getTitle()
             );
