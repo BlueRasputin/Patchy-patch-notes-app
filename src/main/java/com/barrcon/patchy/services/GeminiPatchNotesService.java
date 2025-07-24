@@ -18,17 +18,17 @@ public class GeminiPatchNotesService {
     @Autowired
     private WebClient geminiWebClient;
 
-    @Value("${gemini.api.key}")
-    private String apiKey;
+//    @Value("${GOOGLE_API_KEY}")
+//    private String apiKey;
 
-    private Client client;
+    Client client = new Client();
 
-    @PostConstruct
-    public void init() {
-        System.out.println("Initializing Gemini client with API key: " +
-                (apiKey != null && !apiKey.isEmpty() ? "SET" : "NOT SET"));
-        this.client = new Client();
-    }
+//    @PostConstruct
+//    public void init() {
+//        System.out.println("Initializing Gemini client with API key: " +
+//                (apiKey != null && !apiKey.isEmpty() ? "SET" : "NOT SET"));
+//        this.client = new Client();
+//    }
 
 
 
