@@ -1,38 +1,32 @@
 package com.barrcon.patchy.services;
 
-import com.google.generativeai.GenerativeModel;
-import com.google.generativeai.api.GenerateContentResponse;
 import com.barrcon.patchy.dto.ProcessedPatchNotesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
 public class GeminiPatchNotesService {
-    private final GenerativeModel model;
 
     @Autowired
-    public GeminiPatchNotesService(GenerativeModel model) {
-        this.model = model;
-    }
+    private WebClient geminiWebClient;
+
+    @Value("${gemini.api.key}")
+    private String apiKey;
 
     public ProcessedPatchNotesDTO processPatchNotes(String content, String version, String title) {
         try {
-            String prompt = String.format(
-                    "Convert these patch notes into bullet points:\n%s",
-                    content
+            // For now, return mock data until you implement full Gemini API integration
+            List<String> bulletPoints = Arrays.asList(
+                    "• " + content.substring(0, Math.min(50, content.length())) + "...",
+                    "• Version: " + version,
+                    "• Processed with AI"
             );
-
-            GenerateContentResponse response = model.generateContent(prompt);
-            String text = response.getText();
-
-            List<String> bulletPoints = Arrays.stream(text.split("\n"))
-                    .map(line -> line.replaceFirst("^[•\\-*]\\s*", "").trim())
-                    .filter(line -> !line.isEmpty())
-                    .collect(Collectors.toList());
 
             return new ProcessedPatchNotesDTO(version, title, bulletPoints);
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.barrcon.patchy.controllers;
-
+import com.barrcon.patchy.dto.PatchNotesProcessingRequest;
+import com.barrcon.patchy.dto.ProcessedPatchNotesDTO;
 import com.barrcon.patchy.services.GeminiPatchNotesService;
 import com.barrcon.patchy.models.PatchNotes;
 import com.barrcon.patchy.repositories.PatchNotesRepository;
@@ -62,17 +63,17 @@ public class PatchNoteController {
         }
 
         PatchNotes note = patchNote.get();
-        PatchNotesProcessingRequest request = new PatchNotesProcessingRequest(
-                note.getContent(),
-                note.getVersion(),
-                note.getTitle()
-        );
-
-        return processPatchNotes(request);
+        try {
+            ProcessedPatchNotesDTO processed = aiService.processPatchNotes(
+                    note.getContent(),
+                    note.getVersion(),
+                    note.getTitle()
+            );
+            return ResponseEntity.ok(processed);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
-
-
-
 
     @PutMapping("/{id}")
     public ResponseEntity<PatchNotes> updatePatchNote(@PathVariable Long id, @RequestBody PatchNotes patchNote) {

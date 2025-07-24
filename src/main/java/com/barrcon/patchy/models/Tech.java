@@ -1,10 +1,7 @@
 package com.barrcon.patchy.models;
 
-import java.util.ArrayList;
-
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
-
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
