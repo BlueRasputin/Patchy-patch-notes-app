@@ -22,7 +22,6 @@ public class Feed extends AbstractEntity{
 
 
     public Feed() {
-        // Default constructor
     }
     public Feed(User user, PatchNotes patchNote, LocalDateTime addedToFeedAt, boolean isRead) {
 
