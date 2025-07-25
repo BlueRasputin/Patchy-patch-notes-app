@@ -15,27 +15,12 @@ import java.util.Map;
 @Service
 public class GeminiPatchNotesService {
 
-    @Autowired
-    private WebClient geminiWebClient;
-
-//    @Value("${GOOGLE_API_KEY}")
-//    private String apiKey;
-
-    Client client = new Client();
-
-//    @PostConstruct
-//    public void init() {
-//        System.out.println("Initializing Gemini client with API key: " +
-//                (apiKey != null && !apiKey.isEmpty() ? "SET" : "NOT SET"));
-//        this.client = new Client();
-//    }
-
-
-
+    Dotenv dotenv = Dotenv.configure().directory("src/main/resources").filename("app.env").ignoreIfMissing().load();
+    String apiKey = dotenv.get("GOOGLE_API_KEY", System.getenv("GOOGLE_API_KEY"));
+    Client client = Client.builder()
+            .apiKey(apiKey)
+            .build();
     public ProcessedPatchNotesDTO processPatchNotes(String version, String title) {
-        if (client == null) {
-            throw new IllegalStateException("Gemini client not initialized");
-        }
         try {
 
 
