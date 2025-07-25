@@ -6,14 +6,14 @@ public class ProcessedPatchNotesDTO {
 
     private String version;
     private String title;
-    private String content;
+    private String description;
 
     public ProcessedPatchNotesDTO() {}
 
-    public ProcessedPatchNotesDTO(String version, String title, String content) {
+    public ProcessedPatchNotesDTO(String version, String title, String description) {
         this.version = version;
         this.title = title;
-        this.content = content;
+        this.description = description;
     }
 
     // Getters and setters
@@ -33,11 +33,11 @@ public class ProcessedPatchNotesDTO {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
+    public String getDescription() {
+        return description;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -20,7 +20,6 @@ public class Favorites extends AbstractEntity {
     private boolean isRead;
 
     public Favorites() {
-        // Default constructor
     }
 
     public Favorites(User user, Tech tech, boolean isRead) {

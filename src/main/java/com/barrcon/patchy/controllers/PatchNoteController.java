@@ -49,7 +49,7 @@ public class PatchNoteController {
                 request.getVersion(),
                 request.getTitle()
         );
-        PatchNotes patchNote = new PatchNotes(processed.getContent(), processed.getVersion(), processed.getTitle());
+        PatchNotes patchNote = new PatchNotes(processed.getDescription(), processed.getVersion(), processed.getTitle());
         patchNotesRepository.save(patchNote);
         return ResponseEntity.ok(processed);
     } catch (Exception e) {

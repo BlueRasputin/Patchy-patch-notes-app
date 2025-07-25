@@ -31,7 +31,6 @@ public class Tech extends AbstractEntity {
     private List<Favorites> favorites = new ArrayList<>();
 
     public Tech() {
-        // Default constructor
     }
     public Tech(String name, String category, String officialUrl, List<PatchNotes> patchNotes) {
         this.name = name;

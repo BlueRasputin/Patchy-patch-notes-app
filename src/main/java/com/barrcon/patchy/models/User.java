@@ -34,7 +34,6 @@ public class User extends AbstractEntity {
 
 
     public User() {
-        // Default constructor
     }
 
     public User(String username, String email, Set<Tech> followedTechs, List<Favorites> favorites, List<Feed> feeds) {
