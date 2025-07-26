@@ -17,7 +17,7 @@ public class GeminiPatchNotesService {
             .build();
     public ProcessedPatchNotesDTO processPatchNotes(String version, String title) {
         try {
-            String query = "Search for the latest patch notes for" + title + version + "and return a concise bulleted list. If unavailable, provide a brief list (must be under 255 characters) of the newest version found. The description field must be under 255 characters.";
+            String query = "Search for the latest patch notes for" + title + version + "and return a concise bulleted list. If unavailable, provide a brief list of important changes within the newest version found. The description field must be under 255 characters.";
             GenerateContentResponse response = client.models.generateContent("gemini-2.5-pro", query, null);
             String description = response.text();
             System.out.println("description = " + description);
