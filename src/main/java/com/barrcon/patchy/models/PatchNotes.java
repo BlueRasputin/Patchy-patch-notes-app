@@ -5,8 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import org.jetbrains.annotations.NotNull;
-
-import java.time.LocalDateTime;
+import jakarta.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -18,6 +17,7 @@ public class PatchNotes extends AbstractEntity {
 //    @NotNull
 //    @Column(nullable = false)
 
+
     private String title;
 //    @NotNull
 //    @Column(nullable = false)
@@ -27,27 +27,22 @@ public class PatchNotes extends AbstractEntity {
 //    @NotNull
 //    @Column(nullable = false)
 
-    private String originalUrl;
-//    @NotNull
-//    @Column(nullable = false)
-
-    private LocalDateTime releaseDate;
-
     @ManyToOne
     @JoinColumn(name = "tech_id")
     private Tech tech;
+
+    public PatchNotes() {
+    }
 
     public PatchNotes(String description, String version, String title) {
         this.description = description;
         this.version = version;
         this.title = title;
     }
-    public PatchNotes(String version, String title, String description, String originalUrl, LocalDateTime releaseDate, Tech tech) {
+    public PatchNotes(String version, String title, String description, Tech tech) {
         this.version = version;
         this.title = title;
         this.description = description;
-        this.originalUrl = originalUrl;
-        this.releaseDate = releaseDate;
         this.tech = tech;
     }
     public String getVersion() {
@@ -72,22 +67,6 @@ public class PatchNotes extends AbstractEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getOriginalUrl() {
-        return originalUrl;
-    }
-
-    public void setOriginalUrl(String originalUrl) {
-        this.originalUrl = originalUrl;
-    }
-
-    public LocalDateTime getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(LocalDateTime releaseDate) {
-        this.releaseDate = releaseDate;
     }
 
     public Tech getTech() {

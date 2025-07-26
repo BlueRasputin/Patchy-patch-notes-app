@@ -1,6 +1,8 @@
 package com.barrcon.patchy.controllers;
 
 import com.barrcon.patchy.models.Feed;
+import com.barrcon.patchy.models.User;
+import com.barrcon.patchy.repositories.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -20,9 +22,11 @@ public class FeedController {
 
     @Autowired
     private final FeedRepository feedRepository;
+    private final UserRepository userRepository;
 
-    public FeedController(FeedRepository feedRepository) {
+    public FeedController(FeedRepository feedRepository, UserRepository userRepository) {
         this.feedRepository = feedRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/user/{userId}")
