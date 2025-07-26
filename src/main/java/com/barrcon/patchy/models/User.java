@@ -15,6 +15,9 @@ public class User extends AbstractEntity {
    @Column(unique = true, nullable = false)
     private String username;
 
+   @Column(nullable = false)
+    private String passwordHash;
+
     @Column(unique = true, nullable = false)
     private String email;
 
@@ -24,10 +27,12 @@ public class User extends AbstractEntity {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "tech_id")
     )
-    private Set<Tech> followedTechs = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Favorites> favorites = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "user_tech_ids", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "tech_id")
+    private List<Long> favoriteTechIds = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Feed> feeds = new ArrayList<>();
@@ -36,11 +41,10 @@ public class User extends AbstractEntity {
     public User() {
     }
 
-    public User(String username, String email, Set<Tech> followedTechs, List<Favorites> favorites, List<Feed> feeds) {
+    public User(String username, String passwordHash, String email, List<Feed> feeds) {
         this.username = username;
+        this.passwordHash = passwordHash;
         this.email = email;
-        this.followedTechs = followedTechs;
-        this.favorites = favorites;
         this.feeds = feeds;
     }
 
@@ -52,6 +56,12 @@ public class User extends AbstractEntity {
     public void setUsername(String username) {
         this.username = username;
     }
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
     public String getEmail() {
         return email;
     }
@@ -61,19 +71,24 @@ public class User extends AbstractEntity {
     public Set<Tech> getFollowedTechs() {
         return followedTechs;
     }
-    public void setFollowedTechs(Set<Tech> followedTechs) {
-        this.followedTechs = followedTechs;
-    }
-    public List<Favorites> getFavorites() {
-        return favorites;
-    }
-    public void setFavorites(List<Favorites> favorites) {
-        this.favorites = favorites;
-    }
     public List<Feed> getFeeds() {
         return feeds;
     }
     public void setFeeds(List<Feed> feeds) {
         this.feeds = feeds;
+    }
+
+    public void addFavoriteTech(Long techId) {
+        if (!favoriteTechIds.contains(techId)) {
+            favoriteTechIds.add(techId);
+        }
+    }
+
+    public void removeFavoriteTech(Long techId) {
+        favoriteTechIds.remove(techId);
+    }
+
+    public boolean hasFavoriteTech(Long techId) {
+        return favoriteTechIds.contains(techId);
     }
 }

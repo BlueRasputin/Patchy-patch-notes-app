@@ -22,6 +22,7 @@ public class PatchNotes extends AbstractEntity {
 //    @NotNull
 //    @Column(nullable = false)
 
+    @Column(name ="description", columnDefinition = "TEXT")
     private String description;
 //    @NotNull
 //    @Column(nullable = false)
@@ -36,9 +37,6 @@ public class PatchNotes extends AbstractEntity {
     @JoinColumn(name = "tech_id")
     private Tech tech;
 
-    public PatchNotes() {
-
-    }
     public PatchNotes(String description, String version, String title) {
         this.description = description;
         this.version = version;

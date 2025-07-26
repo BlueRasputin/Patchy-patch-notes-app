@@ -19,7 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class FeedController {
 
     @Autowired
-    private FeedRepository feedRepository;
+    private final FeedRepository feedRepository;
+
+    public FeedController(FeedRepository feedRepository) {
+        this.feedRepository = feedRepository;
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Feed>> getUserFeed(@PathVariable Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            List<Feed> feeds = feedRepository.findByUserIdAndTechIdIn(userId, user.getFavoriteTechIds());
+            return ResponseEntity.ok(feeds);
+        }
+        return ResponseEntity.notFound().build();
+    }
 
     @GetMapping
     public ResponseEntity<List<Feed>> getAllFeeds() {
