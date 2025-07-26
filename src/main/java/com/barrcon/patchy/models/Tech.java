@@ -16,9 +16,6 @@ public class Tech extends AbstractEntity {
     @Column(nullable = false)
     private String category;
 
-    @Column(name = "official_url")
-    private String officialUrl;
-
     private String description;
 
     @OneToMany(mappedBy = "tech", cascade = CascadeType.ALL)
@@ -27,15 +24,12 @@ public class Tech extends AbstractEntity {
     @ManyToMany(mappedBy = "followedTechs")
     private Set<User> followers = new HashSet<>();
 
-    @OneToMany(mappedBy = "tech", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Favorites> favorites = new ArrayList<>();
-
     public Tech() {
     }
-    public Tech(String name, String category, String officialUrl, List<PatchNotes> patchNotes) {
+
+    public Tech(String name, String category, List<PatchNotes> patchNotes) {
         this.name = name;
         this.category = category;
-        this.officialUrl = officialUrl;
         this.patchNotes = patchNotes;
     }
     public String getName() {
@@ -50,24 +44,13 @@ public class Tech extends AbstractEntity {
     public void setCategory(String category) {
         this.category = category;
     }
-    public String getOfficialUrl() {
-        return officialUrl;
-    }
-    public void setOfficialUrl(String officialUrl) {
-        this.officialUrl = officialUrl;
-    }
     public List<PatchNotes> getPatchNotes() {
         return patchNotes;
     }
     public void setPatchNotes(List<PatchNotes> patchNotes) {
         this.patchNotes = patchNotes;
     }
-    public List<Favorites> getFavorites() {
-        return favorites;
-    }
-    public void setFavorites(List<Favorites> favorites) {
-        this.favorites = favorites;
-    }
+
 
 
     public Set<User> getFollowers() {
