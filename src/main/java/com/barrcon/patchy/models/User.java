@@ -27,6 +27,7 @@ public class User extends AbstractEntity {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "tech_id")
     )
+    private Set<Tech> followedTechs = new HashSet<>();
 
     @ElementCollection
     @CollectionTable(name = "user_tech_ids", joinColumns = @JoinColumn(name = "user_id"))
@@ -47,8 +48,6 @@ public class User extends AbstractEntity {
         this.email = email;
         this.feeds = feeds;
     }
-
-
 
     public String getUsername() {
         return username;
@@ -71,12 +70,18 @@ public class User extends AbstractEntity {
     public Set<Tech> getFollowedTechs() {
         return followedTechs;
     }
+    public void setFollowedTechs(Set<Tech> followedTechs) {
+        this.followedTechs = followedTechs;
+    }
     public List<Feed> getFeeds() {
         return feeds;
     }
     public void setFeeds(List<Feed> feeds) {
         this.feeds = feeds;
     }
+
+    public List<Long> getFavoriteTechIds() { return favoriteTechIds; }
+    public void setFavoriteTechIds(List<Long> favoriteTechIds) { this.favoriteTechIds = favoriteTechIds; }
 
     public void addFavoriteTech(Long techId) {
         if (!favoriteTechIds.contains(techId)) {

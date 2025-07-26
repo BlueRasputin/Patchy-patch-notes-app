@@ -1,9 +1,13 @@
 package com.barrcon.patchy.controllers;
 
 import com.barrcon.patchy.models.User;
+import com.barrcon.patchy.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
