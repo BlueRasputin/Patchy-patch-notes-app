@@ -1,11 +1,16 @@
 package com.barrcon.patchy.controllers;
 
+import com.barrcon.patchy.dto.LivePatchNoteDTO;
+import com.barrcon.patchy.models.Tech;
 import com.barrcon.patchy.models.User;
+import com.barrcon.patchy.repositories.TechRepository;
 import com.barrcon.patchy.repositories.UserRepository;
+import com.barrcon.patchy.services.GeminiLivePatchNotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -16,10 +21,16 @@ import java.util.stream.Collectors;
 @CrossOrigin
 public class UserController {
 
-    private final UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
+    private final UserRepository userRepository;
+    private final TechRepository techRepository;
+    private final GeminiLivePatchNotesService geminiService;
+
+    @Autowired
+    public UserController(UserRepository userRepository, TechRepository techRepository, GeminiLivePatchNotesService geminiService) {
         this.userRepository = userRepository;
+        this.techRepository = techRepository;
+        this.geminiService = geminiService;
     }
 
     @GetMapping
@@ -47,7 +58,7 @@ public class UserController {
             user.setUsername(userDetails.getUsername());
             user.setPasswordHash(userDetails.getPasswordHash());
             user.setEmail(userDetails.getEmail());
-            user.setFavoriteTechIds(userDetails.getFavoriteTechIds());
+            user.setFavoriteTechs(userDetails.getFavoriteTechs());
             return ResponseEntity.ok(userRepository.save(user));
         }
         return ResponseEntity.notFound().build();
@@ -66,9 +77,11 @@ public class UserController {
     @PostMapping("/{userId}/favorites/{techId}")
     public ResponseEntity<User> addFavorite(@PathVariable Long userId, @PathVariable Long techId) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
+        Optional<Tech> optionalTech = techRepository.findById(techId);
+
+        if (optionalUser.isPresent() && optionalTech.isPresent()) {
             User user = optionalUser.get();
-            user.addFavoriteTech(techId);
+            user.getFavoriteTechs().add(optionalTech.get());
             return ResponseEntity.ok(userRepository.save(user));
         }
         return ResponseEntity.notFound().build();
@@ -77,19 +90,21 @@ public class UserController {
     @DeleteMapping("/{userId}/favorites/{techId}")
     public ResponseEntity<User> removeFavorite(@PathVariable Long userId, @PathVariable Long techId) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
+        Optional<Tech> optionalTech = techRepository.findById(techId);
+
+        if (optionalUser.isPresent() && optionalTech.isPresent()) {
             User user = optionalUser.get();
-            user.removeFavoriteTech(techId);
+            user.getFavoriteTechs().remove(optionalTech.get());
             return ResponseEntity.ok(userRepository.save(user));
         }
         return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/{userId}/favorites")
-    public ResponseEntity<List<Long>> getUserFavorites(@PathVariable Long userId) {
+    public ResponseEntity<Set<Tech>> getUserFavorites(@PathVariable Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
-            return ResponseEntity.ok(optionalUser.get().getFavoriteTechIds());
+            return ResponseEntity.ok(optionalUser.get().getFavoriteTechs());
         }
         return ResponseEntity.notFound().build();
     }
@@ -98,5 +113,22 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         return ResponseEntity.ok("User registered successfully");
+    }
+
+    @GetMapping("/{userId}/the-bay")
+    public ResponseEntity<List<LivePatchNoteDTO>> getLivePatchNotesForFavoriteTechs(@PathVariable Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User user = optionalUser.get();
+
+        List<LivePatchNoteDTO> livePatchNotes = user.getFavoriteTechs()
+                .parallelStream()
+                .map(tech -> geminiService.fetchLivePatchNotes(tech.getName()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(livePatchNotes);
     }
 }
