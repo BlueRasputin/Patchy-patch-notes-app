@@ -6,7 +6,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 public interface FeedRepository extends CrudRepository<Feed, Long> {
-    List<Feed> findByUserIdOrderByCreatedDateDesc(Long userId);
-    List<Feed> findByUserIdAndIsReadFalse(Long userId);
-    List<Feed> findByUserIdAndTechIdIn(Long userId, List<Long> techIds);
+    List<Feed> findByUserIdAndPatchNoteTechIdIn(Long userId, List<Long> techIds);
 }

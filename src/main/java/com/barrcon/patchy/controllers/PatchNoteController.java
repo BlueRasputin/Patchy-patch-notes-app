@@ -1,6 +1,8 @@
 package com.barrcon.patchy.controllers;
 import com.barrcon.patchy.dto.PatchNotesProcessingRequest;
 import com.barrcon.patchy.dto.ProcessedPatchNotesDTO;
+import com.barrcon.patchy.models.Tech;
+import com.barrcon.patchy.repositories.TechRepository;
 import com.barrcon.patchy.services.GeminiPatchNotesService;
 import com.barrcon.patchy.models.PatchNotes;
 import com.barrcon.patchy.repositories.PatchNotesRepository;
@@ -20,6 +22,9 @@ public class PatchNoteController {
 
     @Autowired
     private PatchNotesRepository patchNotesRepository;
+
+    @Autowired
+    private TechRepository techRepository;
 
     @Autowired
     private GeminiPatchNotesService aiService;
@@ -44,12 +49,17 @@ public class PatchNoteController {
     @PostMapping("/process")
     public ResponseEntity<ProcessedPatchNotesDTO> processPatchNotes(@RequestBody PatchNotesProcessingRequest request) {
         try {
+
+            Tech tech = techRepository.findByName(request.getTitle())
+                    .orElseThrow(() -> new RuntimeException("Tech not found: " + request.getTitle()));
+
         ProcessedPatchNotesDTO processed = aiService.processPatchNotes(
 
                 request.getVersion(),
                 request.getTitle()
         );
         PatchNotes patchNote = new PatchNotes(processed.getDescription(), processed.getVersion(), processed.getTitle());
+        patchNote.setTech(tech);
         patchNotesRepository.save(patchNote);
         return ResponseEntity.ok(processed);
     } catch (Exception e) {
