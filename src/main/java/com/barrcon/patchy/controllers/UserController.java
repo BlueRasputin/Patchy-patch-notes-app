@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -91,6 +93,8 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
+
+
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         return ResponseEntity.ok("User registered successfully");
