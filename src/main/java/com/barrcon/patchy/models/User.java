@@ -1,21 +1,18 @@
+
 package com.barrcon.patchy.models;
 
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
 
 @Entity
 @Table(name = "users")
 public class User extends AbstractEntity {
 
-   @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
 
-   @Column(nullable = false)
+    @Column(nullable = false)
     private String passwordHash;
 
     @Column(unique = true, nullable = false)
@@ -23,77 +20,61 @@ public class User extends AbstractEntity {
 
     @ManyToMany
     @JoinTable(
-        name = "user_followed_techs",
+        name = "user_favorite_techs",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "tech_id")
     )
-    private Set<Tech> followedTechs = new HashSet<>();
+    private Set<Tech> favoriteTechs = new HashSet<>();
 
-    @ElementCollection
-    @CollectionTable(name = "user_tech_ids", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "tech_id")
-    private List<Long> favoriteTechIds = new ArrayList<>();
+    public User() {}
 
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Feed> feeds = new ArrayList<>();
-
-
-    public User() {
-    }
-
-    public User(String username, String passwordHash, String email, List<Feed> feeds) {
+    public User(String username, String passwordHash, String email) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.email = email;
-        this.feeds = feeds;
     }
 
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
+
     public String getPasswordHash() {
         return passwordHash;
     }
+
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
-    public Set<Tech> getFollowedTechs() {
-        return followedTechs;
-    }
-    public void setFollowedTechs(Set<Tech> followedTechs) {
-        this.followedTechs = followedTechs;
-    }
-    public List<Feed> getFeeds() {
-        return feeds;
-    }
-    public void setFeeds(List<Feed> feeds) {
-        this.feeds = feeds;
+
+    public Set<Tech> getFavoriteTechs() {
+        return favoriteTechs;
     }
 
-    public List<Long> getFavoriteTechIds() { return favoriteTechIds; }
-    public void setFavoriteTechIds(List<Long> favoriteTechIds) { this.favoriteTechIds = favoriteTechIds; }
-
-    public void addFavoriteTech(Long techId) {
-        if (!favoriteTechIds.contains(techId)) {
-            favoriteTechIds.add(techId);
-        }
+    public void setFavoriteTechs(Set<Tech> favoriteTechs) {
+        this.favoriteTechs = favoriteTechs;
     }
 
-    public void removeFavoriteTech(Long techId) {
-        favoriteTechIds.remove(techId);
+    public void addFavoriteTech(Tech tech) {
+        favoriteTechs.add(tech);
     }
 
-    public boolean hasFavoriteTech(Long techId) {
-        return favoriteTechIds.contains(techId);
+    public void removeFavoriteTech(Tech tech) {
+        favoriteTechs.remove(tech);
+    }
+
+    public boolean isFollowingTech(Tech tech) {
+        return favoriteTechs.contains(tech);
     }
 }
