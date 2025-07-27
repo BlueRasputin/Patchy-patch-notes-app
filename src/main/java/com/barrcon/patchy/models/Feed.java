@@ -17,18 +17,21 @@ public class Feed extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name = "patch_note_id")
     private PatchNotes patchNote;
-    private LocalDateTime addedToFeedAt;
-    private boolean isRead;
+
+    @ManyToOne
+    @JoinColumn(name = "tech_id")
+    private Tech tech;
+
 
 
     public Feed() {
     }
-    public Feed(User user, PatchNotes patchNote, LocalDateTime addedToFeedAt, boolean isRead) {
+    public Feed(User user, PatchNotes patchNote) {
 
         this.user = user;
         this.patchNote = patchNote;
-        this.addedToFeedAt = addedToFeedAt;
-        this.isRead = isRead;
+        this.tech = patchNote.getTech();
+
 
     }
     public User getUser() {
@@ -43,17 +46,6 @@ public class Feed extends AbstractEntity{
     public void setPatchNote(PatchNotes patchNote) {
         this.patchNote = patchNote;
     }
-    public LocalDateTime getAddedToFeedAt() {
-        return addedToFeedAt;
-    }
-    public void setAddedToFeedAt(LocalDateTime addedToFeedAt) {
-        this.addedToFeedAt = addedToFeedAt;
-    }
-    public boolean isRead() {
-        return isRead;
-    }
-    public void setRead(boolean read) {
-        isRead = read;
-    }
+
 
 }

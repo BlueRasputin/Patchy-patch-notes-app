@@ -14,22 +14,21 @@ public class Tech extends AbstractEntity {
     private String name;
 
     @Column(nullable = false)
-    private String category;
+    private String version;
 
     private String description;
 
     @OneToMany(mappedBy = "tech", cascade = CascadeType.ALL)
     private List<PatchNotes> patchNotes = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "followedTechs")
-    private Set<User> followers = new HashSet<>();
+
 
     public Tech() {
     }
 
-    public Tech(String name, String category, List<PatchNotes> patchNotes) {
+    public Tech(String name, String version, List<PatchNotes> patchNotes) {
         this.name = name;
-        this.category = category;
+        this.version = version;
         this.patchNotes = patchNotes;
     }
     public String getName() {
@@ -38,11 +37,11 @@ public class Tech extends AbstractEntity {
     public void setName(String name) {
         this.name = name;
     }
-    public String getCategory() {
-        return category;
+    public String getVersion() {
+        return version;
     }
-    public void setCategory(String category) {
-        this.category = category;
+    public void setVersion(String version) {
+        this.version = version;
     }
     public List<PatchNotes> getPatchNotes() {
         return patchNotes;
@@ -51,13 +50,4 @@ public class Tech extends AbstractEntity {
         this.patchNotes = patchNotes;
     }
 
-
-
-    public Set<User> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Set<User> followers) {
-        this.followers = followers;
-    }
 }

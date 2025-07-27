@@ -11,7 +11,7 @@ public class PatchNotesProcessingRequest {
         this.title = title;
     }
 
-    // Getters and setters
+
 
     public String getVersion() {
         return version;

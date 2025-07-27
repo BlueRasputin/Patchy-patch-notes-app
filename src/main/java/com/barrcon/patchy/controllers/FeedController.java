@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class FeedController {
 
-    @Autowired
+
     private final FeedRepository feedRepository;
     private final UserRepository userRepository;
 
@@ -34,7 +34,7 @@ public class FeedController {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            List<Feed> feeds = feedRepository.findByUserIdAndTechIdIn(userId, user.getFavoriteTechIds());
+            List<Feed> feeds = feedRepository.findByUserIdAndPatchNoteTechIdIn(userId, user.getFavoriteTechIds());
             return ResponseEntity.ok(feeds);
         }
         return ResponseEntity.notFound().build();
@@ -62,7 +62,6 @@ public class FeedController {
         Optional<Feed> feedOptional = feedRepository.findById(id);
         if (feedOptional.isPresent()) {
             Feed feed = feedOptional.get();
-            feed.setRead(true);
             return ResponseEntity.ok(feedRepository.save(feed));
         }
         return ResponseEntity.notFound().build();

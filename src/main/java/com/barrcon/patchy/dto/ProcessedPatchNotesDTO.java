@@ -16,7 +16,7 @@ public class ProcessedPatchNotesDTO {
         this.description = description;
     }
 
-    // Getters and setters
+
     public String getVersion() {
         return version;
     }
