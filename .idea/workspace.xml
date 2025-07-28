@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="70699022-c756-4300-a920-c43124beefd2" name="Changes" comment="removing unused models and classes">
+      <change afterPath="$PROJECT_DIR$/server/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/server/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/SessionConfig" beforeDir="false" afterPath="$PROJECT_DIR$/server/config/SessionConfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/server/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/server/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/PatchyApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/PatchyApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/config/SessionConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/config/SessionConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/controllers/TechController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/controllers/TechController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/dto/LivePatchNoteDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/dto/LivePatchNoteDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/dto/PatchNotesProcessingRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/dto/PatchNotesProcessingRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/dto/ProcessedPatchNotesDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/dto/ProcessedPatchNotesDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/models/AbstractEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/models/AbstractEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/models/Tech.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/models/Tech.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/repositories/TechRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/repositories/TechRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/repositories/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/services/GeminiLivePatchNotesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/services/GeminiLivePatchNotesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/barrcon/patchy/services/GeminiPatchNotesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/barrcon/patchy/services/GeminiPatchNotesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/barrcon/patchy/PatchyApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/com/barrcon/patchy/PatchyApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/patchy/server">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="patchy" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <branch-grouping />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;BlueRasputin&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/BlueRasputin/Patchy-patch-notes-app.git&quot;,
+    &quot;accountId&quot;: &quot;150c600f-f67a-4012-b943-f2be57b22a84&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/barrcon/patchy/controllers/PatchNoteController.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="306RxwfxhcIaawpeQtyuzJaRr8v" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.PatchyApplication.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "MVP",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/josh_/IdeaProjects/patchy",
+    "settings.editor.selected.configurable": "MavenSettings"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\josh_\IdeaProjects\patchy\server" />
+      <recent name="C:\Users\josh_\IdeaProjects\patchy" />
+      <recent name="C:\Users\josh_\IdeaProjects\patchy\src" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="PatchyApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.barrcon.patchy.PatchyApplication" />
+      <module name="patchy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.barrcon.patchy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.PatchyApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="70699022-c756-4300-a920-c43124beefd2" name="Changes" comment="" />
+      <created>1752946285584</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1752946285584</updated>
+    </task>
+    <task id="LOCAL-00001" summary="created repository files">
+      <option name="closed" value="true" />
+      <created>1752959289012</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1752959289012</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Building controllers and changing methods to reflect relationships">
+      <option name="closed" value="true" />
+      <created>1752988074491</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1752988074491</updated>
+    </task>
+    <task id="LOCAL-00003" summary="updating classes to update related tables">
+      <option name="closed" value="true" />
+      <created>1753041175308</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1753041175308</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Refactoring models for table relationships">
+      <option name="closed" value="true" />
+      <created>1753043125894</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1753043125894</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Refactoring models and controllers">
+      <option name="closed" value="true" />
+      <created>1753049405193</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1753049405193</updated>
+    </task>
+    <task id="LOCAL-00006" summary="set up controllers and testing table configuration">
+      <option name="closed" value="true" />
+      <created>1753060200427</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1753060200427</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Updating Controllers">
+      <option name="closed" value="true" />
+      <created>1753070932500</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1753070932500</updated>
+    </task>
+    <task id="LOCAL-00008" summary="assign CRUD ops to TechController">
+      <option name="closed" value="true" />
+      <created>1753128077183</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1753128077183</updated>
+    </task>
+    <task id="LOCAL-00009" summary="assign CRUD ops to FavoritesController">
+      <option name="closed" value="true" />
+      <created>1753133027108</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1753133027108</updated>
+    </task>
+    <task id="LOCAL-00010" summary="assigning CRUD ops for FeedController">
+      <option name="closed" value="true" />
+      <created>1753144055785</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1753144055785</updated>
+    </task>
+    <task id="LOCAL-00011" summary="assigning CRUD ops for FeedController">
+      <option name="closed" value="true" />
+      <created>1753144071995</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1753144071995</updated>
+    </task>
+    <task id="LOCAL-00012" summary="assigning CRUD ops for FeedController">
+      <option name="closed" value="true" />
+      <created>1753144100131</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1753144100131</updated>
+    </task>
+    <task id="LOCAL-00013" summary="assigning CRUD ops for FeedController">
+      <option name="closed" value="true" />
+      <created>1753144213351</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1753144213351</updated>
+    </task>
+    <task id="LOCAL-00014" summary="add CRUD ops for PatchNotes model, update FeedController and FavoritesController, adding setID method for AbstractEntity">
+      <option name="closed" value="true" />
+      <created>1753145471270</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1753145471270</updated>
+    </task>
+    <task id="LOCAL-00015" summary="created DTO for processed patch notes, updated user controller">
+      <option name="closed" value="true" />
+      <created>1753148133918</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1753148133918</updated>
+    </task>
+    <task id="LOCAL-00016" summary="adding GeminiPatchNotesService and PatchNotesProcessingRequest DTO to prepare app for ai patch note processing">
+      <option name="closed" value="true" />
+      <created>1753238379559</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1753238379559</updated>
+    </task>
+    <task id="LOCAL-00017" summary="adding gemini integration and api key">
+      <option name="closed" value="true" />
+      <created>1753240343010</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1753240343010</updated>
+    </task>
+    <task id="LOCAL-00018" summary="implementing Gemini patch notes processing">
+      <option name="closed" value="true" />
+      <created>1753242177782</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1753242177782</updated>
+    </task>
+    <task id="LOCAL-00019" summary="update Gemini integration">
+      <option name="closed" value="true" />
+      <created>1753290920239</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1753290920239</updated>
+    </task>
+    <task id="LOCAL-00020" summary="updating Google gemini integration">
+      <option name="closed" value="true" />
+      <created>1753312830644</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1753312830644</updated>
+    </task>
+    <task id="LOCAL-00021" summary="refactoring Gemini imports">
+      <option name="closed" value="true" />
+      <created>1753320436029</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1753320436029</updated>
+    </task>
+    <task id="LOCAL-00022" summary="fixing API key integration and calls">
+      <option name="closed" value="true" />
+      <created>1753331925966</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1753331925966</updated>
+    </task>
+    <task id="LOCAL-00023" summary="debugging Google genai integration responses">
+      <option name="closed" value="true" />
+      <created>1753334354491</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1753334354491</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Gemini integration running">
+      <option name="closed" value="true" />
+      <created>1753406794744</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1753406794744</updated>
+    </task>
+    <task id="LOCAL-00025" summary="refactoring code to fix endpoints">
+      <option name="closed" value="true" />
+      <created>1753423204552</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1753423204552</updated>
+    </task>
+    <task id="LOCAL-00026" summary="refactoring to embed favorites table functionality into user table">
+      <option name="closed" value="true" />
+      <created>1753501344947</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1753501344947</updated>
+    </task>
+    <task id="LOCAL-00027" summary="refactoring to embed favorites table functionality into user table">
+      <option name="closed" value="true" />
+      <created>1753503323463</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1753503323463</updated>
+    </task>
+    <task id="LOCAL-00028" summary="removed favorites table references and files">
+      <option name="closed" value="true" />
+      <created>1753508928653</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1753508928653</updated>
+    </task>
+    <task id="LOCAL-00029" summary="removed references to favorites and slim down tech table">
+      <option name="closed" value="true" />
+      <created>1753568993460</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1753568993460</updated>
+    </task>
+    <task id="LOCAL-00030" summary="refactor Feed and Tech models to fix relationships and mapping">
+      <option name="closed" value="true" />
+      <created>1753595775350</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1753595775350</updated>
+    </task>
+    <task id="LOCAL-00031" summary="refactor and rescope: slim down models and relationships for MVP">
+      <option name="closed" value="true" />
+      <created>1753648815976</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1753648815976</updated>
+    </task>
+    <task id="LOCAL-00032" summary="refactor and rescope: slim down models and relationships for MVP">
+      <option name="closed" value="true" />
+      <created>1753648845355</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1753648845355</updated>
+    </task>
+    <task id="LOCAL-00033" summary="removing unused models and classes">
+      <option name="closed" value="true" />
+      <created>1753662151814</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1753662151814</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Refactoring models for table relationships" />
+    <MESSAGE value="Refactoring models and controllers" />
+    <MESSAGE value="set up controllers and testing table configuration" />
+    <MESSAGE value="Updating Controllers" />
+    <MESSAGE value="assign CRUD ops to TechController" />
+    <MESSAGE value="assign CRUD ops to FavoritesController" />
+    <MESSAGE value="assigning CRUD ops for FeedController" />
+    <MESSAGE value="add CRUD ops for PatchNotes model, update FeedController and FavoritesController, adding setID method for AbstractEntity" />
+    <MESSAGE value="created DTO for processed patch notes, updated user controller" />
+    <MESSAGE value="adding GeminiPatchNotesService and PatchNotesProcessingRequest DTO to prepare app for ai patch note processing" />
+    <MESSAGE value="adding gemini integration and api key" />
+    <MESSAGE value="implementing Gemini patch notes processing" />
+    <MESSAGE value="update Gemini integration" />
+    <MESSAGE value="updating Google gemini integration" />
+    <MESSAGE value="refactoring Gemini imports" />
+    <MESSAGE value="fixing API key integration and calls" />
+    <MESSAGE value="debugging Google genai integration responses" />
+    <MESSAGE value="Gemini integration running" />
+    <MESSAGE value="refactoring code to fix endpoints" />
+    <MESSAGE value="refactoring to embed favorites table functionality into user table" />
+    <MESSAGE value="removed favorites table references and files" />
+    <MESSAGE value="removed references to favorites and slim down tech table" />
+    <MESSAGE value="refactor Feed and Tech models to fix relationships and mapping" />
+    <MESSAGE value="refactor and rescope: slim down models and relationships for MVP" />
+    <MESSAGE value="removing unused models and classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="removing unused models and classes" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/patchy$PatchyApplication.ic" NAME="PatchyApplication Coverage Results" MODIFIED="1753404529639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.barrcon.patchy.*</FILTER>
+    </SUITE>
+  </component>
+</project>
