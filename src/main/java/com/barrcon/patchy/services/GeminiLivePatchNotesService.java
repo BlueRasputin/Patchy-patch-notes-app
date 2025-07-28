@@ -33,6 +33,3 @@ import org.springframework.stereotype.Service;
             }
         }
     }
-
-
-//TODO: Change this (The old format) to generate live patch notes
