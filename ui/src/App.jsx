@@ -1,5 +1,11 @@
 
 import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import About from './pages/About.jsx';
+import TheBay from './pages/The-Bay/The-Bay.jsx';
+import Header from './components/Framing/Header.jsx';
+import NavBar from './components/Framing/NavBar.jsx';
 
 function App() {
 
