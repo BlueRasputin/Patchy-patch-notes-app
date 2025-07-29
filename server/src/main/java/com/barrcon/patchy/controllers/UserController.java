@@ -110,11 +110,6 @@ public class UserController {
     }
 
 
-    @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
-        return ResponseEntity.ok("User registered successfully");
-    }
-
     @GetMapping("/{userId}/the-bay")
     public ResponseEntity<List<LivePatchNoteDTO>> getLivePatchNotesForFavoriteTechs(@PathVariable Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
