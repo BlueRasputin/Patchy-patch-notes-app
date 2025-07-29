@@ -15,4 +15,3 @@ import './TheBay.css';
 // });
 
 const TheBay = () => { useState, useEffect } from 'react';
-import Card from '../../components/TechCards/Card';
