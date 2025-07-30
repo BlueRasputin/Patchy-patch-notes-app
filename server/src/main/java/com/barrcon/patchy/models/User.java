@@ -1,9 +1,13 @@
 
 package com.barrcon.patchy.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import static java.util.Base64.getEncoder;
 
 @Entity
 @Table(name = "users")
@@ -13,7 +17,7 @@ public class User extends AbstractEntity {
     private String username;
 
     @Column(nullable = false)
-    private String passwordHash;
+    private String password;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -28,9 +32,9 @@ public class User extends AbstractEntity {
 
     public User() {}
 
-    public User(String username, String passwordHash, String email) {
+    public User(String username, String password, String email) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        setPassword(password);
         this.email = email;
     }
 
@@ -42,12 +46,13 @@ public class User extends AbstractEntity {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    @JsonIgnore
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -74,7 +79,15 @@ public class User extends AbstractEntity {
         favoriteTechs.remove(tech);
     }
 
+    public static BCryptPasswordEncoder getEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     public boolean isFollowingTech(Tech tech) {
         return favoriteTechs.contains(tech);
+    }
+
+    public boolean isMatchingPassword(String password) {
+        return getEncoder().matches(password, this.password);
     }
 }

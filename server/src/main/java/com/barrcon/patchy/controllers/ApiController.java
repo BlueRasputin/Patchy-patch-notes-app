@@ -1,13 +1,16 @@
 package com.barrcon.patchy.controllers;
 
+import com.barrcon.patchy.dto.LoginFormDTO;
 import com.barrcon.patchy.dto.RegisterFormDTO;
 import com.barrcon.patchy.models.User;
 import com.barrcon.patchy.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +35,7 @@ public class ApiController {
     private static final String userSessionKey = "user";
 
     public User getUserFromSession(HttpSession session) {
-        Integer userId = (Integer) session.getAttribute(userSessionKey);
+        Long userId = (Long) session.getAttribute(userSessionKey);
         if (userId == null) {
             return null;
         }
@@ -59,7 +62,7 @@ public class ApiController {
     }
 
     @GetMapping("/currentUserId")
-    public ResponseEntity<Integer> getCurrentUserId (HttpSession session) {
+    public ResponseEntity<Long> getCurrentUserId (HttpSession session) {
         User user = getUserFromSession(session);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -74,7 +77,7 @@ public class ApiController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        User existingUser = userRepository.findByUsernameIgnoreCase(registerFormDTO.getUsername());
+        User existingUser = userRepository.findByUsername(registerFormDTO.getUsername());
 
         if (existingUser != null) {
             return new ResponseEntity<String>("Username already exists", HttpStatus.CONFLICT);
@@ -106,7 +109,7 @@ public class ApiController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        User theUser = userRepository.findByUsernameIgnoreCase(loginFormDTO.getUsername());
+        User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
 
         if (theUser == null || !theUser.isMatchingPassword(loginFormDTO.getPassword())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -114,7 +117,7 @@ public class ApiController {
 
         setUserInSession(request.getSession(), theUser);
 
-        System.out.println("User authenticated: " + theUser.getUserName());
+        System.out.println("User authenticated: " + theUser.getUsername());
 
         return new ResponseEntity<>(theUser, HttpStatus.OK);
     }
