@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("api/tech")
+@RequestMapping("/tech")
 @CrossOrigin
 public class TechController {
 

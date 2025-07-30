@@ -1,7 +1,9 @@
 package com.barrcon.patchy.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-import org.jetbrains.annotations.NotNull;
 
 public class LoginFormDTO {
     @NotNull
