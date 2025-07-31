@@ -1,5 +1,5 @@
 export const fetchUser = async (id) => {
-  const response = await fetch(`http://localhost:8080/api/users/${id}`);
+  const response = await fetch(`http://localhost:8080/users/${id}`);
   if (!response.ok) {
     throw new Error("Argh! user not found");
   }
@@ -7,7 +7,7 @@ export const fetchUser = async (id) => {
 };
 
 export const addUser = async (userData) => {
-  const response = await fetch("http://localhost:8080/api/users", {
+  const response = await fetch("http://localhost:8080/users", {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -17,5 +17,5 @@ export const addUser = async (userData) => {
   if (!response.ok) {
     throw new Error("Argh! Failed to add user");
   }
-  return response.json("Ahoy! Welcome aboard, " + {username} + "!");
+  return response.json("Ahoy! Welcome aboard, " + {user.username} + "!");
 }

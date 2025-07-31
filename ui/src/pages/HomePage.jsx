@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useAuth } from '../Services/useAuth';
 
 // !!! Dummy data for tech - ONLY FOR TESTING PURPOSES !!!
 const dummyTechData = [
@@ -13,7 +14,7 @@ const dummyTechData = [
 ];
 
 function HomePage() {
-
+  const { user, userId } = useAuth();
   const [tech, setTech] = useState([]);
   const [selectedTechIds, setSelectedTechIds] = useState(new Set());
   const [loading, setLoading] = useState(true);
@@ -24,16 +25,16 @@ function HomePage() {
     const fetchTech = async () => {
       try {
         //This is dummy data, but the logic is structured for the real API call
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
-        setTech(dummyTechData);
+        // await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+        // setTech(dummyTechData);
 
         //TODO: Uncomment when the API is running as expected
-        // const response = await fetch('http://localhost:8080/api/tech');
-        // if (!response.ok) {
-        //   throw new Error("Argh! Couldn't fetch tech data");
-        // }
-        // const data = await response.json();
-        // setTech(data);
+        const response = await fetch('http://localhost:8080/tech');
+        if (!response.ok) {
+          throw new Error("Argh! Couldn't fetch tech data");
+        }
+        const data = await response.json();
+        setTech(data);
 
       } catch (error) { //error handling if fetch fails
         setError(`Failed to load tech data: ${error.message}`);
@@ -50,7 +51,7 @@ function HomePage() {
     // TODO: Uncomment when the API is working
     // verify backend calls work as expected
 
-    // fetch('http://localhost:8080/api/tech')
+    // fetch('http://localhost:8080/tech')
     // .then(response => response.json())
     // .then(data => setTech(data))
     // .catch(err =>

@@ -1,3 +1,7 @@
+import React, { useState } from 'react';
+import { useAuth } from '../hooks/useAuth';
+import { loginUser } from '../components/Services/authService';
+import { useNavigate } from 'react-router-dom';
 
 
 const LoginForm = () => {
@@ -19,7 +23,7 @@ const LoginForm = () => {
             if (response.success) {
                 login(response.data);
                 window.alert('Ahoy! Welcome Back!');
-                // Redirect to the home page after successful login
+                // Redirect to user's bay after successful login
                 redirect('/TheBay');
             } else {
                 console.error(response.error);
@@ -29,3 +33,5 @@ const LoginForm = () => {
         }
     }
 };
+
+export default LoginForm;
