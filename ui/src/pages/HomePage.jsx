@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-// !!! Dummy data for tech
+// !!! Dummy data for tech - ONLY FOR TESTING PURPOSES !!!
 const dummyTechData = [
   { id: 1, name: "React", description: "A JavaScript library for building user interfaces" },
   { id: 2, name: "Spring Boot", description: "Java framework for building applications" },
@@ -13,11 +13,13 @@ const dummyTechData = [
 ];
 
 function HomePage() {
+
   const [tech, setTech] = useState([]);
   const [selectedTechIds, setSelectedTechIds] = useState(new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch tech data from tech table
   useEffect(() => {
     const fetchTech = async () => {
       try {
@@ -25,7 +27,7 @@ function HomePage() {
         await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
         setTech(dummyTechData);
 
-        //TODO: Uncomment when the API is working for you
+        //TODO: Uncomment when the API is running as expected
         // const response = await fetch('http://localhost:8080/api/tech');
         // if (!response.ok) {
         //   throw new Error("Argh! Couldn't fetch tech data");
@@ -33,8 +35,8 @@ function HomePage() {
         // const data = await response.json();
         // setTech(data);
 
-      } catch (error) {
-        setError('Failed to load tech data: ${error.message}');
+      } catch (error) { //error handling if fetch fails
+        setError(`Failed to load tech data: ${error.message}`);
         console.error('Error loading tech data:', error);
         // Set dummy data in case of error
         setTech(dummyTechData);
@@ -45,7 +47,8 @@ function HomePage() {
     fetchTech();
   }, []);
 
-    // !!! Below is what you had before I started messing with dummy data - Jake
+    // TODO: Uncomment when the API is working
+    // verify backend calls work as expected
 
     // fetch('http://localhost:8080/api/tech')
     // .then(response => response.json())
@@ -61,20 +64,25 @@ function HomePage() {
   const toggleTech = (techId) => {
     setSelectedTechIds(prev => {
       const newSet = new Set(prev);
+      //checks to see if tech is already in the bay
       if (newSet.has(techId)) {
+        // deletes tech from the bay if it exists
         newSet.delete(techId);
       } else {
+        //adds tech to bay
         newSet.add(techId);
       }
       return newSet;
     });
   };
+  // Function to handle saving selected techs to user's Bay
+  // This function will be called when the user clicks the "Save to yer Bay!" button
 
   const handleSaveFavorites = async () => {
     const selectedTechs = tech.filter(item => selectedTechIds.has(item.id));
     console.log('Selected Techs:', selectedTechs);
-    // !!! Here you would typically send the selected techs to your backend (via API call, likely a POST request)
-    // For now, we'll just log it)
+    //sends selected techs to the backend
+    //TODO: set up backend endpoint to save selected techs
 
   if (selectedTechs.length > 0) {
       alert(`Selected ${selectedTechs.length} technologies:\n${selectedTechs.map(t => t.name).join(', ')}`);
@@ -82,19 +90,19 @@ function HomePage() {
       alert('Please select at least one technology!');
     }
   };
-
+// loading state message
 if (loading) {
     return (
       <div className="homepage">
         <div className="loading">
           <h2>Loading Technologies...</h2>
-          <p>Discovering the seas of development...</p>
+          <p>Scouring the seven seas of development...</p>
         </div>
       </div>
     );
   }
 
-
+//TODO: Hookup save button
 
   return (
     <div className="homepage">
@@ -109,6 +117,8 @@ if (loading) {
             {error} (Using demo data)
           </div>
         )}
+
+//checkbox list of techs
 
       <ul className="tech-list">
         {tech.map(item => (
@@ -129,6 +139,8 @@ if (loading) {
         </li>
         ))}
       </ul>
+
+  //Function to save selected techs to user's Bay
 
       <div className="action-section">
         <button className="save-button" onClick={handleSaveFavorites}>
