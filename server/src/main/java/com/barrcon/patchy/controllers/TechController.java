@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tech")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5173")
 public class TechController {
 
     @Autowired
