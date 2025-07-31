@@ -9,7 +9,7 @@ const RegisterForm = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [verifyPassword, setVerifyPassword] = useState('');
     const { login } = useAuth();
     const redirect = useNavigate();
 
@@ -20,7 +20,7 @@ const RegisterForm = () => {
             username,
             email,
             password,
-            confirmPassword,
+            verifyPassword,
         };
         try {
             const response = await registerUser(user);
@@ -71,12 +71,12 @@ const RegisterForm = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="confirmPassword">Confirm Password:</label>
+                    <label htmlFor="verifyPassword">Verify Password:</label>
                     <input
                         type="password"
-                        id="confirmPassword"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        id="verifyPassword"
+                        value={verifyPassword}
+                        onChange={(e) => setVerifyPassword(e.target.value)}
                         required
                     />
                 </div>

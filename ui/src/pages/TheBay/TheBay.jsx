@@ -49,14 +49,14 @@ const TheBay = () => {
   //TODO: implement error handling and loading state so you can better manage errors.
 
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const data = await fetchBay();
-  //     setSelectedTech(data);
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchBay();
+      setSelectedTech(data);
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
 useEffect(() => {
     const fetchData = async () => {
@@ -68,7 +68,7 @@ useEffect(() => {
         setSelectedTech(dummyData);
         
         // Uncomment this when backend is ready:
-        // const data = await fetchBay(1);
+        // const data = await fetchBay(1); // Assuming userId is available in the context
         // setSelectedTech(data);
         
       } catch (err) {
