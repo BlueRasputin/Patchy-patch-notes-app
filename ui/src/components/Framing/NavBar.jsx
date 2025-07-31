@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './Nav.css';
+import './NavBar.css';
 import { useEffect, useState } from "react";
 
 // NavBar component for navigation links
@@ -20,7 +20,7 @@ function NavBar() {
           <Link to="/" className={isMobile ? 'icon-home' : ''}>{isMobile ? '' : 'HOME'}</Link>
         </li>
         <li>
-          <Link to="/The-Bay" className={isMobile ? 'icon-the-bay' : ''}>{isMobile ? '' : 'THE BAY'}</Link>
+          <Link to="/TheBay" className={isMobile ? 'icon-the-bay' : ''}>{isMobile ? '' : 'THE BAY'}</Link>
         </li>
         <li>
           <Link to="/About" className={isMobile ? 'icon-about' : ''}>{isMobile ? '' : 'ABOUT'}</Link>

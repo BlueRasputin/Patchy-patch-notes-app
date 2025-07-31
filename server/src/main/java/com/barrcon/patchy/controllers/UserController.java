@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080")
 public class UserController {
 
 
@@ -56,7 +56,7 @@ public class UserController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setUsername(userDetails.getUsername());
-            user.setPassword(userDetails.getpassword());
+            user.setPassword(userDetails.getPassword());
             user.setEmail(userDetails.getEmail());
             user.setFavoriteTechs(userDetails.getFavoriteTechs());
             return ResponseEntity.ok(userRepository.save(user));

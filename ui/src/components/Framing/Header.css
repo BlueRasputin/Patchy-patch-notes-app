@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+}
+
+.Header {
+    margin-top: 0;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    display: flex;
+    /* overflow-x: hidden; */
+    background-color: #003B6F;
+    color: white;
+    text-align: center;
+    justify-content: center;
+    gap: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}

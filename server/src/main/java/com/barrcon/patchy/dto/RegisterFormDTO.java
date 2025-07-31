@@ -17,8 +17,6 @@ public class RegisterFormDTO extends LoginFormDTO {
     @NotNull(message = "Passwords do not match")
     private String verifyPassword;
 
-
-
     public String getVerifyPassword() {
         return verifyPassword;
     }

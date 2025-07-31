@@ -4,11 +4,24 @@
 
 //return description
 
-export const Card = ({ livePatchNote }) => {
+const Card = ({ livePatchNote }) => {
+  // return (
+  //   <div className="tech-card">
+  //     <h3>{livePatchNote.techName}</h3>
+  //     <p>{livePatchNote.description}</p>
+  //   </div>
+  // );
   return (
     <div className="tech-card">
-      <h3>{livePatchNote.techName}</h3>
-      <p>{livePatchNote.description}</p>
+      <div className="card-header">
+        <h3 className="tech-title">{livePatchNote.techName}</h3>
+      </div>
+      <div className="card-body">
+        <p className="patch-description">{livePatchNote.description}</p>
+      </div>
     </div>
   );
 }
+
+
+export default Card;

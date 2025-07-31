@@ -1,2 +1,2 @@
 
-export const UserAuth = ({ children }) =>
+const UserAuth = ({ children }) =>

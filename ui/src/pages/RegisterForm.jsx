@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './TheBay.css';
 
 
-const  export RegisterForm = () => {
+const RegisterForm = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -86,3 +86,5 @@ const  export RegisterForm = () => {
     );
 
 };
+
+export default RegisterForm
