@@ -4,7 +4,7 @@ import Card from '../../components/TechCards/Card';
 import './TheBay.css';
 
 
-
+// !!! Dummy data for live patch notes - ONLY FOR TESTING PURPOSES !!!
 const dummyData = [
   {
     id: 1,
@@ -27,6 +27,8 @@ const dummyData = [
     description: "Better type inference, improved error messages, and new utility types. Enhanced support for decorators and template literal types."
   }
 ];
+
+
 
 //Return title "The Bay"
 
@@ -62,10 +64,10 @@ useEffect(() => {
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 1000));
         
-        // Use dummy data instead of API call
+        // Using dummy data instead of API call
         setSelectedTech(dummyData);
         
-        // Uncomment this when your backend is ready:
+        // Uncomment this when backend is ready:
         // const data = await fetchBay(1);
         // setSelectedTech(data);
         
