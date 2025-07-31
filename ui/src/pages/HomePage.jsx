@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from '../Services/useAuth';
+import { loginUser, registerUser } from '../components/Services/authService';
+// import './HomePage.css';
+// import 
 
 // !!! Dummy data for tech - ONLY FOR TESTING PURPOSES !!!
-const dummyTechData = [
-  { id: 1, name: "React", description: "A JavaScript library for building user interfaces" },
-  { id: 2, name: "Spring Boot", description: "Java framework for building applications" },
-  { id: 3, name: "Node.js", description: "JavaScript runtime for server-side development" },
-  { id: 4, name: "TypeScript", description: "Typed superset of JavaScript" },
-  { id: 5, name: "Vue.js", description: "Progressive JavaScript framework" },
-  { id: 6, name: "Python", description: "High-level programming language" },
-  { id: 7, name: "Docker", description: "Container platform" },
-  { id: 8, name: "Kubernetes", description: "Container orchestration platform" }
-];
+// const dummyTechData = [
+//   { id: 1, name: "React", description: "A JavaScript library for building user interfaces" },
+//   { id: 2, name: "Spring Boot", description: "Java framework for building applications" },
+//   { id: 3, name: "Node.js", description: "JavaScript runtime for server-side development" },
+//   { id: 4, name: "TypeScript", description: "Typed superset of JavaScript" },
+//   { id: 5, name: "Vue.js", description: "Progressive JavaScript framework" },
+//   { id: 6, name: "Python", description: "High-level programming language" },
+//   { id: 7, name: "Docker", description: "Container platform" },
+//   { id: 8, name: "Kubernetes", description: "Container orchestration platform" }
+// ];
 
 function HomePage() {
-  const { user, userId } = useAuth();
+  const { user, userId } = loginUser();
   const [tech, setTech] = useState([]);
   const [selectedTechIds, setSelectedTechIds] = useState(new Set());
   const [loading, setLoading] = useState(true);
@@ -31,7 +33,7 @@ function HomePage() {
         //TODO: Uncomment when the API is running as expected
         const response = await fetch('http://localhost:8080/tech');
         if (!response.ok) {
-          throw new Error("Argh! Couldn't fetch tech data");
+          throw new Error("Argh! Couldn't fetch yer tech!");
         }
         const data = await response.json();
         setTech(data);
@@ -91,7 +93,9 @@ function HomePage() {
       alert('Please select at least one technology!');
     }
   };
+
 // loading state message
+
 if (loading) {
     return (
       <div className="homepage">

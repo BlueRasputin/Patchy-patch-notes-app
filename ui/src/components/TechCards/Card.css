@@ -1,10 +1,11 @@
-.tech-card {
+/* .tech-card {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
   margin: 16px 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  background: rgb(9, 56, 94);
+  background: rgb(77, 53, 8);
+  text-color: #f7f0f0;
 }
 
 .card-header {
@@ -46,4 +47,4 @@
 .loading, .error {
   text-align: center;
   padding: 20px;
-}
+} */
