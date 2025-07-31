@@ -17,5 +17,5 @@ export const addUser = async (userData) => {
   if (!response.ok) {
     throw new Error("Argh! Failed to add user");
   }
-  return response.json("Ahoy! Welcome aboard, " + {user.username} + "!");
+  return response.json("Ahoy! Welcome aboard, " + {username} + "!");
 }
