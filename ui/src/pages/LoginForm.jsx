@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import { loginUser } from '../components/Services/authService';
+import { useAuth } from '../components/Services/authContext';
+import { AuthUserProvider } from '../components/Services/AuthUserProvider';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -21,11 +21,18 @@ const LoginForm = () => {
         };
 
         try {
-            const response = await loginUser(user);
+            const response = await fetch("http://localhost:8080/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(user),
+
+            });
             if (response.success) {
                 login(response.data);
-                window.alert('Ahoy! Welcome Back!');
-                // Redirect to user's bay after successful login
+                window.alert('Ahoy! Welcome Back!');    
+                // Redirect user to bay after successful login
                 redirect('/TheBay');
             } else {
                 console.error(response.error);

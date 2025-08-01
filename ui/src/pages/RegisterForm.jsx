@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { registerUser } from '../../components/Services/authService';
+import { useAuth } from '../components/Services/authContext';
 import { useNavigate } from 'react-router-dom';
-import './TheBay.css';
+
+// import './RegisterForm.css';
 
 
 const RegisterForm = () => {
@@ -10,11 +10,18 @@ const RegisterForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
+    const [error, setError] = useState('');
     const { login } = useAuth();
     const redirect = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
+
+         if (password !== verifyPassword) {
+            setError('Passwords do not match!');
+            return;
+        }
 
         const user = {
             username,
@@ -22,23 +29,38 @@ const RegisterForm = () => {
             password,
             verifyPassword,
         };
+
         try {
-            const response = await registerUser(user);
+            const response = await fetch("http://localhost:8080/api/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(user),
+            });
+            console.log(response.data);
             if (response.success) {
                 login(response.data);
                 window.alert('Ahoy! Welcome Aboard!');
                 // Redirect to the home page after successful registration
-                redirect('/HomePage');
+                redirect('/');
             } else {
+                setError(response.error || 'Registration failed');
                 console.error(response.error);
             }
         } catch (error) {
+            setError('Registration failed: ' + error.message);
             console.error('Argh! Registration failed:', error);
         }
     };
     return (
         <div className="register-form">
             <h2>Register</h2>
+            {error && (
+                <div className="error-banner">
+                    {error}
+                </div>
+            )}
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="username">Username:</label>
@@ -87,4 +109,4 @@ const RegisterForm = () => {
 
 };
 
-export default RegisterForm
+export default RegisterForm;

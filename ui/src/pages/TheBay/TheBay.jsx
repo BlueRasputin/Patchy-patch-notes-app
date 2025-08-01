@@ -4,102 +4,88 @@ import Card from '../../components/TechCards/Card';
 import './TheBay.css';
 
 
-// !!! Dummy data for live patch notes - ONLY FOR TESTING PURPOSES !!!
-const dummyData = [
-  {
-    id: 1,
-    techName: "React",
-    description: "New concurrent features and improved performance. Added automatic batching for better state updates and new hooks for concurrent rendering."
-  },
-  {
-    id: 2,
-    techName: "Spring Boot",
-    description: "Enhanced security features, improved startup performance, and better integration with cloud-native applications. Added new actuator endpoints."
-  },
-  {
-    id: 3,
-    techName: "Node.js",
-    description: "Performance improvements in V8 engine, new experimental features for ES modules, and enhanced debugging capabilities."
-  },
-  {
-    id: 4,
-    techName: "TypeScript",
-    description: "Better type inference, improved error messages, and new utility types. Enhanced support for decorators and template literal types."
-  }
-];
-
-
-
-//Return title "The Bay"
-
-//loop through selected tech cards
-
-//for each tech card, render a Card component
-
-// Card.forEach(livePatchNote => {
-//   <Card key={livePatchNote.id} livePatchNote={livePatchNote} />
-// });
-
 const TheBay = () => {
-  const [selectedTech, setSelectedTech] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);  
+  const [bayFeed, setBayFeed] = useState([]);
+  
 
   //TODO: once you have user authentication, pass the userId to fetchBay
   //TODO: implement error handling and loading state so you can better manage errors.
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchBay();
-      setSelectedTech(data);
-    };
-
-    fetchData();
-  }, []);
-
 useEffect(() => {
     const fetchData = async () => {
       try {
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Using dummy data instead of API call
-        setSelectedTech(dummyData);
-        
-        // Uncomment this when backend is ready:
-        // const data = await fetchBay(1); // Assuming userId is available in the context
-        // setSelectedTech(data);
-        
+        const userInSession = await fetch("http://localhost:8080/api/currentUserId", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", 
+        });
+
+        if (!userInSession.ok) {
+          throw new Error("Failed to fetch current user ID");
+        }
+
+        const { userId } = await userInSession.json(); 
+        if (!userId) {
+          throw new Error("No user ID found in session");
+        }
+
+        const data = await fetchBay(userInSession);
+        setBayFeed(data);
       } catch (err) {
-        setError(err.message);
-        console.error('Error:', err);
-      } finally {
+        console.error("Error loading Bay data:", err);
         setLoading(false);
-      }
+      } 
     };
 
     fetchData();
   }, []);
 
-  if (loading) return <div>Loading The Bay...</div>;
-  if (error) return <div>Error: {error}</div>;
-
-
-
-
+  if (loading) {
+    return (
+      <div className="the-bay">
+        <div className="bay-header">
+          <h1>The Bay</h1>
+          <p className="bay-subtitle">Your personalized tech patch notes</p>
+        </div>
+        <div className="loading">
+          <h2>Loading Your Bay...</h2>
+          <p>Scouring the seas for your tech updates...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="theBay">
-      <h1>The Bay</h1>
+
+    <div className="the-bay">
+      <div className="bay-header">
+        <h1>The Bay</h1>
+        <p className="bay-subtitle">Your personalized tech patch notes</p>
+        <div className="bay-stats">
+          <span className="tech-count">{bayFeed.length} technologies tracked</span>
+        </div>
+      </div>
+      
       <div className="card-container">
-        {selectedTech.map(livePatchNote => (
-          <Card key={livePatchNote.id} livePatchNote={livePatchNote} />
-        ))}
+        {bayFeed.length > 0 ? (
+          bayFeed.map((livePatchNote) => (
+            <Card 
+              key={livePatchNote.id || livePatchNote.techName} 
+              livePatchNote={livePatchNote} 
+            />
+          ))
+        ) : (
+          <div className="no-data">
+            <h3>No technologies in yer bay yet!</h3>
+            <p>Visit the home page to add some technologies to track.</p>
+          </div>
+        )}
       </div>
     </div>
   );
+
 };
-
-
 export default TheBay;
