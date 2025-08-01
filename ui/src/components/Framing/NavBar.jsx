@@ -13,6 +13,9 @@ function NavBar() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  //TODO: useEffect to display isLoggedIn/isLoggedOut
+  
+
   return (
     <nav className="nav">
       <ul>

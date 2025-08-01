@@ -24,12 +24,11 @@ const RegisterForm = () => {
         }
 
         const user = {
-            username,
             email,
             password,
-            verifyPassword,
+            username,
+            verifyPassword
         };
-
         try {
             const response = await fetch("http://localhost:8080/api/register", {
                 method: "POST",
@@ -39,8 +38,8 @@ const RegisterForm = () => {
                 body: JSON.stringify(user),
             });
             console.log(response.data);
-            if (response.success) {
-                login(response.data);
+            if (response.ok) {
+                
                 window.alert('Ahoy! Welcome Aboard!');
                 // Redirect to the home page after successful registration
                 redirect('/');

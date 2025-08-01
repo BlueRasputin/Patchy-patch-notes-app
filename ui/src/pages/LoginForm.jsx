@@ -17,7 +17,7 @@ const LoginForm = () => {
 
         const user = {
             username,
-            password,
+            password
         };
 
         try {
@@ -31,7 +31,7 @@ const LoginForm = () => {
             });
             if (response.success) {
                 login(response.data);
-                window.alert('Ahoy! Welcome Back!');    
+                window.alert('Ahoy! Captain on Deck!');    
                 // Redirect user to bay after successful login
                 redirect('/TheBay');
             } else {
