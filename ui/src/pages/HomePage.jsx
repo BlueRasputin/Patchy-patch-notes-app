@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { loginUser, registerUser } from '../components/Services/authService';
+import { useAuth } from '../components/Services/authContext';
 // import './HomePage.css';
 // import 
 
@@ -16,17 +16,17 @@ import { loginUser, registerUser } from '../components/Services/authService';
 // ];
 
 function HomePage() {
-  const { user, userId } = loginUser();
+ const  {userState,login,logout,isAuthenticated} = useAuth();
   const [tech, setTech] = useState([]);
   const [selectedTechIds, setSelectedTechIds] = useState(new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  
   // Fetch tech data from tech table
   useEffect(() => {
     const fetchTech = async () => {
       try {
-        //This is dummy data, but the logic is structured for the real API call
+        // //This is dummy data, but the logic is structured for the real API call
         // await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
         // setTech(dummyTechData);
 
@@ -42,7 +42,6 @@ function HomePage() {
         setError(`Failed to load tech data: ${error.message}`);
         console.error('Error loading tech data:', error);
         // Set dummy data in case of error
-        setTech(dummyTechData);
       } finally {
         setLoading(false);
       }
