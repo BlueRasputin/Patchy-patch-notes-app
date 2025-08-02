@@ -29,6 +29,10 @@ function NavBar() {
           <Link to="/About" className={isMobile ? 'icon-about' : ''}>{isMobile ? '' : 'ABOUT'}</Link>
         </li>
       </ul>
+      <ul className="login/reg block">
+        <li><Link to="/Login">Login</Link></li>
+        <li><Link to="/Register">Register</Link></li>
+      </ul>
     </nav>
   );
 }

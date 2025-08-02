@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RequestMapping("/api")
 public class ApiController {
-
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -41,6 +40,7 @@ public class ApiController {
         if (user.isEmpty()) {
             return null;
         }
+        System.out.println("User retrieved from session: " + user.get().getUsername());
         return user.get();
     }
 
@@ -51,7 +51,6 @@ public class ApiController {
 
     public ResponseEntity<User> getCurrentUser(HttpSession session) {
         User user = getUserFromSession(session);
-
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -62,6 +61,7 @@ public class ApiController {
     @GetMapping("/currentUserId")
     public ResponseEntity<Long> getCurrentUserId (HttpSession session) {
         User user = getUserFromSession(session);
+        System.out.println("Current user ID: " + (user != null ? user.getId() : "null"));
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -116,6 +116,7 @@ public class ApiController {
         setUserInSession(request.getSession(), theUser);
 
         System.out.println("User authenticated: " + theUser.getUsername());
+        System.out.println("User ID in session: " + request.getSession().getAttribute(userSessionKey));
 
         return new ResponseEntity<>(theUser, HttpStatus.OK);
     }

@@ -1,5 +1,5 @@
 package com.barrcon.patchy.controllers;
-
+import com.barrcon.patchy.dto.TechDTO;
 import com.barrcon.patchy.dto.LivePatchNoteDTO;
 import com.barrcon.patchy.models.Tech;
 import com.barrcon.patchy.models.User;
@@ -9,8 +9,6 @@ import com.barrcon.patchy.services.GeminiLivePatchNotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -74,21 +72,30 @@ public class UserController {
     }
 
 
-    @PostMapping("/{userId}/favorites/{techId}")
-    public ResponseEntity<User> addFavorite(@PathVariable Long userId, @PathVariable Long techId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        Optional<Tech> optionalTech = techRepository.findById(techId);
 
-        if (optionalUser.isPresent() && optionalTech.isPresent()) {
-            User user = optionalUser.get();
-            user.getFavoriteTechs().add(optionalTech.get());
-            return ResponseEntity.ok(userRepository.save(user));
+
+    @PostMapping("/{userId}/favorites")
+    public ResponseEntity<User> addFavorite(@PathVariable Long userId, @RequestBody TechDTO techDTO) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+
+        User user = optionalUser.get();
+
+        for (Long techId : techDTO.getTechIds()) {
+            Optional<Tech> optionalTech = techRepository.findById(techId);
+            if (optionalTech.isPresent()) {
+                user.getFavoriteTechs().add(optionalTech.get());
+            }
+        }
+
+        return ResponseEntity.ok(userRepository.save(user));
     }
 
     @DeleteMapping("/{userId}/favorites/{techId}")
-    public ResponseEntity<User> removeFavorite(@PathVariable Long userId, @PathVariable Long techId) {
+    public ResponseEntity<User> removeFavorite(@PathVariable Long userId, @RequestBody Long techId) {
         Optional<User> optionalUser = userRepository.findById(userId);
         Optional<Tech> optionalTech = techRepository.findById(techId);
 
