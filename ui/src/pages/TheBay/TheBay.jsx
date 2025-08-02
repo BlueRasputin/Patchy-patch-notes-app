@@ -12,27 +12,24 @@ const TheBay = () => {
   //TODO: once you have user authentication, pass the userId to fetchBay
   //TODO: implement error handling and loading state so you can better manage errors.
 
-useEffect(() => {
+
     const fetchData = async () => {
       try {
-        const userInSession = await fetch("http://localhost:8080/api/currentUserId", {
+        const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include", 
-        });
+          credentials: "include"
+      });
 
-        if (!userInSession.ok) {
-          throw new Error("Failed to fetch current user ID");
-        }
-
-        const { userId } = await userInSession.json(); 
+        const userId  = await userInSession.json(); 
+        
         if (!userId) {
           throw new Error("No user ID found in session");
         }
 
-        const data = await fetchBay(userInSession);
+        const data = await fetchBay(userId);
         setBayFeed(data);
       } catch (err) {
         console.error("Error loading Bay data:", err);
@@ -40,7 +37,8 @@ useEffect(() => {
       } 
     };
 
-    fetchData();
+  useEffect(() => {
+    fetchData().then(() => setLoading(false));
   }, []);
 
   if (loading) {

@@ -26,11 +26,14 @@ const LoginForm = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
+                credentials:"include",
                 body: JSON.stringify(user),
 
             });
-            if (response.success) {
-                login(response.data);
+            if (response.ok) {
+                const userData = await response.json();
+                console.log(userData);
+                login(userData);
                 window.alert('Ahoy! Captain on Deck!');    
                 // Redirect user to bay after successful login
                 redirect('/TheBay');

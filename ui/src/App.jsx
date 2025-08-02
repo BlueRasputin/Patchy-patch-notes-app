@@ -1,19 +1,23 @@
 
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePage.jsx';
 import About from './pages/About.jsx';
 import TheBay from './pages/TheBay/TheBay.jsx';
 import LoginForm from './pages/LoginForm.jsx';
 import RegisterForm from './pages/RegisterForm.jsx';
 import Header from './components/Framing/Header.jsx';
 import NavBar from './components/Framing/NavBar.jsx';
+import {AuthUserProvider} from './components/Services/AuthUserProvider.jsx';
+
+
+
 function App() {
 
   return (
     <>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+        <AuthUserProvider>
         <Router>
         <Header />
         <NavBar />
@@ -25,7 +29,7 @@ function App() {
             <Route path="/About" element={<About />} />
           </Routes>
         </Router>
-        
+      </AuthUserProvider>
 
     </>
   );

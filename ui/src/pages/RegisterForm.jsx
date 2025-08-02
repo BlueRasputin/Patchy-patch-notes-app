@@ -11,7 +11,6 @@ const RegisterForm = () => {
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
     const [error, setError] = useState('');
-    const { login } = useAuth();
     const redirect = useNavigate();
 
     const handleSubmit = async (e) => {
