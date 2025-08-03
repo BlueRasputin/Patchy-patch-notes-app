@@ -7,7 +7,6 @@ function Header() {
       
         <div className="Header">
             <img className="logo" src="./src/assets/icons/Patchy-logo.png" alt="Patchy Logo" />
-            <h1 className="site-title">Patchy</h1>
         </div>
         
     </>

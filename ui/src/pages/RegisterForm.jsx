@@ -37,7 +37,9 @@ const RegisterForm = () => {
                 },
                 body: JSON.stringify(user),
             });
+            
             console.log(response.data);
+            const userData = await response.json();
             if (response.ok) {
                 login(userData);
                 window.alert('Ahoy! Welcome Aboard!');
