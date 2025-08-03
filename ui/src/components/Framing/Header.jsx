@@ -1,4 +1,4 @@
-
+import './Header.css';
 
 function Header() {
     return (
@@ -6,7 +6,8 @@ function Header() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       
         <div className="Header">
-            <h2>Patchy</h2>
+            <img className="logo" src="./src/assets/icons/Patchy-logo.png" alt="Patchy Logo" />
+            <h1 className="site-title">Patchy</h1>
         </div>
         
     </>

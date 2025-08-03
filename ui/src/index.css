@@ -8,8 +8,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(100, 54, 11, 0.87);
-  background: #758fd6; 
+  color: rgba(218, 179, 144, 0.87);
+  background: url('./src/assets/background-wood.jpg');
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

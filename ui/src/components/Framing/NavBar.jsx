@@ -15,6 +15,13 @@ function NavBar() {
 
   //TODO: useEffect to display isLoggedIn/isLoggedOut
   
+function
+
+
+
+
+
+
 
   return (
     <nav className="nav">
