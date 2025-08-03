@@ -1,9 +1,9 @@
 .homepage {
   background: linear-gradient(180deg, 
-    #1a365d 0%,     /* Dark blue sky */
-    #2d5a87 30%,    /* Ocean blue */
-    #1e3a5f 70%,    /* Deep ocean */
-    #0f1419 100%    /* Abyss */
+    #1a365d 0%,     
+    #2d5a87 30%,    
+    #1e3a5f 70%,    
+    #0f1419 100%    
   );
   min-height: 100vh;
   padding: 2rem;

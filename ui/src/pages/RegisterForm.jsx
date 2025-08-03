@@ -11,6 +11,7 @@ const RegisterForm = () => {
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
     const [error, setError] = useState('');
+    const { login } = useAuth();
     const redirect = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -38,7 +39,7 @@ const RegisterForm = () => {
             });
             console.log(response.data);
             if (response.ok) {
-                
+                login(userData);
                 window.alert('Ahoy! Welcome Aboard!');
                 // Redirect to the home page after successful registration
                 redirect('/');

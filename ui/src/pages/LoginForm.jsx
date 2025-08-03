@@ -41,7 +41,7 @@ const LoginForm = () => {
                 console.error(response.error);
             }
         } catch (error) {
-            console.error('Argh! Login failed:', error);
+            console.error('Argh! Couldn\'t log ye in', error);
         }
     };
 
