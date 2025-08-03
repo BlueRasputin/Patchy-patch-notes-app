@@ -118,19 +118,19 @@ body {
     }
     
     .icon-home::before {
-        content: url(../../assets/icons/);
+        content: url(../../assets/icons/icon-chest.png);
         display: inline-block;
         margin-right: 4px;
     }
     
     .icon-the-bay::before {
-        content: url(../../assets/icons/);
+        content: url(../../assets/icons/icon-ship.png);
         display: inline-block;
         margin-right: 4px;
     }
     
     .icon-about::before {
-        content: url(../../assets/icons/);
+        content: url(../../assets/icons/icon-about.png);
         display: inline-block;
         margin-right: 4px;
     }
