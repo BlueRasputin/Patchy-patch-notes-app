@@ -8,6 +8,7 @@ import LoginForm from './pages/LoginForm.jsx';
 import RegisterForm from './pages/RegisterForm.jsx';
 import Header from './components/Framing/Header.jsx';
 import NavBar from './components/Framing/NavBar.jsx';
+import Footer from './components/Framing/Footer.jsx';
 import {AuthUserProvider} from './components/Services/AuthUserProvider.jsx';
 
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/TheBay" element={<TheBay />} />
             <Route path="/About" element={<About />} />
           </Routes>
+          <Footer />
         </Router>
       </AuthUserProvider>
 

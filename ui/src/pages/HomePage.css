@@ -1,0 +1,26 @@
+.homepage {
+  background: linear-gradient(180deg, 
+    #1a365d 0%,     /* Dark blue sky */
+    #2d5a87 30%,    /* Ocean blue */
+    #1e3a5f 70%,    /* Deep ocean */
+    #0f1419 100%    /* Abyss */
+  );
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.homepage::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(255, 223, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}

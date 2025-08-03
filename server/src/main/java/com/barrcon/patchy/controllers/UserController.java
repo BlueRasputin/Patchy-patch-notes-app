@@ -94,8 +94,10 @@ public class UserController {
         return ResponseEntity.ok(userRepository.save(user));
     }
 
+
+
     @DeleteMapping("/{userId}/favorites/{techId}")
-    public ResponseEntity<User> removeFavorite(@PathVariable Long userId, @RequestBody Long techId) {
+    public ResponseEntity<User> removeFavorite(@PathVariable Long userId, @PathVariable Long techId) {
         Optional<User> optionalUser = userRepository.findById(userId);
         Optional<Tech> optionalTech = techRepository.findById(techId);
 
@@ -104,6 +106,7 @@ public class UserController {
             user.getFavoriteTechs().remove(optionalTech.get());
             return ResponseEntity.ok(userRepository.save(user));
         }
+
         return ResponseEntity.notFound().build();
     }
 

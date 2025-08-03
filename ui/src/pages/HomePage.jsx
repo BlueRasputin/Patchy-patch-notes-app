@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "../components/Services/authContext";
-
+import './HomePage.css';
 
 function HomePage() {
   const { userState, isAuthenticated } = useAuth();
@@ -9,12 +9,6 @@ function HomePage() {
   const [selectedTechIds, setSelectedTechIds] = useState(new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const dummyTechData = [
-    { id: 1, name: "React", description: "A JavaScript library for building UIs" },
-    { id: 2, name: "Node.js", description: "A JavaScript runtime for server-side apps" },
-    { id: 3, name: "TypeScript", description: "A typed superset of JavaScript" },
-  ];
 
   useEffect(() => {
     const fetchTech = async () => {
@@ -34,24 +28,102 @@ function HomePage() {
         }
         const data = await response.json();
         setTech(data);
+        if(isAuthenticated()) {
+          const userResponse = await fetch("http://localhost:8080/api/currentUserId", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          });
+          if (!userResponse.ok){
+            throw new Error("AOWDMAOWMDOA");
+          }
+          const userId = await userResponse.json();
+          const favoritesResponse = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        if (!favoritesResponse.ok) {
+          throw new Error("Argh! Couldn't fetch yer favorites!");
+        }
+        const favoritesData = await favoritesResponse.json();
+        setSelectedTechIds(new Set(favoritesData.map((tech) => tech.id)));
+      }
       } catch (error) {
         setError(`Failed to load tech data: ${error.message}`);
         console.error("Error loading tech data:", error);
-        setTech(dummyTechData);
       } finally {
         setLoading(false);
       }
     };
     fetchTech();
-  }, []);
+  }, [isAuthenticated]);
 
-const toggleTech = (techId) => {
-  setSelectedTechIds((prev) => {
-    const newSet = new Set(prev);
-    newSet.has(techId) ? newSet.delete(techId) : newSet.add(techId);
-    return newSet;
-  });
-};
+// const toggleTech = (techId) => {
+//   setSelectedTechIds((prev) => {
+//     const newSet = new Set(prev);
+//     newSet.has(techId) ? newSet.delete(techId) : 
+//     newSet.add(techId);
+//     return newSet;
+//   });
+// };
+const toggleTech = async (techId) => {
+    if (!isAuthenticated()) {
+      alert("Please log in to modify your favorite technologies!");
+      return;
+    }
+
+    setSelectedTechIds((prev) => {
+      const newSet = new Set(prev);
+      const isSelected = newSet.has(techId);
+      if (isSelected) {
+        handleRemoveFavorite(techId);
+        newSet.delete(techId);
+      } else {
+        newSet.add(techId);
+      }
+      return newSet;
+    });
+  };
+
+const handleRemoveFavorite = async (techId) => {
+    try {
+      const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (!userInSession.ok) {
+        throw new Error("Argh! Ye need to be logged in to remove yer favorites!");
+      }
+
+      const userId = await userInSession.json();
+
+      const response = await fetch(`http://localhost:8080/users/${userId}/favorites/${techId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Argh! Failed to remove yer favorite!");
+      }
+
+      alert("Technology removed from yer Bay!");
+    } catch (error) {
+      console.error("Error removing favorite:", error);
+      alert(`Error: ${error.message}`);
+    }
+  };
 
   const handleSaveFavorites = async () => {
     if (!isAuthenticated()) {
@@ -60,7 +132,7 @@ const toggleTech = (techId) => {
     }
     const selectedTechs = tech.filter((item) => selectedTechIds.has(item.id));
     if (selectedTechs.length === 0) {
-      alert("Please select at least one technology!");
+      alert("Please select at least one technology ye want to add, matey!");
       return;
     }
 
@@ -72,6 +144,10 @@ const toggleTech = (techId) => {
           },
           credentials: "include"
       });
+
+      if (!userInSession.ok) {
+        throw new Error("Argh! Ye need to be logged in to save yer favorites!");
+      }
 
         const userId  = await userInSession.json();
         
@@ -89,11 +165,11 @@ const toggleTech = (techId) => {
         }),
       });
       if (!response.ok) {
-        throw new Error("Failed to save favorites to the Bay!");
+        throw new Error("Argh! Failed to save yer favorites!");
       }
 
       alert(
-        `Saved ${selectedTechs.length} technologies to your Bay:\n${selectedTechs
+        `Saved ${selectedTechs.length} technologies to yer Bay:\n${selectedTechs
           .map((t) => t.name)
           .join(", ")}`
       );
@@ -102,8 +178,6 @@ const toggleTech = (techId) => {
       alert(`Error: ${error.message}`);
     }
   };
-
-
 
   if (loading) {
     return (
@@ -118,8 +192,8 @@ const toggleTech = (techId) => {
 
   return (
     <div className="homepage">
-      <h1>Patchy</h1>
-      <h2>Select Technologies to add to your Bay</h2>
+      <h2>Welcome to Patchy!</h2>
+      <h3>Select Technologies to send 'em to yer Bay!</h3>
       <p className="instruction">
         Choose the technologies you want to follow and get their latest patch notes
         in The Bay
@@ -160,7 +234,6 @@ const toggleTech = (techId) => {
     </div>
   );
 
-  //TODO: set up api call to send data 
 }
 
 export default HomePage;
