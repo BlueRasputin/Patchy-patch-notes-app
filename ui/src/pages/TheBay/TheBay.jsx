@@ -7,10 +7,6 @@ import './TheBay.css';
 const TheBay = () => {
   const [loading, setLoading] = useState(true);
   const [bayFeed, setBayFeed] = useState([]);
-  
-
-  //TODO: once you have user authentication, pass the userId to fetchBay
-  //TODO: implement error handling and loading state so you can better manage errors.
 
 
     const fetchData = async () => {
@@ -26,7 +22,7 @@ const TheBay = () => {
         const userId  = await userInSession.json(); 
         
         if (!userId) {
-          throw new Error("No user ID found in session");
+          throw new Error("Argh! Ye got to be logged in to view yer Bay!");
         }
 
         const data = await fetchBay(userId);
@@ -46,22 +42,26 @@ const TheBay = () => {
       <div className="the-bay">
         <div className="bay-header">
           <h1>The Bay</h1>
-          <p className="bay-subtitle">Your personalized tech patch notes</p>
+          <p className="bay-subtitle">Your personalized list of patch notes</p>
         </div>
         <div className="loading">
-          <h2>Loading Your Bay...</h2>
-          <p>Scouring the seas for your tech updates...</p>
+          <h2>Loading Yer Bay...</h2>
+          <p>Scouring the seas for yer tech updates...</p>
         </div>
       </div>
     );
   }
+
+  
+
+  
 
   return (
 
     <div className="the-bay">
       <div className="bay-header">
         <h1>The Bay</h1>
-        <p className="bay-subtitle">Your personalized tech patch notes</p>
+        <p className="bay-subtitle">Yer personalized fleet of patch notes</p>
         <div className="bay-stats">
           <span className="tech-count">{bayFeed.length} technologies tracked</span>
         </div>
@@ -77,8 +77,8 @@ const TheBay = () => {
           ))
         ) : (
           <div className="no-data">
-            <h3>No technologies in yer bay yet!</h3>
-            <p>Visit the home page to add some technologies to track.</p>
+            <h3>Ye aint got nothin in yer bay yet!</h3>
+            <p>Visit the home page to add some technologies to follow.</p>
           </div>
         )}
       </div>

@@ -1,21 +1,9 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Cinzel:wght@400;600;700&display=swap');
 
 
 :root {
-  /* --primary-blue: #1e3a8a;
-  --secondary-blue: #3b82f6;
-  --accent-gold: #f59e0b;
-  --dark-navy: #0f172a;
-  --light-blue: #dbeafe;
-  --white: #ffffff;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-600: #4b5563;
-  --gray-800: #1f2937;
-  --success: #10b981;
-  --error: #ef4444; */
-
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Cinzel, 'Creepster', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
