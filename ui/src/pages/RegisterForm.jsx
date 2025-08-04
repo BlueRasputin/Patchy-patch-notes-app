@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../components/Services/authContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 // import './RegisterForm.css';
 
@@ -42,7 +43,7 @@ const RegisterForm = () => {
             const userData = await response.json();
             if (response.ok) {
                 login(userData);
-                window.alert('Ahoy! Welcome Aboard!');
+                toast.success('Ahoy! Welcome Aboard!');
                 // Redirect to the home page after successful registration
                 redirect('/');
             } else {

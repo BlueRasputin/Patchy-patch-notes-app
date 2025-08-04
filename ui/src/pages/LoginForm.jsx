@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../components/Services/authContext';
 import { AuthUserProvider } from '../components/Services/AuthUserProvider';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 const LoginForm = () => {
@@ -34,7 +35,7 @@ const LoginForm = () => {
                 const userData = await response.json();
                 console.log(userData);
                 login(userData);
-                window.alert('Ahoy! Captain on Deck!');    
+                toast.success('Ahoy! Captain on Deck!');
                 // Redirect user to bay after successful login
                 redirect('/TheBay');
             } else {

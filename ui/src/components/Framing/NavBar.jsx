@@ -28,6 +28,9 @@ function NavBar() {
         <li>
           <Link to="/About" className={isMobile ? 'icon-about' : ''}>{isMobile ? '' : 'ABOUT'}</Link>
         </li>
+        <li>
+          <Link to="/UserProfile" className={isMobile ? 'icon-user-profile' : ''}>{isMobile ? '' : 'USER PROFILE'}</Link>
+        </li>
       </ul>
       
     </nav>

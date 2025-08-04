@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchBay } from '../../components/Services/bayService';
 import Card from '../../components/TechCards/Card';
 import './TheBay.css';
-
+import LoadingSpinner from '../../components/LoadingIcon/LoadingSpinner';
 
 const TheBay = () => {
   const [loading, setLoading] = useState(true);
@@ -44,10 +44,10 @@ const TheBay = () => {
           <h1>The Bay</h1>
           <p className="bay-subtitle">Your personalized list of patch notes</p>
         </div>
-        <div className="loading">
-          <h2>Loading Yer Bay...</h2>
-          <p>Scouring the seas for yer tech updates...</p>
-        </div>
+        <LoadingSpinner 
+          message="Loading Yer Bay..."
+          subtitle="Scouring the seas for yer tech updates..."
+        />
       </div>
     );
   }

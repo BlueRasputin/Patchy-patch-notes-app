@@ -25,12 +25,10 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #d4cdb8;
   text-decoration: inherit;
 }
-a:hover {
-  color: #434bf0;
-}
+
 
 body {
   margin: 0;
