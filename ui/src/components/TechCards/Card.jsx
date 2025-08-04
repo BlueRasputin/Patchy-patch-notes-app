@@ -12,12 +12,7 @@ const Card = ({ livePatchNote }) => {
       <div className="card-header">
         <h3 className="tech-title">{livePatchNote.techName}</h3>
       </div>
-      {/* <div className="action-section">
-      <button className="remove-button" onClick={handleRemoveFavorite}>
-        Remove from yer Bay
-      </button>
-
-      </div> */}
+    
       <div className="card-body">
         <p className="patch-description">{livePatchNote.description}</p>
       </div>

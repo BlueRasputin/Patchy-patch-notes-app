@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../components/Services/authContext";
 import './HomePage.css';
+import { toast } from 'react-toastify';
 
 function HomePage() {
   const { userState, isAuthenticated } = useAuth();
@@ -12,7 +13,9 @@ function HomePage() {
 
   useEffect(() => {
     const fetchTech = async () => {
-      try {
+      try { 
+
+        //fetch full list of tech
         const response = await fetch("http://localhost:8080/tech"
         , {
           method: "GET",
@@ -20,12 +23,15 @@ function HomePage() {
             "Content-Type": "application/json",
           },
           credentials: "include",
-          
         }
-        );
+        ); 
+        
+        //error if tech fetch fails
         if (!response.ok) {
           throw new Error("Argh! Couldn't fetch yer tech!");
         }
+
+         // Parse the response as JSON
         const data = await response.json();
         setTech(data);
         if(isAuthenticated()) {
@@ -36,10 +42,13 @@ function HomePage() {
             },
             credentials: "include",
           });
+        
+
           if (!userResponse.ok){
             throw new Error("Please Log in");
           }
           const userId = await userResponse.json();
+          // Fetch user's favorite technology list
           const favoritesResponse = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
           method: "GET",
           headers: {
@@ -47,9 +56,12 @@ function HomePage() {
           },
           credentials: "include",
         });
+
         if (!favoritesResponse.ok) {
           throw new Error("Argh! Couldn't fetch yer favorites!");
         }
+
+        // Parse the favorites response
         const favoritesData = await favoritesResponse.json();
         setSelectedTechIds(new Set(favoritesData.map((tech) => tech.id)));
       }
@@ -60,20 +72,14 @@ function HomePage() {
         setLoading(false);
       }
     };
+
     fetchTech();
   }, [isAuthenticated]);
 
-// const toggleTech = (techId) => {
-//   setSelectedTechIds((prev) => {
-//     const newSet = new Set(prev);
-//     newSet.has(techId) ? newSet.delete(techId) : 
-//     newSet.add(techId);
-//     return newSet;
-//   });
-// };
+
 const toggleTech = async (techId) => {
     if (!isAuthenticated()) {
-      alert("Please log in to modify your favorite technologies!");
+      setError("Please log in to modify your favorite technologies!");
       return;
     }
 
@@ -90,6 +96,7 @@ const toggleTech = async (techId) => {
     });
   };
 
+//handle removing favorite tech
 const handleRemoveFavorite = async (techId) => {
     try {
       const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
@@ -118,25 +125,25 @@ const handleRemoveFavorite = async (techId) => {
         throw new Error("Argh! Failed to remove yer favorite!");
       }
 
-      alert("Technology removed from yer Bay!");
+      toast.success("Technology removed from yer Bay!");
     } catch (error) {
       console.error("Error removing favorite:", error);
-      alert(`Error: ${error.message}`);
+      toast.error(`Error: ${error.message}`);
     }
   };
-
+//Prevent saving if not logged in
   const handleSaveFavorites = async () => {
     if (!isAuthenticated()) {
-      alert("Please log in to save your favorite technologies!");
+      toast.error("Please log in to save your favorite technologies!");
       return;
-    }
+    } // Ensure at least one technology is selected
     const selectedTechs = tech.filter((item) => selectedTechIds.has(item.id));
     if (selectedTechs.length === 0) {
-      alert("Please select at least one technology ye want to add, matey!");
+      toast.error("Please select at least one technology ye want to add, matey!");
       return;
     }
 
-    try {
+    try { // Fetch the current user ID
       const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
           method: "GET",
           headers: {
@@ -168,17 +175,18 @@ const handleRemoveFavorite = async (techId) => {
         throw new Error("Argh! Failed to save yer favorites!");
       }
 
-      alert(
+      toast.success(
         `Saved ${selectedTechs.length} technologies to yer Bay:\n${selectedTechs
           .map((t) => t.name)
           .join(", ")}`
       );
     } catch (error) {
       console.error("Error saving favorites:", error);
-      alert(`Error: ${error.message}`);
+      toast.error(`Error: ${error.message}`);
     }
   };
 
+//Dislay Load when fetching
   if (loading) {
     return (
       <div className="homepage">
@@ -189,6 +197,7 @@ const handleRemoveFavorite = async (techId) => {
       </div>
     );
   }
+
 
   return (
     <div className="homepage">

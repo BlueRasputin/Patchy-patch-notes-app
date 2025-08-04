@@ -1,9 +1,11 @@
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage.jsx';
 import About from './pages/About.jsx';
 import TheBay from './pages/TheBay/TheBay.jsx';
+import UserProfile from './pages/UserProfile.jsx';
 import LoginForm from './pages/LoginForm.jsx';
 import RegisterForm from './pages/RegisterForm.jsx';
 import Logout from './pages/Logout.jsx';
@@ -30,11 +32,13 @@ function App() {
             <Route path="/logout" element={<Logout />} />
             <Route path="/TheBay" element={<TheBay />} />
             <Route path="/About" element={<About />} />
+            <Route path="/UserProfile" element={<UserProfile />} />
           </Routes>
           <Footer />
         </Router>
+        <ToastContainer position="top-right" autoClose={3000} />
       </AuthUserProvider>
-
+      
     </>
   );
 }

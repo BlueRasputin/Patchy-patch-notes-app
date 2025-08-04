@@ -134,6 +134,11 @@ body {
         display: inline-block;
         margin-right: 4px;
     }
+    .icon-user-profile::before {
+        content: url(../../assets/icons/icon-pirate.png);
+        display: inline-block;
+        margin-right: 4px;
+    }
 }
 
 
