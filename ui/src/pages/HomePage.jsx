@@ -37,7 +37,7 @@ function HomePage() {
             credentials: "include",
           });
           if (!userResponse.ok){
-            throw new Error("AOWDMAOWMDOA");
+            throw new Error("Please Log in");
           }
           const userId = await userResponse.json();
           const favoritesResponse = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
@@ -54,7 +54,7 @@ function HomePage() {
         setSelectedTechIds(new Set(favoritesData.map((tech) => tech.id)));
       }
       } catch (error) {
-        setError(`Failed to load tech data: ${error.message}`);
+        setError(`Ye got to be Logged in to add tech to yer bay! ${error.message}`);
         console.error("Error loading tech data:", error);
       } finally {
         setLoading(false);
@@ -101,7 +101,7 @@ const handleRemoveFavorite = async (techId) => {
       });
 
       if (!userInSession.ok) {
-        throw new Error("Argh! Ye need to be logged in to remove yer favorites!");
+        throw new Error("Argh! Ye need to be logged in to modify yer bay!");
       }
 
       const userId = await userInSession.json();
@@ -201,7 +201,7 @@ const handleRemoveFavorite = async (techId) => {
 
       {error && (
         <div className="error-banner">
-          {error} (Using demo data)
+          {error}
         </div>
       )}
 
