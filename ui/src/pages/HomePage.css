@@ -1,0 +1,43 @@
+.homepage {
+  background: linear-gradient(180deg, 
+    #1a365d 0%,     
+    #2d5a87 30%,    
+    #1e3a5f 70%,    
+    #0f1419 100%    
+  );
+  min-height: 60vh;
+  padding: 2rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.homepage::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(255, 223, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+button { 
+  background: linear-gradient(145deg, 
+        #8B4513 0%,     
+        #A0522D 50%,    
+        #654321 100%    
+    );
+    
+    font-family: 'Cinzel', serif;
+    padding: 12px 18px;
+    font-weight: 600;
+    
+}
+
+.tech-name {
+  color:rgb(211, 194, 159)
+}
