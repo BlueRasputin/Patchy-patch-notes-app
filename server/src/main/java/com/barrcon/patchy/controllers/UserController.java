@@ -42,6 +42,8 @@ public class UserController {
         return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+
+    //endpoint to create user
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User savedUser = userRepository.save(user);
@@ -49,7 +51,7 @@ public class UserController {
     }
 
 
-
+    //endpoint to update user id
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
         Optional<User> optionalUser = userRepository.findById(id);
@@ -61,6 +63,8 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+
+    //delete user
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         if (userRepository.existsById(id)) {
@@ -72,7 +76,7 @@ public class UserController {
 
 
 
-
+    //add to users favorites list
     @PostMapping("/{userId}/favorites")
     public ResponseEntity<User> addFavorite(@PathVariable Long userId, @RequestBody TechDTO techDTO) {
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -94,7 +98,7 @@ public class UserController {
     }
 
 
-
+    //delete tech from users favorites
     @DeleteMapping("/{userId}/favorites/{techId}")
     public ResponseEntity<User> removeFavorite(@PathVariable Long userId, @PathVariable Long techId) {
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -109,6 +113,8 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+
+    //get list of users favorites
     @GetMapping("/{userId}/favorites")
     public ResponseEntity<Set<Tech>> getUserFavorites(@PathVariable Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -118,7 +124,7 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-
+    //get the users bay, prompting gemini through DTO
     @GetMapping("/{userId}/the-bay")
     public ResponseEntity<List<LivePatchNoteDTO>> getLivePatchNotesForFavoriteTechs(@PathVariable Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);

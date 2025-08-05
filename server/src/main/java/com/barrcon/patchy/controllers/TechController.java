@@ -20,11 +20,14 @@ public class TechController {
     @Autowired
     private TechRepository techRepository;
 
+    //get full list of tech
     @GetMapping
     public ResponseEntity<List<Tech>> getAllTech() {
         return ResponseEntity.ok((List<Tech>) techRepository.findAll());
     }
 
+
+    //get tech by ID
     @GetMapping("/{id}")
     public ResponseEntity<Tech> getTechById(@PathVariable Long id) {
          Optional<Tech> tech = techRepository.findById(id);
@@ -32,11 +35,14 @@ public class TechController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    //Add tech to repository
     @PostMapping
     public ResponseEntity<Tech> createTech(@RequestBody Tech tech) {
         return ResponseEntity.ok(techRepository.save(tech));
     }
 
+
+    //Delete tech from tech table
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTech(@PathVariable Long id) {
         techRepository.deleteById(id);

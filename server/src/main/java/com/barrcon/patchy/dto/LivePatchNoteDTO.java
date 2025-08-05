@@ -29,4 +29,4 @@ public class LivePatchNoteDTO {
         this.description = description;
     }
 
-}
+} //DTO

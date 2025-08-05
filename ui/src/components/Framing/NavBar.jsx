@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import './NavBar.css';
-// import { useAuth } from "../components/Services/authContext";
 import { useEffect, useState } from "react";
 
 // NavBar component for navigation links

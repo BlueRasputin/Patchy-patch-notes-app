@@ -21,7 +21,7 @@ const UserProfile = () => {
             return;
         }
 
-        // Pre-fill form with current user data
+        // check UserState and set 
         if (userState) {
             setUsername(userState.username || '');
         }
@@ -40,7 +40,7 @@ const UserProfile = () => {
         }
 
         try {
-            // Get current user ID
+            // Get user id from logged in user
             const userResponse = await fetch(`http://localhost:8080/api/currentUserId`, {
                 method: "GET",
                 headers: {
@@ -48,7 +48,7 @@ const UserProfile = () => {
                 },
                 credentials: "include",
             });
-
+            // Check if user is logred in
             if (!userResponse.ok) {
                 throw new Error("Argh! Ye need to be logged in to change yer username!");
             }
@@ -61,7 +61,7 @@ const UserProfile = () => {
             };
 
 
-            // Update user
+            // Update user id
             const response = await fetch(`http://localhost:8080/users/${userId}`, {
                 method: "PUT",
                 headers: {
@@ -84,7 +84,6 @@ const UserProfile = () => {
             toast.success("Username updated successfully!");
 
         } catch (error) {
-            console.error("Error updating profile:", error);
             setError(`Error: ${error.message}`);
             toast.error(`Error: ${error.message}`);
         } finally {

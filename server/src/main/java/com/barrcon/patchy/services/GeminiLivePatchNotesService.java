@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
         }
 
         public LivePatchNoteDTO fetchLivePatchNotes(String techName) {
-            try {
+            try { //takes in array of user favorites and generates a patch note for each one
                 String query = "Search for the latest patch notes for" + techName + "and return a concise bulleted list. If unavailable, provide a brief list of important changes within the newest version found. The description field must be under 255 characters.";
                 GenerateContentResponse response = client.models.generateContent("gemini-2.5-flash", query, null);
                 String description = response.text();

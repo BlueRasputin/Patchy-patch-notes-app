@@ -30,7 +30,7 @@ useEffect(() => {
       });
       if (!userResponse.ok) throw new Error("Please Log in");
       const userId = await userResponse.json();
-      console.log(userId);
+      
 
       const favoritesResponse = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
         method: "GET",
@@ -42,7 +42,7 @@ useEffect(() => {
       setSelectedTechIds(new Set(favoritesData.map((tech) => tech.id)));
     } catch (error) {
       setError(`Ye got to be Logged in to add tech to yer bay! ${error.message}`);
-      console.error("Error loading tech data:", error);
+      
     } finally {
       setLoading(false);
     }
@@ -51,6 +51,8 @@ useEffect(() => {
   fetchTech();
 }, []);
 
+
+//toggle tech selections
 
 const toggleTech = async (techId) => {
     if (!isAuthenticated()) {
@@ -69,7 +71,12 @@ const toggleTech = async (techId) => {
       }
       return newSet;
     });
+
+
+    
   };
+
+
 
 //handle removing favorite tech
 const handleRemoveFavorite = async (techId) => {
@@ -102,10 +109,13 @@ const handleRemoveFavorite = async (techId) => {
 
       toast.success("Technology removed from yer Bay!");
     } catch (error) {
-      console.error("Error removing favorite:", error);
+      
       toast.error(`Error: ${error.message}`);
     }
   };
+
+
+
 //Prevent saving if not logged in
   const handleSaveFavorites = async () => {
     if (!isAuthenticated()) {
@@ -130,9 +140,9 @@ const handleRemoveFavorite = async (techId) => {
       if (!userInSession.ok) {
         throw new Error("Argh! Ye need to be logged in to save yer favorites!");
       }
-
+          
         const userId  = await userInSession.json();
-        
+          // convertes techids into an array to send to backend
          const techIds = Array.from(selectedTechIds);
       
       
@@ -156,7 +166,7 @@ const handleRemoveFavorite = async (techId) => {
           .join(", ")}`
       );
     } catch (error) {
-      console.error("Error saving favorites:", error);
+      
       toast.error(`Error: ${error.message}`);
     }
   };

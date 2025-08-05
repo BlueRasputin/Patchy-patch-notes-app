@@ -8,7 +8,7 @@ import java.util.Set;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static java.util.Base64.getEncoder;
-
+//instantiates user table
 @Entity
 @Table(name = "users")
 public class User extends AbstractEntity {
