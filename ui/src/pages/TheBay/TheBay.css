@@ -13,8 +13,14 @@
 
 h1 {
   font-size: 2.5rem;
-  color: var(--primary-blue);
+  color: rgb(207, 185, 156);
   margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: rgb(207, 185, 156);
+  margin-bottom: 0.5rem;
 }
 
 .bay-header {
@@ -26,15 +32,14 @@ h1 {
 .bay-header h1 {
   font-size: 3.5rem;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
   background-clip: text;
 }
 
 .bay-subtitle {
   font-size: 1.2rem;
-  color: var(--gray-600);
+  color: rgb(207, 185, 156);
   margin-bottom: 1.5rem;
   max-width: 600px;
   margin-left: auto;
@@ -46,11 +51,11 @@ h1 {
   background: var(--light-blue);
   padding: 0.75rem 1.5rem;
   border-radius: 25px;
-  border: 1px solid var(--primary-blue);
+  border: 1px solid rgb(207, 185, 156);
 }
 
 .tech-count {
-  color: var(--primary-blue);
+  color: rgb(207, 185, 156);
   font-weight: 600;
   font-size: 1rem;
 }
@@ -87,12 +92,12 @@ h1 {
 }
 
 .loading-container h2 {
-  color: var(--primary-blue);
+  color: rgb(207, 185, 156);
   margin-bottom: 1rem;
 }
 
 .loading-container p {
-  color: var(--gray-600);
+  color: rgb(207, 185, 156);
   font-style: italic;
 }
 
@@ -105,17 +110,17 @@ h1 {
 }
 
 .error-container h2 {
-  color: var(--error);
+  color: rgb(207, 185, 156);
   margin-bottom: 1rem;
 }
 
 .error-container p {
-  color: var(--error);
+  color: rgb(207, 185, 156);
   margin-bottom: 2rem;
 }
 
 .error-container button {
-  background: var(--error);
+  background: rgb(207, 185, 156);
   color: white;
   border: none;
   padding: 0.75rem 2rem;
@@ -144,12 +149,12 @@ h1 {
 }
 
 .empty-bay h3 {
-  color: var(--gray-800);
+  color: rgb(207, 185, 156);
   margin-bottom: 1rem;
 }
 
 .empty-bay p {
-  color: var(--gray-600);
+  color: rgb(207, 185, 156);
   margin-bottom: 2rem;
   max-width: 400px;
   margin-left: auto;
@@ -172,18 +177,7 @@ h1 {
 }
 
 
-.bay-footer {
-  text-align: center;
-  padding: 2rem;
-  border-top: 1px solid var(--gray-200);
-  margin-top: 2rem;
-}
 
-.bay-footer p {
-  color: var(--gray-600);
-  font-style: italic;
-  margin: 0;
-}
 
 @media (max-width: 768px) {
   .the-bay {
