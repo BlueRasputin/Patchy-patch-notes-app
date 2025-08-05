@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../components/Services/authContext';
 import { useNavigate } from 'react-router-dom';
-// import './UserProfile.css';
+import './AuthPage.css';
 import { toast } from 'react-toastify';
 
 const UserProfile = () => {
     const { userState, isAuthenticated, login } = useAuth();
     const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -19,14 +15,15 @@ const UserProfile = () => {
     useEffect(() => {
         if (!isAuthenticated()) {
             toast.error("Ye need to be logged in to view yer profile!");
+
             navigate('/Login');
+
             return;
         }
 
         // Pre-fill form with current user data
         if (userState) {
             setUsername(userState.username || '');
-            setEmail(userState.email || '');
         }
     }, [isAuthenticated, userState, navigate]);
 
@@ -36,9 +33,8 @@ const UserProfile = () => {
         setSuccess('');
         setLoading(true);
 
-        // Validate passwords if user is trying to change password
-        if (newPassword && newPassword !== confirmPassword) {
-            setError('New passwords do not match!');
+        if (!username.trim()) {
+            setError('Username cannot be empty!');
             setLoading(false);
             return;
         }
@@ -54,25 +50,16 @@ const UserProfile = () => {
             });
 
             if (!userResponse.ok) {
-                throw new Error("Argh! Ye need to be logged in!");
+                throw new Error("Argh! Ye need to be logged in to change yer username!");
             }
 
             const userId = await userResponse.json();
 
             // Prepare update data
             const updateData = {
-                username: username,
-                email: email,
-                favoriteTechs: userState?.favoriteTechs || []
+                username: username
             };
 
-            // Only include password if user wants to change it
-            if (newPassword) {
-                updateData.password = newPassword;
-            } else {
-                // Keep existing password (you might need to handle this differently based on your backend)
-                updateData.password = currentPassword;
-            }
 
             // Update user
             const response = await fetch(`http://localhost:8080/users/${userId}`, {
@@ -94,26 +81,23 @@ const UserProfile = () => {
             login(updatedUser);
             
             setSuccess("Yer profile has been updated successfully, matey!");
-            
-            // Clear password fields
-            setCurrentPassword('');
-            setNewPassword('');
-            setConfirmPassword('');
+            toast.success("Username updated successfully!");
 
         } catch (error) {
             console.error("Error updating profile:", error);
             setError(`Error: ${error.message}`);
+            toast.error(`Error: ${error.message}`);
         } finally {
             setLoading(false);
         }
     };
 
     if (!isAuthenticated()) {
-        return null; // Will redirect in useEffect
+        return null;
     }
 
     return (
-        <div className="user-profile">
+        <div className="user-form">
             <div className="profile-container">
                 <h2>Yer Profile</h2>
                 <p className="profile-subtitle">Update yer account details, matey!</p>
@@ -141,56 +125,6 @@ const UserProfile = () => {
                             required
                             placeholder="Enter yer new username"
                         />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            placeholder="Enter yer email"
-                        />
-                    </div>
-
-                    <div className="password-section">
-                        <h3>Change Password (Optional)</h3>
-                        <p className="password-note">Leave blank to keep current password</p>
-                        
-                        <div className="form-group">
-                            <label htmlFor="currentPassword">Current Password:</label>
-                            <input
-                                type="password"
-                                id="currentPassword"
-                                value={currentPassword}
-                                onChange={(e) => setCurrentPassword(e.target.value)}
-                                placeholder="Enter current password"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="newPassword">New Password:</label>
-                            <input
-                                type="password"
-                                id="newPassword"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                placeholder="Enter new password"
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="confirmPassword">Confirm New Password:</label>
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                placeholder="Confirm new password"
-                            />
-                        </div>
                     </div>
 
                     <div className="form-actions">

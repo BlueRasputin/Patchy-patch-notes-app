@@ -14,6 +14,18 @@
     justify-content: space-between;
     align-items: center;
 }
+.Footer {
+    margin-top: 0;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    display: flex;
+    color: white;
+    justify-content: flex-start;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .logo {
     width: 18rem;

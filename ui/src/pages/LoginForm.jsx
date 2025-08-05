@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '../components/Services/authContext';
-import { AuthUserProvider } from '../components/Services/AuthUserProvider';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import './AuthPage.css';
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -47,7 +47,7 @@ const LoginForm = () => {
     };
 
      return (
-        <div className="login-form">
+        <div className="user-form">
             <h2>Login</h2>
             {error && (
                 <div className="error-banner">

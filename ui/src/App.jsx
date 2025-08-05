@@ -36,7 +36,7 @@ function App() {
           </Routes>
           <Footer />
         </Router>
-        <ToastContainer position="top-right" autoClose={3000} />
+        <ToastContainer position="top-left" autoClose={3000} />
       </AuthUserProvider>
       
     </>

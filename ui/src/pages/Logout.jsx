@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../components/Services/authContext';
+import { toast } from 'react-toastify';
 
 
 const Logout = () => {
@@ -24,7 +25,7 @@ const Logout = () => {
                 
             } catch (error) {
                 console.error("Error during logout", error);
-                window.alert("Argh! There was an error logging you out.");
+                toast("Argh! There was an error logging you out.");
                 if (logout) {
                     logout();
                 }
@@ -36,6 +37,6 @@ const Logout = () => {
     }, [redirect, logout]);
 
     return null; 
-};
+}; 
 
 export default Logout;

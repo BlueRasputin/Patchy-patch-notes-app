@@ -3,6 +3,7 @@ import { fetchBay } from '../../components/Services/bayService';
 import Card from '../../components/TechCards/Card';
 import './TheBay.css';
 import LoadingSpinner from '../../components/LoadingIcon/LoadingSpinner';
+import { toast } from 'react-toastify';
 
 const TheBay = () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ const TheBay = () => {
         const data = await fetchBay(userId);
         setBayFeed(data);
       } catch (err) {
-        console.error("Error loading Bay data:", err);
+        toast.error(`Error loading Bay data: ${err.message}`);
         setLoading(false);
       } 
     };
