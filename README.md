@@ -28,15 +28,11 @@ installation and run steps
 1. clone repository
 2. open Patchy/Server file in IntelliJ (or similar IDE)
 3. Open MySQL Workbench and create schema titles 'patchy'
-4. start Patchy.js to instantiate database and start server
-
-5\. run the 'tech\_table\_sample\_data.sql' file in sql to instantiate tech table data (and add other queries for whatever tech you want to see on the site)
-
-6\. open Patchy/ui in VSCode
-
-7\. navigate into the ui folder and enter 'npm run dev' to open on localhost
-
-8\. create account and begin adding techs to favorites table
+4. start Patchy in Java to instantiate database and start server
+5. run the 'tech\_table\_sample\_data.sql' file in sql to instantiate tech table data (and add other queries for whatever tech you want to see on the site)
+6. open Patchy/ui in VSCode
+7. navigate into the ui folder and enter 'npm run dev' to open on localhost
+8. create account and begin adding techs to favorites table
 
 
 
