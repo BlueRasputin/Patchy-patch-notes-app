@@ -21,7 +21,6 @@ function Header() {
     // Method to check if user is logged in
     const checkUserLoggedIn = () => {
         const authStatus = isAuthenticated() && userState !== null;
-        console.log("checkUserLoggedIn result:", authStatus);
         return authStatus;
     };
 

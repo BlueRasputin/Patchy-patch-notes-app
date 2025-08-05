@@ -24,8 +24,8 @@ const Logout = () => {
                 redirect("/");
                 
             } catch (error) {
-                console.error("Error during logout", error);
-                toast("Argh! There was an error logging you out.");
+                error
+                toast.error("Argh! There was an error logging you out.");
                 if (logout) {
                     logout();
                 }

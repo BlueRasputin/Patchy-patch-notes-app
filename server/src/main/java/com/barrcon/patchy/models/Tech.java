@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+//instantiate tech table
 @Entity
 @Table(name = "techs")
 public class Tech extends AbstractEntity {

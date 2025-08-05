@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
-
+//superclass to assign ID for each database entry
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

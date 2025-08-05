@@ -67,7 +67,7 @@ public class ApiController {
         }
         return new ResponseEntity<>(user.getId(),HttpStatus.OK);
     }
-
+    //register user controller
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody @Valid RegisterFormDTO registerFormDTO, Errors errors, HttpServletRequest request) {
         if (errors.hasErrors()) {

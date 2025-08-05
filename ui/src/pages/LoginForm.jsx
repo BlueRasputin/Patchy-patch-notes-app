@@ -33,7 +33,6 @@ const LoginForm = () => {
             });
             if (response.ok) {
                 const userData = await response.json();
-                console.log(userData);
                 login(userData);
                 toast.success('Ahoy! Captain on Deck!');
                 // Redirect user to bay after successful login
