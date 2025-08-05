@@ -19,9 +19,11 @@ export const AuthUserProvider = ({ children }) => {
   }, []);
 
   const login = (userData) => {
-    setUserState(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
- 
+    return new Promise((resolve) => {{
+      setUserState(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      resolve();
+    }});
   };
 
   const logout = () => {

@@ -11,70 +11,45 @@ function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchTech = async () => {
-      try { 
+useEffect(() => {
+  const fetchTech = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/tech", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("Argh! Couldn't fetch yer tech!");
+      const data = await response.json();
+      setTech(data);
 
-        //fetch full list of tech
-        const response = await fetch("http://localhost:8080/tech"
-        , {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-        ); 
-        
-        //error if tech fetch fails
-        if (!response.ok) {
-          throw new Error("Argh! Couldn't fetch yer tech!");
-        }
+      const userResponse = await fetch("http://localhost:8080/api/currentUserId", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      if (!userResponse.ok) throw new Error("Please Log in");
+      const userId = await userResponse.json();
+      console.log(userId);
 
-         // Parse the response as JSON
-        const data = await response.json();
-        setTech(data);
-        if(isAuthenticated()) {
-          const userResponse = await fetch("http://localhost:8080/api/currentUserId", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          });
-        
+      const favoritesResponse = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      if (!favoritesResponse.ok) throw new Error("Argh! Couldn't fetch yer favorites!");
+      const favoritesData = await favoritesResponse.json();
+      setSelectedTechIds(new Set(favoritesData.map((tech) => tech.id)));
+    } catch (error) {
+      setError(`Ye got to be Logged in to add tech to yer bay! ${error.message}`);
+      console.error("Error loading tech data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-          if (!userResponse.ok){
-            throw new Error("Please Log in");
-          }
-          const userId = await userResponse.json();
-          // Fetch user's favorite technology list
-          const favoritesResponse = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        });
-
-        if (!favoritesResponse.ok) {
-          throw new Error("Argh! Couldn't fetch yer favorites!");
-        }
-
-        // Parse the favorites response
-        const favoritesData = await favoritesResponse.json();
-        setSelectedTechIds(new Set(favoritesData.map((tech) => tech.id)));
-      }
-      } catch (error) {
-        setError(`Ye got to be Logged in to add tech to yer bay! ${error.message}`);
-        console.error("Error loading tech data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTech();
-  }, [isAuthenticated]);
+  fetchTech();
+}, []);
 
 
 const toggleTech = async (techId) => {

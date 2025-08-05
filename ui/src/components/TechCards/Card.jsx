@@ -1,9 +1,7 @@
-//return title
-import React from 'react';
-import TheBay from '../../pages/TheBay/TheBay';
 
+import './Card.css';
 
-//return description
+//organizes tech cards with live patch note information
 
 const Card = ({ livePatchNote }) => {
   

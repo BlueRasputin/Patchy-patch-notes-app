@@ -1,4 +1,4 @@
-
+import './HeaderFooter.css'
 function Footer() {
     return (
     <>

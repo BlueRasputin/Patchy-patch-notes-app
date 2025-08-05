@@ -3,7 +3,7 @@ import { useAuth } from '../components/Services/authContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-// import './RegisterForm.css';
+import './AuthPage.css';
 
 
 const RegisterForm = () => {
@@ -30,25 +30,35 @@ const RegisterForm = () => {
             username,
             verifyPassword
         };
+        
         try {
-            const response = await fetch("http://localhost:8080/api/register", {
+            const registerResponse = await fetch("http://localhost:8080/api/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(user),
             });
-            
-            console.log(response.data);
-            const userData = await response.json();
-            if (response.ok) {
+            if (!registerResponse.ok) {
+                throw new Error("Argh! Couldn't register ye!")
+            }
+
+            //logging in the user after successful registration
+            const loginResponse = await fetch("http://localhost:8080/api/login", {
+                method: "POST",
+                headers:{"Content-Type": "application/json"},
+                credentials: "include",
+                body: JSON.stringify(user)
+            });
+            if (loginResponse.ok) {
+                const userData = await loginResponse.json();
                 login(userData);
                 toast.success('Ahoy! Welcome Aboard!');
-                // Redirect to the home page after successful registration
                 redirect('/');
+                
             } else {
-                setError(response.error || 'Registration failed');
-                console.error(response.error);
+                setError(registerResponse.error || 'Login failed');
+                console.error(registerResponse.error);
             }
         } catch (error) {
             setError('Registration failed: ' + error.message);
@@ -56,7 +66,7 @@ const RegisterForm = () => {
         }
     };
     return (
-        <div className="register-form">
+        <div className="user-form">
             <h2>Register</h2>
             {error && (
                 <div className="error-banner">

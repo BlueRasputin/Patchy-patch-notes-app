@@ -1,11 +1,11 @@
-/* .tech-card {
-  border: 1px solid #ddd;
+.tech-card {
+  border: 1px solid #d3c3a0;
   border-radius: 8px;
   padding: 16px;
   margin: 16px 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  background: rgb(77, 53, 8);
-  text-color: #f7f0f0;
+  background: rgb(65, 44, 6);
+  /* color: #f7f0f0; */
 }
 
 .card-header {
@@ -17,7 +17,7 @@
 
 .tech-title {
   margin: 0;
-  color: #333;
+  color: #e2c7a8;
 }
 
 .version-badge {
@@ -35,7 +35,7 @@
 .patch-description {
   margin: 0;
   line-height: 1.5;
-  color: #666;
+  color: #a78e72;
 }
 
 .cards-container {
@@ -44,7 +44,3 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
-.loading, .error {
-  text-align: center;
-  padding: 20px;
-} */
