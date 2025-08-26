@@ -76,31 +76,31 @@ public class ApiController {
         }
 
         User existingUser = userRepository.findByUsername(registerFormDTO.getUsername());
-
+        // Check if username is already claimed
         if (existingUser != null) {
             return new ResponseEntity<String>("Username already exists", HttpStatus.CONFLICT);
         }
-
+        // obtain password and verify password from DTO
         String password = registerFormDTO.getPassword();
         String verifyPassword = registerFormDTO.getVerifyPassword();
-
+        // Check if passwords match
         if (!password.equals(verifyPassword)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
+        // Create and save new user
         User newUser = new User(registerFormDTO.getUsername(),passwordEncoder.encode(password), registerFormDTO.getEmail());
         userRepository.save(newUser);
-
+        // Set user in session
         setUserInSession(request.getSession(), newUser);
 
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
-
+    //login user controller
     @GetMapping("/login")
     public ResponseEntity<String> displayLoginForm() {
         return new ResponseEntity<>("Please log in", HttpStatus.OK);
     }
-
+    // Process login form submission
     @PostMapping("/login")
     public ResponseEntity<User> processLoginForm(@RequestBody @Valid LoginFormDTO loginFormDTO, Errors errors, HttpServletRequest request) {
         if (errors.hasErrors()) {
@@ -108,11 +108,11 @@ public class ApiController {
         }
 
         User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
-
+        // Check if user exists and if their password matches database
         if (theUser == null || !theUser.isMatchingPassword(loginFormDTO.getPassword())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
+        // Set user in session
         setUserInSession(request.getSession(), theUser);
 
         System.out.println("User authenticated: " + theUser.getUsername());

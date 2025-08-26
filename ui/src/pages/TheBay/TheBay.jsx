@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchBay } from '../../components/Services/bayService';
+import { fetchBay } from '../../Services/bayService';
 import Card from '../../components/TechCards/Card';
 import './TheBay.css';
 import LoadingSpinner from '../../components/LoadingIcon/LoadingSpinner';

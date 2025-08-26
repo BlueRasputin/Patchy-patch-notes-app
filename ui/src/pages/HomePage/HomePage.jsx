@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { useAuth } from "../components/Services/authContext";
+import { useAuth } from "../../Services/authContext";
 import './HomePage.css';
 import { toast } from 'react-toastify';
 
@@ -13,12 +13,12 @@ function HomePage() {
 
 useEffect(() => {
   const fetchTech = async () => {
-    try {
+    try { // Fetch the list of technologies from the backend
       const response = await fetch("http://localhost:8080/tech", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-      });
+      }); //throw error if response is not ok
       if (!response.ok) throw new Error("Argh! Couldn't fetch yer tech!");
       const data = await response.json();
       setTech(data);
