@@ -1,15 +1,15 @@
 
 import React, { useState, useEffect} from "react";
-import AuthUserContext from "./authContext";
+import { AuthUserContext } from "./authContext";
 
 
 export const AuthUserProvider = ({ children }) => {
   const [userState, setUserState] = useState(null);
-
-    useEffect(() => {
+  // Stores user info in local storage to be accessible across all pages
+  useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      try {
+      try { //parse stored user data
         setUserState(JSON.parse(storedUser));
       } catch (error) {
         console.error("Failed to parse stored user data:", error);

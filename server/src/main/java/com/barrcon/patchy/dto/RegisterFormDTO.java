@@ -8,8 +8,6 @@ import jakarta.validation.constraints.Size;
 
 public class RegisterFormDTO extends LoginFormDTO {
 
-
-
     @Email(message = "Invalid email. Try again.")
     @NotBlank(message = "Email is required.")
     private String email;

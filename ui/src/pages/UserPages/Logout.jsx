@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from '../components/Services/authContext';
+import { useAuth } from '../../Services/authContext';
 import { toast } from 'react-toastify';
 
 

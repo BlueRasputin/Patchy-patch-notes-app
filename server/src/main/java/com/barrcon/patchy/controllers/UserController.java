@@ -76,7 +76,7 @@ public class UserController {
 
 
 
-    //add to users favorites list
+    //add tech to users favorites list
     @PostMapping("/{userId}/favorites")
     public ResponseEntity<User> addFavorite(@PathVariable Long userId, @RequestBody TechDTO techDTO) {
         Optional<User> optionalUser = userRepository.findById(userId);

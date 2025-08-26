@@ -25,7 +25,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+// This class configures the security settings for the application for CORS and authentication.
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -33,7 +33,7 @@ public class SecurityConfig {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
-
+        //authorizes http requests from the form login
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -43,7 +43,8 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .formLogin(Customizer.withDefaults());
-
+        //CSRF is disabled for development simplicity, but would be enabled in production
+        //CORS is enabled to allow cross-origin requests
         return http.build();
     }
 

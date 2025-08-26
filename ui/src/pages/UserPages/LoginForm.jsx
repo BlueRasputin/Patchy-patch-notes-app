@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../components/Services/authContext';
+import { useAuth } from '../../Services/authContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -22,18 +22,18 @@ const LoginForm = () => {
         };
 
         try {
-            const response = await fetch("http://localhost:8080/api/login", {
+            const response = await fetch("http://localhost:8080/api/login", { 
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json", 
                 },
                 credentials:"include",
                 body: JSON.stringify(user),
-
+                
             });
             if (response.ok) {
                 const userData = await response.json();
-                login(userData);
+                login(userData); // Save user data in context
                 toast.success('Ahoy! Captain on Deck!');
                 // Redirect user to bay after successful login
                 redirect('/TheBay');

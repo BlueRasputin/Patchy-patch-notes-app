@@ -27,7 +27,7 @@ public class User extends AbstractEntity {
         name = "user_favorite_techs",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "tech_id")
-    )
+    ) 
     private Set<Tech> favoriteTechs = new HashSet<>();
 
     public User() {}

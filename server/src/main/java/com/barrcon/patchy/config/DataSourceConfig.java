@@ -6,6 +6,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
+// this sets up the datasource for the application to connect to the MySQL database
 
 @Configuration
 public class DataSourceConfig {

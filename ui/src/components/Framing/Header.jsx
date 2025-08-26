@@ -1,6 +1,6 @@
 import './HeaderFooter.css';
 import { Link } from 'react-router-dom';
-import { useAuth } from "../Services/authContext";
+import { useAuth } from "../../Services/authContext";
 import { useEffect } from "react";
 
 

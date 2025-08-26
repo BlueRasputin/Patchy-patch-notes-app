@@ -2,17 +2,17 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage.jsx';
-import About from './pages/About.jsx';
+import HomePage from './pages/HomePage/HomePage.jsx';
+import About from './pages/AboutPage/About.jsx';
 import TheBay from './pages/TheBay/TheBay.jsx';
-import UserProfile from './pages/UserProfile.jsx';
-import LoginForm from './pages/LoginForm.jsx';
-import RegisterForm from './pages/RegisterForm.jsx';
-import Logout from './pages/Logout.jsx';
+import UserProfile from './pages/UserPages/UserProfile.jsx';
+import LoginForm from './pages/UserPages/LoginForm.jsx';
+import RegisterForm from './pages/UserPages/RegisterForm.jsx';
+import Logout from './pages/UserPages/Logout.jsx';
 import Header from './components/Framing/Header.jsx';
 import NavBar from './components/Framing/NavBar.jsx';
 import Footer from './components/Framing/Footer.jsx';
-import {AuthUserProvider} from './components/Services/AuthUserProvider.jsx';
+import {AuthUserProvider} from './Services/AuthUserProvider.jsx';
 
 
 
