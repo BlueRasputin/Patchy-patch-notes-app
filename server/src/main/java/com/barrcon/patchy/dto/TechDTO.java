@@ -1,6 +1,6 @@
 package com.barrcon.patchy.dto;
 import java.util.Set;
-
+//converts tech ids to a set
 public class TechDTO {
     private Set<Long> techIds;
 

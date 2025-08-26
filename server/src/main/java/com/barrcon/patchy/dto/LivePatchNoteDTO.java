@@ -29,4 +29,5 @@ public class LivePatchNoteDTO {
         this.description = description;
     }
 
-} //DTO
+} //DTO to turn live patch notes into a JSON object
+// This DTO is used to send live patch notes to the frontend

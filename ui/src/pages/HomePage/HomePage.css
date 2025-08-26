@@ -41,3 +41,8 @@ button {
 .tech-name {
   color:rgb(211, 194, 159)
 }
+
+li {
+  list-style: none;
+  margin: 12px 0;
+}
