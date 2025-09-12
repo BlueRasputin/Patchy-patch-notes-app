@@ -42,6 +42,12 @@ public class TechController {
     }
 
 
+    @PostMapping("/{id}")
+    public ResponseEntity<Void> addTech(@PathVariable Long id) {
+        techRepository.findById(id);
+        return ResponseEntity.ok().build();
+    }
+
     //Delete tech from tech table
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTech(@PathVariable Long id) {
