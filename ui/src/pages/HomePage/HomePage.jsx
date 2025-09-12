@@ -54,27 +54,54 @@ useEffect(() => {
 
 //toggle tech selections
 
+// const toggleTech = async (techId) => {
+//     if (!isAuthenticated()) {
+//       setError("Please log in to modify your favorite technologies!");
+//       return;
+//     }
+
+//     setSelectedTechIds((prev) => {
+//       const newSet = new Set(prev);
+//       const isSelected = newSet.has(techId);
+//       if (isSelected) {
+//         handleRemoveFavorite(techId);
+//         newSet.delete(techId);
+//       } else {
+//         newSet.add(techId);
+//       }
+//       return newSet;
+//     });
+
+
+    
+//   };
+
 const toggleTech = async (techId) => {
     if (!isAuthenticated()) {
       setError("Please log in to modify your favorite technologies!");
       return;
     }
 
-    setSelectedTechIds((prev) => {
-      const newSet = new Set(prev);
-      const isSelected = newSet.has(techId);
-      if (isSelected) {
-        handleRemoveFavorite(techId);
-        newSet.delete(techId);
-      } else {
-        newSet.add(techId);
-      }
-      return newSet;
-    });
-
-
+    const isCurrentlySelected = selectedTechIds.has(techId);
     
-  };
+    if (isCurrentlySelected) {
+      // Remove from favorites
+      await handleRemoveFavorite(techId);
+      setSelectedTechIds((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(techId);
+        return newSet;
+      });
+    } else {
+      // Add to favorites
+      await handleAddFavorite(techId);
+      setSelectedTechIds((prev) => {
+        const newSet = new Set(prev);
+        newSet.add(techId);
+        return newSet;
+      });
+    }
+};
 
 
 
@@ -114,62 +141,97 @@ const handleRemoveFavorite = async (techId) => {
     }
   };
 
-
-
-//Prevent saving if not logged in
-  const handleSaveFavorites = async () => {
-    if (!isAuthenticated()) {
-      toast.error("Please log in to save your favorite technologies!");
-      return;
-    } // Ensure at least one technology is selected
-    const selectedTechs = tech.filter((item) => selectedTechIds.has(item.id));
-    if (selectedTechs.length === 0) {
-      toast.error("Please select at least one technology ye want to add, matey!");
-      return;
-    }
-
-    try { // Fetch the current user ID
+  const handleAddFavorite = async (techId) => {
+    try {
       const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include"
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       });
 
       if (!userInSession.ok) {
-        throw new Error("Argh! Ye need to be logged in to save yer favorites!");
+        throw new Error("Argh! Ye need to be logged in to modify yer bay!");
       }
-          
-        const userId  = await userInSession.json();
-          // convertes techids into an array to send to backend
-         const techIds = Array.from(selectedTechIds);
-      
-      
-      const response = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
+
+      const userId = await userInSession.json();
+
+      const response = await fetch(`http://localhost:8080/users/${userId}/favorites/${techId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          userId: userState?.id,
-          techIds: techIds,
-        }),
+        credentials: "include",
       });
+
       if (!response.ok) {
-        throw new Error("Argh! Failed to save yer favorites!");
+        throw new Error("Argh! Failed to add yer favorite!");
       }
 
-      toast.success(
-        `Saved ${selectedTechs.length} technologies to yer Bay:\n${selectedTechs
-          .map((t) => t.name)
-          .join(", ")}`
-      );
+      toast.success("Technology added to yer Bay!");
     } catch (error) {
       
       toast.error(`Error: ${error.message}`);
     }
   };
+
+
+
+//Prevent saving if not logged in
+  // const handleSaveFavorites = async () => {
+  //   if (!isAuthenticated()) {
+  //     toast.error("Please log in to save your favorite technologies!");
+  //     return;
+  //   } // Ensure at least one technology is selected
+  //   const selectedTechs = tech.filter((item) => selectedTechIds.has(item.id));
+  //   if (selectedTechs.length === 0) {
+  //     toast.error("Please select at least one technology ye want to add, matey!");
+  //     return;
+  //   }
+
+  //   try { // Fetch the current user ID
+  //     const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         credentials: "include"
+  //     });
+
+  //     if (!userInSession.ok) {
+  //       throw new Error("Argh! Ye need to be logged in to save yer favorites!");
+  //     }
+          
+  //       const userId  = await userInSession.json();
+  //         // convertes techids into an array to send to backend
+  //        const techIds = Array.from(selectedTechIds);
+      
+      
+  //     const response = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         userId: userState?.id,
+  //         techIds: techIds,
+  //       }),
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error("Argh! Failed to save yer favorites!");
+  //     }
+
+  //     toast.success(
+  //       `Saved ${selectedTechs.length} technologies to yer Bay:\n${selectedTechs
+  //         .map((t) => t.name)
+  //         .join(", ")}`
+  //     );
+  //   } catch (error) {
+      
+  //     toast.error(`Error: ${error.message}`);
+  //   }
+  // };
 
 //Dislay Load when fetching
   if (loading) {
@@ -220,11 +282,7 @@ const handleRemoveFavorite = async (techId) => {
         ))}
       </ul>
 
-      <div className="action-section">
-        <button className="save-button" onClick={handleSaveFavorites}>
-          Save to yer Bay! ({selectedTechIds.size} selected)
-        </button>
-      </div>
+      
     </div>
   );
 
