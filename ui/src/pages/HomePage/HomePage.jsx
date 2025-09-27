@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../Services/authContext";
 import './HomePage.css';
 import { toast } from 'react-toastify';
+import SearchBar from "../../components/SearchBar/searchBar";
 
 function HomePage() {
   const { userState, isAuthenticated } = useAuth();
   const [tech, setTech] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedTechIds, setSelectedTechIds] = useState(new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,6 +52,19 @@ useEffect(() => {
 
   fetchTech();
 }, []);
+
+const filteredTech = tech.filter((item) =>
+  item.name.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
+return (
+  <div>
+    <h1> Available Technologies</h1>
+    <searchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={setSearchQuery} />
+  
+
+  </div>
+)
 
 
 //toggle tech selections
