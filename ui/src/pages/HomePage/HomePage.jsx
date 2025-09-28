@@ -57,14 +57,41 @@ const filteredTech = tech.filter((item) =>
   item.name.toLowerCase().includes(searchQuery.toLowerCase())
 );
 
+
+ if (loading) {
+    return (
+      <div className="search-results">
+        <LoadingSpinner 
+          message="Loading..."
+          subtitle="Scouring the seas for yer tech updates..."
+        />
+      </div>
+    );
+  }
+
 return (
   <div>
     <h1> Available Technologies</h1>
     <searchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={setSearchQuery} />
-  
+
+     {loading && <p>Loading tech list...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      <ul>
+        {filteredTech.length > 0 ? (
+          filteredTech.map((item) => (
+            <li key={item.id}>
+              <strong>{item.name}</strong> – {item.description}
+            </li>
+          ))
+        ) : (
+          <p>No tech found for “{searchQuery}”.</p>
+        )}
+      </ul>
 
   </div>
 )
+
+
 
 
 //toggle tech selections
