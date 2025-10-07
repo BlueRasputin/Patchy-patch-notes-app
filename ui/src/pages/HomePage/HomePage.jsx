@@ -3,14 +3,13 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../Services/authContext";
 import './HomePage.css';
 import { toast } from 'react-toastify';
-import SearchBar from "../../components/SearchBar/searchBar";
+// import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 function HomePage() {
-  const { userState, isAuthenticated } = useAuth();
+  const { userState, isAuthenticated } = useAuth(); 
   const [tech, setTech] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTechIds, setSelectedTechIds] = useState(new Set());
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
 useEffect(() => {
@@ -53,44 +52,44 @@ useEffect(() => {
   fetchTech();
 }, []);
 
-const filteredTech = tech.filter((item) =>
-  item.name.toLowerCase().includes(searchQuery.toLowerCase())
-);
+// const filteredTech = tech.filter((item) =>
+//   item.name.toLowerCase().includes(searchQuery.toLowerCase())
+// );
 
 
- if (loading) {
-    return (
-      <div className="search-results">
-        <LoadingSpinner 
-          message="Loading..."
-          subtitle="Scouring the seas for yer tech updates..."
-        />
-      </div>
-    );
-  }
+//  if (loading) {
+//     return (
+//       <div className="search-results">
+//         <LoadingSpinner 
+//           message="Loading..."
+//           subtitle="Scouring the seas for yer tech updates..."
+//         />
+//       </div>
+//     );
+//   }
 
-return (
-  <div>
-    <h1> Available Technologies</h1>
-    <searchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={setSearchQuery} />
+// return (
+//   <div>
+//     <h1> Available Technologies</h1>
+//     <searchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={setSearchQuery} />
 
-     {loading && <p>Loading tech list...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <ul>
-        {filteredTech.length > 0 ? (
-          filteredTech.map((item) => (
-            <li key={item.id}>
-              <strong>{item.name}</strong> – {item.description}
-            </li>
-          ))
-        ) : (
-          <p>No tech found for “{searchQuery}”.</p>
-        )}
-      </ul>
+//      {loading && <p>Loading tech list...</p>}
+//       {error && <p style={{ color: "red" }}>{error}</p>}
+//       <ul>
+//         {filteredTech.length > 0 ? (
+//           filteredTech.map((item) => (
+//             <li key={item.id}>
+//               <strong>{item.name}</strong> – {item.description}
+//             </li>
+//           ))
+//         ) : (
+//           <p>No tech found for “{searchQuery}”.</p>
+//         )}
+//       </ul>
 
-  </div>
-)
-
+//   </div>
+// )
+// };
 
 
 
@@ -115,8 +114,7 @@ return (
 //     });
 
 
-    
-//   };
+
 
 const toggleTech = async (techId) => {
     if (!isAuthenticated()) {
@@ -276,16 +274,16 @@ const handleRemoveFavorite = async (techId) => {
   // };
 
 //Dislay Load when fetching
-  if (loading) {
-    return (
-      <div className="homepage">
-        <div className="loading">
-          <h2>Loading Technologies...</h2>
-          <p>Scouring the seven seas of development...</p>
-        </div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="homepage">
+  //       <div className="loading">
+  //         <h2>Loading Technologies...</h2>
+  //         <p>Scouring the seven seas of development...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
 
   return (
