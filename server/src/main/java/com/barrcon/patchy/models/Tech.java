@@ -29,4 +29,11 @@ public class Tech extends AbstractEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+    @OneToMany
+    @JoinTable(
+            name = "tech_patch_notes",
+            joinColumns = @JoinColumn(name = "tech_name_update"),
+            inverseJoinColumns = @JoinColumn(name = "tech_id")
+    )
 }
