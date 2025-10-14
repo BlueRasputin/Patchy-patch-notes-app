@@ -15,22 +15,22 @@ import java.util.stream.Collectors;
 
 public class PatchNoteController {
 
-    @GetMapping("/{userId}/the-bay")
-    public ResponseEntity<List<LivePatchNoteDTO>> getLivePatchNotesForFavoriteTechs(@PathVariable Long userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        User user = optionalUser.get();
-
-        List<LivePatchNoteDTO> livePatchNotes = user.getFavoriteTechs()
-                .parallelStream()
-                .map(tech -> geminiService.fetchLivePatchNotes(tech.getName()))
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(livePatchNotes);
-    }
+//    @GetMapping("/{userId}/the-bay")
+//    public ResponseEntity<List<LivePatchNoteDTO>> getLivePatchNotesForFavoriteTechs(@PathVariable Long userId) {
+//        Optional<User> optionalUser = userRepository.findById(userId);
+//        if (optionalUser.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        User user = optionalUser.get();
+//
+//        List<LivePatchNoteDTO> livePatchNotes = user.getFavoriteTechs()
+//                .parallelStream()
+//                .map(tech -> geminiService.fetchLivePatchNotes(tech.getName()))
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(livePatchNotes);
+//    }
 
     @PostMapping("/api/process-crawled-notes")
     public ResponseEntity<String> processCrawledNotes(@RequestBody List<Map<String, Object>> crawledData) {
@@ -42,7 +42,7 @@ public class PatchNoteController {
                 String title = (String) item.get("title");
                 String version = (String) item.get("version");
 
-                log.info("Processed patch notes for: " + techName);
+               
             }
 
             return ResponseEntity.ok("Processed " + crawledData.size() + " patch note sources");
