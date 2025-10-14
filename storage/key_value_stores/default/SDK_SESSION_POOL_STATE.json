@@ -1,0 +1,443 @@
+{
+  "usableSessionsCount": 6,
+  "retiredSessionsCount": 0,
+  "sessions": [
+    {
+      "id": "session_UOV2czVeA2",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-10-14T02:31:01.704Z",
+      "createdAt": "2025-10-14T01:41:01.704Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_MpGzwLzpJG",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": [
+          {
+            "key": "_gh_sess",
+            "value": "wg48uM1DfCoLD8MzgVAnpsTYt8k7QKw7Q%2B%2BBkt0cU%2FaLEFlvBvgSXgQ%2BhXlx3Kh68CiQFmUN5RGBPpTkRcBRWNToEdA0NSFMOvIv82kZcbvMcyWlg%2BN%2BQi5eppaKHa3hQOQMDsBXJRCWOhc7sB%2BcJNVd28yPBd1rTwa2DAaaCd2bHn9BKhLeOSZAbMFPzIHZE0Nx8C37XnjCxTPq%2BLVJJ4EvCQqFx7vKtIYQe2fzdJUxo5dhgdwtzmI1Y6lFSATxOSMYgDra9VSYydDgqUMHww%3D%3D--al%2FHVW%2BnqVTJuq%2BF--sHocfOzKlNGWcKqTrb6udw%3D%3D",
+            "expires": "2025-10-14T02:31:06.604Z",
+            "domain": "github.com",
+            "path": "/",
+            "secure": true,
+            "httpOnly": true,
+            "hostOnly": true,
+            "creation": "2025-10-14T01:41:06.604Z",
+            "lastAccessed": "2025-10-14T01:41:06.604Z"
+          },
+          {
+            "key": "_octo",
+            "value": "GH1.1.1012831060.1760406065",
+            "expires": "2026-10-14T01:41:05.146Z",
+            "domain": "github.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:06.604Z",
+            "lastAccessed": "2025-10-14T01:41:06.604Z"
+          },
+          {
+            "key": "logged_in",
+            "value": "no",
+            "expires": "2026-10-14T01:41:05.146Z",
+            "domain": "github.com",
+            "path": "/",
+            "secure": true,
+            "httpOnly": true,
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:06.604Z",
+            "lastAccessed": "2025-10-14T01:41:06.604Z"
+          },
+          {
+            "key": "cpu_bucket",
+            "value": "lg",
+            "expires": "2025-10-14T02:31:06.604Z",
+            "domain": "github.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:06.604Z",
+            "lastAccessed": "2025-10-14T01:41:06.604Z"
+          },
+          {
+            "key": "preferred_color_mode",
+            "value": "light",
+            "expires": "2025-10-14T02:31:06.604Z",
+            "domain": "github.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:06.604Z",
+            "lastAccessed": "2025-10-14T01:41:06.604Z"
+          },
+          {
+            "key": "__utma",
+            "value": "32101439.1992680772.1760406067.1760406067.1760406067.1",
+            "expires": "2026-11-18T01:41:07.240Z",
+            "domain": "python.org",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.283Z",
+            "lastAccessed": "2025-10-14T01:41:07.283Z"
+          },
+          {
+            "key": "__utmc",
+            "value": "32101439",
+            "expires": "2025-10-14T02:31:07.283Z",
+            "domain": "python.org",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.285Z",
+            "lastAccessed": "2025-10-14T01:41:07.285Z"
+          },
+          {
+            "key": "__utmz",
+            "value": "32101439.1760406067.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)",
+            "expires": "2026-04-14T13:41:07.000Z",
+            "domain": "python.org",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.287Z",
+            "lastAccessed": "2025-10-14T01:41:07.287Z"
+          },
+          {
+            "key": "__utmt",
+            "value": "1",
+            "expires": "2025-10-14T01:51:07.000Z",
+            "domain": "python.org",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.287Z",
+            "lastAccessed": "2025-10-14T01:41:07.287Z"
+          },
+          {
+            "key": "__utmb",
+            "value": "32101439.1.10.1760406067",
+            "expires": "2025-10-14T02:11:07.000Z",
+            "domain": "python.org",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.287Z",
+            "lastAccessed": "2025-10-14T01:41:07.287Z"
+          },
+          {
+            "key": "akaas_aud-seg-ocom-prod",
+            "value": "2147483647~rv=44~id=71d73470d213ec5d913c3717a00f83fd",
+            "expires": "2025-10-14T02:31:07.346Z",
+            "domain": "www.oracle.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": true,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "bm_ss",
+            "value": "ab8e18ef4e",
+            "expires": "2025-10-14T02:41:05.607Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "secure": true,
+            "httpOnly": true,
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "ak_bmsc",
+            "value": "482C730835CBC065BFBD130658A8ED69~000000000000000000000000000000~YAAQh1HDF6Ff6MqZAQAAk9Fg4B0nLcR+jrtjwVUVE0OfRJFGfskUvnYJ2qn3Z3e65PqbcQEeizfblzx/SPwfZPVFhEeb/PrsAgO2WTZkXuMtY0wqfnU8uC9EQ7yuHGb9v6iVPmHJ249GpBPdy/1v9HW1FrF7C7EAVzvhrmggreOwGIa30VwhK64Wp12Pc9g9idICgKl0ofhS3g5fC3eBVRq49T/ql/J5vhck5xF2geagsmevLkH6d9ub8WBwbKPTRi6+4U7KCF95TXc8QqZIbqB3Pef2w0fb/fgDwcV7jImF/6ZvGiGw5XopGiszwbyTKvvqrHtZADG2JfLnyGjhfAyoCr+j2FNd2U21/oe+7Acjypl0a2X2KI1kPwFySak+P818rfyDwP8y0s+fRd+9cudWuXBemwQjxZ1LzaN7o94l3bmwgw==",
+            "expires": "2025-10-14T03:41:05.608Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "bm_so",
+            "value": "4390F838F4401DF86F5E99656C428EA91F72153072286FFE3ED6196AA918FB69~YAAQh1HDF6Nf6MqZAQAAk9Fg4AWnF3IQ3vPKXuYTO66o2M/55Nghi9jr6+MraewqkT+PWM5KW8nmnJQIWJfCpp4Rfs3vJvpvwPg1sBCgJT4bfRSVrOjRccSMBkBUf2uT56gwZzOmXarpqhhRe40sD9dHQYpsAK31Kx0LJ0OMra8CXQyIuKswHSiMzggSPg0Wa8B8Lpphb27punAUhJeCem5LQzCqxYAK5ZTsW8mDXws3mvmpVyhfYgQQHc8lgqSnTFQUGhQz+89bLm+n08DSRlMZVhmQZdoZc+plMazP4+gMNfNfds4ojpbir4kL9OthZWCbc3dV3bkjJ/L6BIk915Vj4jAWMzAVy5POWI6G2FMREDYdZjaBWIrSXzMoAzor297GrFU6Ng9+sXYnlCxBcXaP115alIStJa96yYDf08YB33pe238nU43PMtBFVxHMyp2WzzXMm5Ekoz5O7O9UQDj+F/IpiDwJ0uBJ77xMUwF6zlDF83DTOg==",
+            "expires": "2025-10-15T01:41:05.608Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "TAsessionID",
+            "value": "8905d655-2a8c-4be8-be40-9e82931fdaee|NEW",
+            "expires": "2025-10-14T02:11:06.000Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "notice_behavior",
+            "value": "implied,us",
+            "expires": "2025-10-14T02:31:07.346Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "RT",
+            "value": "\"z=1&dm=oracle.com&si=97b4b34b-f788-456c-98d0-336f123fbec0&ss=mgpwbh8j&sl=0&tt=0&bcn=%2F%2F17de4c12.akstat.io%2F\"",
+            "expires": "2025-10-21T01:41:06.000Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "bm_lso",
+            "value": "4390F838F4401DF86F5E99656C428EA91F72153072286FFE3ED6196AA918FB69~YAAQh1HDF6Nf6MqZAQAAk9Fg4AWnF3IQ3vPKXuYTO66o2M/55Nghi9jr6+MraewqkT+PWM5KW8nmnJQIWJfCpp4Rfs3vJvpvwPg1sBCgJT4bfRSVrOjRccSMBkBUf2uT56gwZzOmXarpqhhRe40sD9dHQYpsAK31Kx0LJ0OMra8CXQyIuKswHSiMzggSPg0Wa8B8Lpphb27punAUhJeCem5LQzCqxYAK5ZTsW8mDXws3mvmpVyhfYgQQHc8lgqSnTFQUGhQz+89bLm+n08DSRlMZVhmQZdoZc+plMazP4+gMNfNfds4ojpbir4kL9OthZWCbc3dV3bkjJ/L6BIk915Vj4jAWMzAVy5POWI6G2FMREDYdZjaBWIrSXzMoAzor297GrFU6Ng9+sXYnlCxBcXaP115alIStJa96yYDf08YB33pe238nU43PMtBFVxHMyp2WzzXMm5Ekoz5O7O9UQDj+F/IpiDwJ0uBJ77xMUwF6zlDF83DTOg==^1760406066424",
+            "expires": "2025-11-13T01:41:06.000Z",
+            "domain": "www.oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "AMCVS_93263704532955710A490D44%40AdobeOrg",
+            "value": "1",
+            "expires": "2025-10-14T02:31:07.346Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "bm_s",
+            "value": "YAAQh1HDF4Ni6MqZAQAA/tVg4AQzQ6RC/n2N7P2B5A3sexBVzrt3k0BTKhZTVYDeHJPfsJVW0jRJBg37ZNzDg2gHbCKUoJy8OtFx+/J7st956p9cNRBlIJ9l9I2MW2gOtBWFbe7x/6eWGZlFZQAywVyHubJgT8MyX9CmSjQAjh8iavKv9U7k97iMpBKdLDDA4rwtq6niT7elRLCmsrvmr/9S4efUCvP01rOqTWsqBDd65WFO00+t7kVMW4uSIP74jOhmK0mw49BjGO2Kpw21mOjkpLsytWwwPOhntzx9SVMly0PNm7udQMPnQ+KJReHaHS8KGXN8tLBerorXO3vHjgiqw2kp+dRjv8HOfFHduxTu+ygcAa/jp3JpPcjs6s6VxDQtVgfKgweF126pbpIWWGAflvPRwdSN2FFr1Kfi2GawjasUu6Cg3YPJ4gOEAf7mp8I8dfRIoapnGxYypwiH7cu7Gw7edhcyKx+i8gAtY8Ov/JKm/WYzy5r8/49x26xtjFJW8k6zn9fwsIa3qi5I7YbRhFaNhZh0XoW4Kfz4mkXMPSuwmqzkKsDoDaVTwSC6akd5wCbUlKyH0EbDub3j",
+            "expires": "2025-11-14T01:41:06.655Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "secure": true,
+            "httpOnly": true,
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "bm_sv",
+            "value": "00156947EA2CCF996C1B88FFEDF279FE~YAAQh1HDF4Ri6MqZAQAA/tVg4B2St4YlNIZPXlwEpePeSMy5DWTAz4Cn4c5sBiLSW0DukQeT9Gttysf0OCQDU+l05ntkxThxypHAlsdxNBXrmuLlZcYwQ9yJaxYcAshU3B8T8vU6WIcJCTsrv+iFmJ3FFkvj9ClqrA81xpyd3d3K0qiwhzC3MHdP+69xtQFtWEc3E+Wk+X0cNV56551JoYU//n5pYZVy5IsNSwHpZAL+4cFoQxB3oi77BYWwdoDh~1",
+            "expires": "2025-10-14T03:41:06.655Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "AMCV_93263704532955710A490D44%40AdobeOrg",
+            "value": "1585540135%7CMCIDTS%7C20376%7CMCMID%7C27945729848422732860223158467333645779%7CMCAAMLH-1761010866%7C7%7CMCAAMB-1761010866%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1760413266s%7CNONE%7CMCAID%7CNONE%7CvVersion%7C4.4.0",
+            "expires": "2026-11-18T01:41:06.936Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "s_ips",
+            "value": "982",
+            "expires": "2025-10-14T02:31:07.346Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "s_tp",
+            "value": "28196",
+            "expires": "2025-10-14T02:31:07.346Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "s_ppv",
+            "value": "ocom%253Aen-us%253A%252Fjava%252Ftechnologies%252Fjavase%252F25all-relnotes.html%2C3%2C3%2C3%2C982%2C28%2C1",
+            "expires": "2025-10-14T02:31:07.346Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "s_nr",
+            "value": "1760406067047-New",
+            "expires": "2025-11-13T01:41:07.000Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "ora_session",
+            "value": "set",
+            "expires": "2025-10-14T02:31:07.346Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "gpw_e24",
+            "value": "no%20value",
+            "expires": "2025-10-14T02:11:07.000Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "s_cc",
+            "value": "true",
+            "expires": "2025-10-14T02:31:07.346Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          },
+          {
+            "key": "utag_main",
+            "value": "v_id:0199e060d32e00111c2c80833c9600075004306d009dc$_sn:1$_se:4$_ss:0$_st:1760407867342$ses_id:1760406065967%3Bexp-session$_pn:1%3Bexp-session",
+            "expires": "2026-10-14T01:41:07.000Z",
+            "domain": "oracle.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-10-14T01:41:07.346Z",
+            "lastAccessed": "2025-10-14T01:41:07.346Z"
+          }
+        ]
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-10-14T02:31:01.706Z",
+      "createdAt": "2025-10-14T01:41:01.706Z",
+      "usageCount": 5,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_QldfNdLcW6",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-10-14T02:31:01.710Z",
+      "createdAt": "2025-10-14T01:41:01.710Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_fk6EgUXgdy",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-10-14T02:31:06.615Z",
+      "createdAt": "2025-10-14T01:41:06.615Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_SVnqOENHn1",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-10-14T02:31:07.298Z",
+      "createdAt": "2025-10-14T01:41:07.298Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_FdG6leWSW6",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-10-14T02:31:07.368Z",
+      "createdAt": "2025-10-14T01:41:07.368Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    }
+  ]
+}
