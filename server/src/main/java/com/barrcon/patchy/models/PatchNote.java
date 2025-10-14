@@ -1,5 +1,4 @@
 package com.barrcon.patchy.models;
-
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -15,10 +14,22 @@ public class PatchNote extends AbstractEntity {
     private String version;
 
     @Column(columnDefinition = "TEXT")
-    private String processedContent;
+    private String content;
 
     @Column(nullable = false)
     private String sourceUrl;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private java.time.LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
     public PatchNote() {
     }
@@ -45,12 +56,12 @@ public class PatchNote extends AbstractEntity {
         this.version = version;
     }
 
-    public String getProcessedContent() {
-        return processedContent;
+    public String getContent() {
+        return content;
     }
 
-    public void setProcessedContent(String processedContent) {
-        this.processedContent = processedContent;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getSourceUrl() {

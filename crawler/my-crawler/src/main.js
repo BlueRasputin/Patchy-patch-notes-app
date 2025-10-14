@@ -3,7 +3,7 @@ import { PlaywrightCrawler, Dataset } from 'crawlee';
 
 const sources = [
     { 
-        url: 'https://github.com/facebook/react/releases',
+        url: 'https://react.dev/blog/2025/10/01/react-19-2',
         techName: 'React',
         type: 'github_releases'
     },
@@ -114,7 +114,7 @@ async function extractOracleData(page) {
         if (!contentArea) return { content: '', version: 'Unknown' };
 
         // Look for version in headings
-        const versionElement = contentArea.querySelector('h1, h2, h3');
+        const versionElement = contentArea.querySelector('h2');
         const version = versionElement?.textContent?.match(/\d+\.\d+[\.\d]*/)?.[0] || 'Latest';
 
         const content = contentArea.textContent?.trim() || '';
@@ -223,18 +223,47 @@ const results = await dataset.getData();
 console.log(`Crawled ${results.items.length} patch note pages`);
 
 // Send to backend
+// if (results.items.length > 0) {
+//     try {
+//         const response = await fetch('http://localhost:8080/api/process-crawled-notes', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify(results.items)
+//         });
+        
+//         if (response.ok) {
+//             console.log('Data sent to backend successfully');
+//         }
+//     } catch (error) {
+//         console.log('Backend not available, data saved locally');
+//     }
+// }
+
 if (results.items.length > 0) {
     try {
+        console.log('📊 Sending data to backend:', JSON.stringify(results.items, null, 2));
+        
         const response = await fetch('http://localhost:8080/api/process-crawled-notes', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(results.items)
         });
         
+        console.log('📡 Response status:', response.status);
+        console.log('📡 Response headers:', response.headers);
+        
         if (response.ok) {
-            console.log('Data sent to backend successfully');
+            const responseText = await response.text();
+            console.log('✅ Backend response:', responseText);
+            console.log('✅ Data sent to backend successfully');
+        } else {
+            const errorText = await response.text();
+            console.error('❌ Backend error:', response.status, errorText);
         }
     } catch (error) {
-        console.log('Backend not available, data saved locally');
+        console.error('❌ Network error:', error.message);
+        console.log('ℹ️ Backend not available, data saved locally in ./storage/datasets/default/');
     }
+} else {
+    console.log('⚠️ No data to send to backend');
 }
