@@ -31,3 +31,20 @@ const Card = ({ patchNote }) => {
 
 
 export default Card;
+
+
+
+
+// const Card = ({ patchNote }) => {
+//   return (
+//     <div className="card">
+//       <h3>{patchNote.techName}</h3>
+//       <p>{patchNote.content}</p>
+//       {patchNote.sourceUrl && (
+//         <a href={patchNote.sourceUrl} target="_blank" rel="noopener noreferrer">
+//           View Source
+//         </a>
+//       )}
+//     </div>
+//   );
+// };
