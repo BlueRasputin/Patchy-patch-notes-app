@@ -238,8 +238,10 @@ function HomePage() {
           credentials: "include",
         });
         if (!patchNotesResponse.ok) throw new Error("Argh! Couldn't fetch patch notes!");
+
         const patchNotesData = await patchNotesResponse.json();
         setPatchNotes(patchNotesData);
+        console.log(patchNotesData);
 
         // Fetch user favorites if authenticated
         if (isAuthenticated()) {
@@ -272,6 +274,10 @@ function HomePage() {
     fetchData();
   }, [isAuthenticated]);
 
+
+
+
+
   const toggleTech = async (techId) => {
     if (!isAuthenticated()) {
       setError("Please log in to modify your favorite technologies!");
@@ -296,6 +302,11 @@ function HomePage() {
       });
     }
   };
+
+
+
+
+
 
   const handleRemoveFavorite = async (techId) => {
     try {
@@ -326,6 +337,10 @@ function HomePage() {
     }
   };
 
+
+
+
+
   const handleAddFavorite = async (techId) => {
     try {
       const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
@@ -354,6 +369,11 @@ function HomePage() {
       toast.error(`Error: ${error.message}`);
     }
   };
+
+
+
+
+
 
   if (loading) {
     return (

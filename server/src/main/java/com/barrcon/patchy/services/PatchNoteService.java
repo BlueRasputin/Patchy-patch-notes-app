@@ -25,20 +25,32 @@ public class PatchNoteService {
     public PatchNote processAndSave(Tech tech, String newContent, String sourceUrl) {
         Optional<PatchNote> existingNoteOpt = patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech);
 
+
+        PatchNote patchNote;
+        if (existingNoteOpt.isPresent()) {
+            patchNote = existingNoteOpt.get();
+            log.info("Found existing patch note for tech: {}", tech.getName());
+        } else {
+            patchNote = new PatchNote(tech, sourceUrl);
+            log.info("Creating new patch note for tech: {}", tech.getName());
+        }
+
+
         boolean contentChanged = existingNoteOpt.isEmpty() ||
                 !existingNoteOpt.get().getContent().equals(newContent);
 
         if (!contentChanged) {
             log.info("No changes detected for {} - skipping", tech.getName());
-            return existingNoteOpt.get();
+            return patchNote;
         }
 
         log.info("New content detected for {} - generating summary", tech.getName());
 
         String summary = summaryService.generateSummary(newContent);
 
-        PatchNote patchNote = new PatchNote(tech, sourceUrl);
+
         patchNote.setContent(summary);
+        patchNote.setSourceUrl(sourceUrl);
         patchNote.setLastUpdated(LocalDateTime.now());
 
         PatchNote saved = patchNoteRepository.save(patchNote);

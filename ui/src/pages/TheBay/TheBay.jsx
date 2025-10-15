@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { fetchBay } from '../../Services/bayService';
 import Card from '../../components/TechCards/Card';
@@ -9,33 +10,30 @@ const TheBay = () => {
   const [loading, setLoading] = useState(true);
   const [bayFeed, setBayFeed] = useState([]);
 
-
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+        const userResponse = await fetch(`http://localhost:8080/api/currentUserId`, {
+          headers: { "Content-Type": "application/json" },
           credentials: "include"
-      });
+        });
 
-        const userId  = await userInSession.json(); 
-        
-        if (!userId) {
+        if (!userResponse.ok) {
           throw new Error("Argh! Ye got to be logged in to view yer Bay!");
         }
 
-        const data = await fetchBay(userId);
-        setBayFeed(data);
+        const userId = await userResponse.json();
+        const patchNotes = await fetchBay(userId);
+        
+        setBayFeed(patchNotes);
       } catch (err) {
         toast.error(`Error loading Bay data: ${err.message}`);
+      } finally {
         setLoading(false);
-      } 
+      }
     };
 
-  useEffect(() => {
-    fetchData().then(() => setLoading(false));
+    fetchData();
   }, []);
 
   if (loading) {
@@ -53,12 +51,7 @@ const TheBay = () => {
     );
   }
 
-  
-
-  
-
   return (
-
     <div className="the-bay">
       <div className="bay-header">
         <h1>The Bay</h1>
@@ -70,10 +63,10 @@ const TheBay = () => {
       
       <div className="card-container">
         {bayFeed.length > 0 ? (
-          bayFeed.map((livePatchNote) => (
+          bayFeed.map((note) => (
             <Card 
-              key={livePatchNote.id || livePatchNote.techName} 
-              livePatchNote={livePatchNote} 
+              key={note.id} 
+              patchNote={note} 
             />
           ))
         ) : (
@@ -85,6 +78,6 @@ const TheBay = () => {
       </div>
     </div>
   );
-
 };
+
 export default TheBay;
