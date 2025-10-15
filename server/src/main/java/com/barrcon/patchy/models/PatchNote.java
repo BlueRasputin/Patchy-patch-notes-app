@@ -10,9 +10,6 @@ public class PatchNote extends AbstractEntity {
     @JoinColumn(name = "tech_id", nullable = false)
     private Tech tech;
 
-    @Column(nullable = false)
-    private String version;
-
     @Column(columnDefinition = "TEXT")
     private String content;
 
@@ -21,6 +18,9 @@ public class PatchNote extends AbstractEntity {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private java.time.LocalDateTime createdAt;
+
+    @Column(name = "last_updated")
+    private LocalDateTime lastUpdated;
 
     @PrePersist
     protected void onCreate() {
@@ -31,12 +31,19 @@ public class PatchNote extends AbstractEntity {
         return createdAt;
     }
 
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
     public PatchNote() {
     }
 
-    public PatchNote(Tech tech, String version, String sourceUrl) {
+    public PatchNote(Tech tech, String sourceUrl) {
         this.tech = tech;
-        this.version = version;
         this.sourceUrl = sourceUrl;
     }
 
@@ -46,14 +53,6 @@ public class PatchNote extends AbstractEntity {
 
     public void setTech(Tech tech) {
         this.tech = tech;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
     }
 
     public String getContent() {
