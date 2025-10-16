@@ -11,7 +11,7 @@ const Card = ({ patchNote }) => {
       .map((line, index) => {
         const trimmedLine = line.trim();
         
-        // Handle headers
+        // formatting for patchnotes
         if (trimmedLine.startsWith('# ')) {
           return <h1 key={index} className="md-h1">{trimmedLine.replace('# ', '')}</h1>;
         }
@@ -21,8 +21,8 @@ const Card = ({ patchNote }) => {
         if (trimmedLine.startsWith('### ')) {
           return <h3 key={index} className="md-h3">{trimmedLine.replace('### ', '')}</h3>;
         }
+
         
-        // Handle bold text
         if (trimmedLine.includes('**')) {
           const parts = trimmedLine.split('**');
           const formatted = parts.map((part, i) => 
@@ -31,17 +31,17 @@ const Card = ({ patchNote }) => {
           return <p key={index}>{formatted}</p>;
         }
         
-        // Handle bullet points
+        
         if (trimmedLine.startsWith('- ')) {
           return <li key={index}>{trimmedLine.replace('- ', '')}</li>;
         }
         
-        // Empty lines
+        
         if (trimmedLine === '') {
           return <br key={index} />;
         }
         
-        // Regular paragraphs
+        
         return <p key={index}>{trimmedLine}</p>;
       });
   };
