@@ -44,7 +44,7 @@ public class SummaryService {
             JSONArray messages = new JSONArray();
             JSONObject message = new JSONObject();
             message.put("role", "user");
-            message.put("content", "Summarize these patch notes concisely and organize them in a bulletted list" + content);
+            message.put("content", "Summarize these patch notes concisely and organize them in a bulletted list, with line breaks to separate sections" + content);
             messages.put(message);
             requestBody.put("messages", messages);
 
