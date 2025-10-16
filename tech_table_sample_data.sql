@@ -1,10 +1,7 @@
 INSERT INTO patchy.techs (name) VALUES 
-('Java'),
-('JavaScript'),
-('Git'),
+('Ruby on Rails'),
+('Node.js'),
 ('React'),
 ('Python'),
-('Maven'),
-('MySQL'),
-('Spring Boot'),
-('Vite');
+('Spring'),
+('Java');
