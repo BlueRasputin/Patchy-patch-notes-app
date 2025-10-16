@@ -10,3 +10,13 @@
   position: relative;
   overflow-x: hidden;
 }
+h2 {
+  color: #ffffff;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+h3 {
+  color: #d1d5db;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}

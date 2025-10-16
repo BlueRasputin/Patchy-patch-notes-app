@@ -16,7 +16,7 @@ function HomePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch technologies
+        // Fetch tech list to select from
         const techResponse = await fetch("http://localhost:8080/tech", {
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -25,7 +25,7 @@ function HomePage() {
         const techData = await techResponse.json();
         setTech(techData);
 
-        // Fetch patch notes
+        // Fetch patch notes to display on homepage
         const patchNotesResponse = await fetch("http://localhost:8080/api/patch-notes", {
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -36,7 +36,7 @@ function HomePage() {
         setPatchNotes(patchNotesData);
         console.log(patchNotesData);
 
-        // Fetch user favorites if authenticated
+        // Fetch user favorites if user is authenticated
         if (isAuthenticated()) {
           const userResponse = await fetch("http://localhost:8080/api/currentUserId", {
             headers: { "Content-Type": "application/json" },
@@ -69,8 +69,7 @@ function HomePage() {
 
 
 
-
-
+  // toggle tech selection to add/remove from favorites and display in The Bay
   const toggleTech = async (techId) => {
     if (!isAuthenticated()) {
       setError("Please log in to modify your favorite technologies!");
@@ -100,7 +99,7 @@ function HomePage() {
 
 
 
-
+  //function to handle removing a favorite tech
   const handleRemoveFavorite = async (techId) => {
     try {
       const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
@@ -133,7 +132,7 @@ function HomePage() {
 
 
 
-
+  //function to handle adding a favorite tech
   const handleAddFavorite = async (techId) => {
     try {
       const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
