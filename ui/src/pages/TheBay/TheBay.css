@@ -63,15 +63,9 @@ h3 {
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: 1fr;
   gap: 2rem;
   margin-bottom: 3rem;
-   background: linear-gradient(180deg, 
-    #1a365d 0%,     
-    #2d5a87 30%,    
-    #1e3a5f 70%,    
-    #0f1419 100%    
-  );
 }
 
 

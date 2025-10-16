@@ -1,11 +1,9 @@
 package com.barrcon.patchy.controllers;
 import com.barrcon.patchy.dto.TechDTO;
-import com.barrcon.patchy.dto.LivePatchNoteDTO;
 import com.barrcon.patchy.models.Tech;
 import com.barrcon.patchy.models.User;
 import com.barrcon.patchy.repositories.TechRepository;
 import com.barrcon.patchy.repositories.UserRepository;
-import com.barrcon.patchy.services.GeminiLivePatchNotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +20,12 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final TechRepository techRepository;
-    private final GeminiLivePatchNotesService geminiService;
+
 
     @Autowired
-    public UserController(UserRepository userRepository, TechRepository techRepository, GeminiLivePatchNotesService geminiService) {
+    public UserController(UserRepository userRepository, TechRepository techRepository) {
         this.userRepository = userRepository;
         this.techRepository = techRepository;
-        this.geminiService = geminiService;
     }
 
     @GetMapping
@@ -139,23 +136,7 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-    //get the users bay, prompting gemini through DTO
-    @GetMapping("/{userId}/the-bay")
-    public ResponseEntity<List<LivePatchNoteDTO>> getLivePatchNotesForFavoriteTechs(@PathVariable Long userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
 
-        User user = optionalUser.get();
-
-        List<LivePatchNoteDTO> livePatchNotes = user.getFavoriteTechs()
-                .parallelStream()
-                .map(tech -> geminiService.fetchLivePatchNotes(tech.getName()))
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(livePatchNotes);
-    }
 
 
 }

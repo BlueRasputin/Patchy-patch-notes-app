@@ -29,4 +29,6 @@ public class Tech extends AbstractEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

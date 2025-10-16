@@ -5,7 +5,7 @@
     #1e3a5f 70%,    
     #0f1419 100%    
   );
-  min-height: 60vh;
+  min-height: 100vh;
   padding: 2rem;
   position: relative;
   overflow-x: hidden;
@@ -43,6 +43,16 @@ button {
 }
 
 li {
+  position: relative;
+    
   list-style: none;
-  margin: 12px 0;
+  margin: 12px ;
+}
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 0;
+  margin: 20px 0;
+  justify-content: space-between;
 }

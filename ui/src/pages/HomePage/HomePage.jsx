@@ -3,80 +3,74 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../Services/authContext";
 import './HomePage.css';
 import { toast } from 'react-toastify';
+import Card from "../../components/TechCards/Card"; 
 
 function HomePage() {
-  const { userState, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth(); 
   const [tech, setTech] = useState([]);
+  const [patchNotes, setPatchNotes] = useState([]);
   const [selectedTechIds, setSelectedTechIds] = useState(new Set());
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const fetchTech = async () => {
-    try { // Fetch the list of technologies from the backend
-      const response = await fetch("http://localhost:8080/tech", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }); //throw error if response is not ok
-      if (!response.ok) throw new Error("Argh! Couldn't fetch yer tech!");
-      const data = await response.json();
-      setTech(data);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch tech list to select from
+        const techResponse = await fetch("http://localhost:8080/tech", {
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        });
+        if (!techResponse.ok) throw new Error("Argh! Couldn't fetch yer tech!");
+        const techData = await techResponse.json();
+        setTech(techData);
 
-      const userResponse = await fetch("http://localhost:8080/api/currentUserId", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-      if (!userResponse.ok) throw new Error("Please Log in");
-      const userId = await userResponse.json();
-      
+        // Fetch patch notes to display on homepage
+        const patchNotesResponse = await fetch("http://localhost:8080/api/patch-notes", {
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        });
+        if (!patchNotesResponse.ok) throw new Error("Argh! Couldn't fetch patch notes!");
 
-      const favoritesResponse = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-      if (!favoritesResponse.ok) throw new Error("Argh! Couldn't fetch yer favorites!");
-      const favoritesData = await favoritesResponse.json();
-      setSelectedTechIds(new Set(favoritesData.map((tech) => tech.id)));
-    } catch (error) {
-      setError(`Ye got to be Logged in to add tech to yer bay! ${error.message}`);
-      
-    } finally {
-      setLoading(false);
-    }
-  };
+        const patchNotesData = await patchNotesResponse.json();
+        setPatchNotes(patchNotesData);
+        console.log(patchNotesData);
 
-  fetchTech();
-}, []);
+        // Fetch user favorites if user is authenticated
+        if (isAuthenticated()) {
+          const userResponse = await fetch("http://localhost:8080/api/currentUserId", {
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          });
+          
+          if (userResponse.ok) {
+            const userId = await userResponse.json();
+            
+            const favoritesResponse = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+            });
+            
+            if (favoritesResponse.ok) {
+              const favoritesData = await favoritesResponse.json();
+              setSelectedTechIds(new Set(favoritesData.map((tech) => tech.id)));
+            }
+          }
+        }
+      } catch (error) {
+        setError(`Ye got to be Logged in to add tech to yer bay! ${error.message}`);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-
-//toggle tech selections
-
-// const toggleTech = async (techId) => {
-//     if (!isAuthenticated()) {
-//       setError("Please log in to modify your favorite technologies!");
-//       return;
-//     }
-
-//     setSelectedTechIds((prev) => {
-//       const newSet = new Set(prev);
-//       const isSelected = newSet.has(techId);
-//       if (isSelected) {
-//         handleRemoveFavorite(techId);
-//         newSet.delete(techId);
-//       } else {
-//         newSet.add(techId);
-//       }
-//       return newSet;
-//     });
+    fetchData();
+  }, [isAuthenticated]);
 
 
-    
-//   };
 
-const toggleTech = async (techId) => {
+  // toggle tech selection to add/remove from favorites and display in The Bay
+  const toggleTech = async (techId) => {
     if (!isAuthenticated()) {
       setError("Please log in to modify your favorite technologies!");
       return;
@@ -85,7 +79,6 @@ const toggleTech = async (techId) => {
     const isCurrentlySelected = selectedTechIds.has(techId);
     
     if (isCurrentlySelected) {
-      // Remove from favorites
       await handleRemoveFavorite(techId);
       setSelectedTechIds((prev) => {
         const newSet = new Set(prev);
@@ -93,7 +86,6 @@ const toggleTech = async (techId) => {
         return newSet;
       });
     } else {
-      // Add to favorites
       await handleAddFavorite(techId);
       setSelectedTechIds((prev) => {
         const newSet = new Set(prev);
@@ -101,18 +93,17 @@ const toggleTech = async (techId) => {
         return newSet;
       });
     }
-};
+  };
 
 
 
-//handle removing favorite tech
-const handleRemoveFavorite = async (techId) => {
+
+
+  //function to handle removing a favorite tech
+  const handleRemoveFavorite = async (techId) => {
     try {
       const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
 
@@ -124,9 +115,7 @@ const handleRemoveFavorite = async (techId) => {
 
       const response = await fetch(`http://localhost:8080/users/${userId}/favorites/${techId}`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
 
@@ -136,18 +125,18 @@ const handleRemoveFavorite = async (techId) => {
 
       toast.success("Technology removed from yer Bay!");
     } catch (error) {
-      
       toast.error(`Error: ${error.message}`);
     }
   };
 
+
+
+
+  //function to handle adding a favorite tech
   const handleAddFavorite = async (techId) => {
     try {
       const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
 
@@ -159,9 +148,7 @@ const handleRemoveFavorite = async (techId) => {
 
       const response = await fetch(`http://localhost:8080/users/${userId}/favorites/${techId}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
 
@@ -171,80 +158,23 @@ const handleRemoveFavorite = async (techId) => {
 
       toast.success("Technology added to yer Bay!");
     } catch (error) {
-      
       toast.error(`Error: ${error.message}`);
     }
   };
 
 
 
-//Prevent saving if not logged in
-  // const handleSaveFavorites = async () => {
-  //   if (!isAuthenticated()) {
-  //     toast.error("Please log in to save your favorite technologies!");
-  //     return;
-  //   } // Ensure at least one technology is selected
-  //   const selectedTechs = tech.filter((item) => selectedTechIds.has(item.id));
-  //   if (selectedTechs.length === 0) {
-  //     toast.error("Please select at least one technology ye want to add, matey!");
-  //     return;
-  //   }
 
-  //   try { // Fetch the current user ID
-  //     const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         credentials: "include"
-  //     });
 
-  //     if (!userInSession.ok) {
-  //       throw new Error("Argh! Ye need to be logged in to save yer favorites!");
-  //     }
-          
-  //       const userId  = await userInSession.json();
-  //         // convertes techids into an array to send to backend
-  //        const techIds = Array.from(selectedTechIds);
-      
-      
-  //     const response = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         userId: userState?.id,
-  //         techIds: techIds,
-  //       }),
-  //     });
-  //     if (!response.ok) {
-  //       throw new Error("Argh! Failed to save yer favorites!");
-  //     }
 
-  //     toast.success(
-  //       `Saved ${selectedTechs.length} technologies to yer Bay:\n${selectedTechs
-  //         .map((t) => t.name)
-  //         .join(", ")}`
-  //     );
-  //   } catch (error) {
-      
-  //     toast.error(`Error: ${error.message}`);
-  //   }
-  // };
-
-//Dislay Load when fetching
   if (loading) {
     return (
       <div className="homepage">
-        <div className="loading">
-          <h2>Loading Technologies...</h2>
-          <p>Scouring the seven seas of development...</p>
-        </div>
+        <h2>Loading...</h2>
+        <p>Fetching technologies and patch notes...</p>
       </div>
     );
   }
-
 
   return (
     <div className="homepage">
@@ -282,10 +212,16 @@ const handleRemoveFavorite = async (techId) => {
         ))}
       </ul>
 
-      
+      <section className="patch-notes-section">
+        <h3>Latest Patch Notes</h3>
+        <div className="patch-notes-grid">
+          {patchNotes.map((note) => (
+            <Card key={note.id} patchNote={note} />
+          ))}
+        </div>
+      </section>
     </div>
   );
-
 }
 
 export default HomePage;

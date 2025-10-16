@@ -1,11 +1,48 @@
+
+
+
 .tech-card {
-  border: 1px solid #d3c3a0;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px 0;
+  border: 8px solid #d3c3a0;
+  border-image: repeating-linear-gradient(
+    45deg,
+    #b47e57 0px,
+    #a36244 4px,
+    #705030 8px,
+    #926341 12px
+  ) 8;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 32px 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.1),
+    inset 0 0 0 2px #654321;
   background: rgb(65, 44, 6);
-  /* color: #f7f0f0; */
+  color: #e2c7a8;
+  position: relative;
+}
+
+.tech-card::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    rgba(139, 69, 19, 0.3) 2px,
+    transparent 4px
+  ),
+  repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    rgba(160, 82, 45, 0.3) 2px,
+    transparent 4px
+  );
+  border-radius: 20px;
+  z-index: -1;
 }
 
 .card-header {
@@ -35,7 +72,40 @@
 .patch-description {
   margin: 0;
   line-height: 1.5;
-  color: #a78e72;
+  color: #d6c8b7;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+
+.patch-description h2,
+.patch-description h3 {
+  color: #f4e4c1;
+  margin: 12px 0 6px 0;
+}
+
+.patch-description h2 {
+  font-size: 1.1rem;
+  border-bottom: 1px solid #8B4513;
+  padding-bottom: 2px;
+}
+
+.patch-description h3 {
+  font-size: 1rem;
+}
+
+.patch-description strong {
+  color: #f4e4c1;
+  font-weight: bold;
+}
+
+.patch-description ul {
+  margin: 8px 0;
+  padding-left: 16px;
+}
+
+.patch-description li {
+  margin: 4px 0;
 }
 
 .cards-container {
@@ -44,3 +114,22 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
+.card-footer {
+  text-align: right;
+  font-size: 0.875rem;
+  
+  align: bottom;
+
+}
+
+.tech-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color:#ebe5dd
+}
+
+.source-link {
+  color:#ebe5dd;
+  text-decoration: none;
+}
