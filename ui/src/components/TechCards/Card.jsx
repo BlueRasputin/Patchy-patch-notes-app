@@ -1,9 +1,51 @@
 
+
 import './Card.css';
 
-//organizes tech cards with live patch note information
-
 const Card = ({ patchNote }) => {
+  const formatContent = (content) => {
+    if (!content) return '';
+    
+    return content
+      .split('\n')
+      .map((line, index) => {
+        const trimmedLine = line.trim();
+        
+        // Handle headers
+        if (trimmedLine.startsWith('# ')) {
+          return <h1 key={index} className="md-h1">{trimmedLine.replace('# ', '')}</h1>;
+        }
+        if (trimmedLine.startsWith('## ')) {
+          return <h2 key={index} className="md-h2">{trimmedLine.replace('## ', '')}</h2>;
+        }
+        if (trimmedLine.startsWith('### ')) {
+          return <h3 key={index} className="md-h3">{trimmedLine.replace('### ', '')}</h3>;
+        }
+        
+        // Handle bold text
+        if (trimmedLine.includes('**')) {
+          const parts = trimmedLine.split('**');
+          const formatted = parts.map((part, i) => 
+            i % 2 === 1 ? <strong key={i}>{part}</strong> : part
+          );
+          return <p key={index}>{formatted}</p>;
+        }
+        
+        // Handle bullet points
+        if (trimmedLine.startsWith('- ')) {
+          return <li key={index}>{trimmedLine.replace('- ', '')}</li>;
+        }
+        
+        // Empty lines
+        if (trimmedLine === '') {
+          return <br key={index} />;
+        }
+        
+        // Regular paragraphs
+        return <p key={index}>{trimmedLine}</p>;
+      });
+  };
+
   return (
     <div className="tech-card">
       <div className="card-header">
@@ -11,7 +53,9 @@ const Card = ({ patchNote }) => {
       </div>
     
       <div className="card-body">
-        <p className="patch-description">{patchNote.content}</p>
+        <div className="patch-description">
+          {formatContent(patchNote.content)}
+        </div>
       </div>
       
       <div className="card-footer">
@@ -28,23 +72,4 @@ const Card = ({ patchNote }) => {
   );
 }
 
-
-
 export default Card;
-
-
-
-
-// const Card = ({ patchNote }) => {
-//   return (
-//     <div className="card">
-//       <h3>{patchNote.techName}</h3>
-//       <p>{patchNote.content}</p>
-//       {patchNote.sourceUrl && (
-//         <a href={patchNote.sourceUrl} target="_blank" rel="noopener noreferrer">
-//           View Source
-//         </a>
-//       )}
-//     </div>
-//   );
-// };

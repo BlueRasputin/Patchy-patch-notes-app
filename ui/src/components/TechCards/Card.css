@@ -73,6 +73,8 @@
   margin: 0;
   line-height: 1.5;
   color: #d6c8b7;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 
