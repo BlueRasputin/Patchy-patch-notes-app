@@ -1,5 +1,5 @@
 package com.barrcon.patchy.dto;
-
+//DTO for patchnotes returned from web crawling
 public class CrawledNoteDTO {
     private String techName;
     private String content;

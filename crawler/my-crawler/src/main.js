@@ -1,5 +1,5 @@
 import { PlaywrightCrawler, Dataset } from 'crawlee';
-
+// list of sources for the ccrawler to scrape patch notes from
 const sources = [
     { 
         url: 'https://react.dev/blog/2025/10/01/react-19-2',
@@ -18,7 +18,7 @@ const sources = [
         techName: 'Node.js'
     },
     { 
-        url: 'https://github.com/rails/rails/releases/tag/v8.0.3',
+        url: 'https://github.com/rails/rails/releases/tag/v8.1.0',
         techName: 'Ruby on Rails'
     },
     { 
@@ -41,11 +41,12 @@ const crawler = new PlaywrightCrawler({
             }
 
             const content = await page.evaluate((techName) => {
+                //Remove formatting and scripts that may interfere with text extraction
                 const scripts = document.querySelectorAll('script, style, nav, header, footer');
                 scripts.forEach(el => el.remove());
                 
                 let mainContent;
-                
+                // Custom selectors for each patchnotes page to limit redundant or irrelevant information
                 if (techName === 'React') {
                     mainContent = document.querySelector('.min-w-0 isolate');
                 } else if (techName === 'Java') {
@@ -67,6 +68,7 @@ const crawler = new PlaywrightCrawler({
             }, source.techName);
 
             if (content && content.length > 100) {
+                // save data to local storage (in case of failure to connect to backend)
                 await pushData({
                     techName: source.techName,
                     url: request.loadedUrl,
@@ -98,7 +100,7 @@ console.log(`Plundered ${results.items.length} patch note pages`);
 if (results.items.length > 0) {
     try {
         console.log('Sending data to backend...');
-        
+        // send data to backend
         const response = await fetch('http://localhost:8080/api/process-crawled-notes', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

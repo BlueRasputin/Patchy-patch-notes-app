@@ -1,7 +1,7 @@
 package com.barrcon.patchy.dto;
 
 import java.time.LocalDateTime;
-
+//DTO for patch notes returned from Claude API
 public class PatchNoteResponseDTO {
     private Long id;
     private String techName;
