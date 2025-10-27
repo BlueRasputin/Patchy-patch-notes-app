@@ -1,19 +1,18 @@
-* {
-    box-sizing: border-box;
-}
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap');
+
 
 .Header {
-    margin-top: 0;
-    margin-left: 2rem;
+    margin-left: 0rem;
     margin-right: 2rem;
     display: flex;
     color: white;
     justify-content: flex-start;
-    padding-left: 2rem;
+    padding-left: 0rem;
     padding-right: 2rem;
-    justify-content: space-between;
     align-items: center;
 }
+
 .Footer {
     margin-top: 0;
     margin-left: 2rem;
@@ -28,10 +27,40 @@
 }
 
 .logo {
-    width: 18rem;
-    height: 18rem;
-    margin-right: 1rem;
-    align-self: left;
+    width: 14rem;
+    height: 14rem;
+    margin-right: 0rem;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 1rem;
+}
+
+.title-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.site-title {
+    font-family: "Cinzel Decorative", serif;
+    font-size: 4rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 0;
+}
+
+.site-tagline {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    text-align: left;
 }
 
 .auth-buttons {
@@ -57,4 +86,15 @@
     padding: 6px 12px;
     border: 2px solid #654321;
     border-radius: 8px;
+}
+
+.user-nav{
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+    margin-right: 0rem;
+    justify-content: flex-end;
+
 }
