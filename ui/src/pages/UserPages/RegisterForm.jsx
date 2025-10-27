@@ -19,8 +19,8 @@ const RegisterForm = () => {
         e.preventDefault();
         setError('');
 
-         if (password !== verifyPassword) {
-            setError('Passwords do not match!');
+        if (password !== verifyPassword) {
+            setError('Argh! Yer passwords don\'t match!');
             return;
         }
 
@@ -58,11 +58,9 @@ const RegisterForm = () => {
                 
             } else {
                 setError(registerResponse.error || 'Login failed');
-                console.error(registerResponse.error);
             }
         } catch (error) {
-            setError('Registration failed: ' + error.message);
-            console.error('Argh! Registration failed:', error);
+            setError('Argh! Registration failed: ' + error.message);
         }
     };
     return (

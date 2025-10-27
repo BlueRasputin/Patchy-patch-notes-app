@@ -11,11 +11,9 @@ import com.barrcon.patchy.services.PatchNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -36,7 +34,7 @@ public class PatchNoteController {
 
     @Autowired
     private PatchNoteService patchNoteService;
-
+    //Receives crawled patch note data from crawler service
     @PostMapping("/api/process-crawled-notes")
     public ResponseEntity<String> processCrawledNotes(@RequestBody List<CrawledNoteDTO> crawledData) {
 
@@ -96,7 +94,7 @@ public class PatchNoteController {
         return ResponseEntity.ok(responseDTOs);
     }
 
-
+    //Return a list of user-favorite patchnotes to the front end
     @GetMapping("/api/users/{userId}/patch-notes")
     public ResponseEntity<List<PatchNoteResponseDTO>> getUserPatchNotes(@PathVariable Long userId) {
 
