@@ -45,6 +45,9 @@ const crawler = new PlaywrightCrawler({
                 const scripts = document.querySelectorAll('script, style, nav, header, footer');
                 scripts.forEach(el => el.remove());
                 
+
+
+
                 let mainContent;
                 // Custom selectors for each patchnotes page to limit redundant or irrelevant information
                 if (techName === 'React') {
@@ -89,7 +92,7 @@ const crawler = new PlaywrightCrawler({
     headless: true,
 });
 
-console.log('Argh, starting to sail...');
+console.log('Ahoy, starting to sail...');
 await crawler.run(sources.map(s => s.url));
 
 const dataset = await Dataset.open();

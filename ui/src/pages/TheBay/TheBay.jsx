@@ -45,7 +45,7 @@ const TheBay = () => {
           <h1>The Bay</h1>
           <p className="bay-subtitle">Your personalized list of patch notes</p>
         </div>
-        <LoadingSpinner 
+        <LoadingSpinner
           message="Loading Yer Bay..."
           subtitle="Scouring the seas for yer tech updates..."
         />
