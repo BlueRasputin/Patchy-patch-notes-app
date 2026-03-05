@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -134,6 +135,34 @@ public class PatchNoteController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    @GetMapping("/api/patch-notes/compare")
+    public ResponseEntity<List<PatchNoteResponseDTO>> comparePatchNotes(
+            @RequestParam List<Long> techIds) {
+
+        if (techIds == null || techIds.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<PatchNoteResponseDTO> comparedNotes = techIds.stream()
+                .map(techRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(tech -> patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(pn -> new PatchNoteResponseDTO(
+                        pn.getId(),
+                        pn.getTech().getName(),
+                        pn.getContent(),
+                        pn.getSourceUrl(),
+                        pn.getCreatedAt(),
+                        pn.getLastUpdated()
+                ))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(comparedNotes);
     }
 
 }

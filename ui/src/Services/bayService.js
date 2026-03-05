@@ -17,7 +17,6 @@ export const fetchBay = async (userId) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    setError("Argh! There was a problem catchin' yer patch notes from The Bay: " + error.message);
     throw error;
   }
 };
