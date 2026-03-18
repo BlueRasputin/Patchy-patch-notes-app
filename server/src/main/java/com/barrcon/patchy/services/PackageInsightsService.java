@@ -83,6 +83,8 @@ public class PackageInsightsService {
                     patchNote.getId(),
                     patchNote.getTech().getName(),
                     patchNote.getContent(),
+                    patchNote.getOriginalContent(),
+                    patchNote.getReleaseVersion(),
                     patchNote.getSourceUrl(),
                     patchNote.getCreatedAt(),
                     patchNote.getLastUpdated()

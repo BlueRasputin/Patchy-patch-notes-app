@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -18,7 +19,7 @@ public class PatchNoteService {
     @Autowired
     private SummaryService summaryService;
 
-    public PatchNote processAndSave(Tech tech, String newContent, String sourceUrl) {
+    public ProcessResult processAndSave(Tech tech, String newContent, String sourceUrl, String releaseVersion) {
         Optional<PatchNote> existingNoteOpt = patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech);
 
 
@@ -30,11 +31,18 @@ public class PatchNoteService {
         }
 
 
-        boolean contentChanged = existingNoteOpt.isEmpty() ||
-                !existingNoteOpt.get().getContent().equals(newContent);
+        String normalizedIncomingContent = normalize(newContent);
+        String normalizedExistingContent = normalize(patchNote.getOriginalContent());
+        boolean contentChanged = existingNoteOpt.isEmpty()
+                || !Objects.equals(normalizedExistingContent, normalizedIncomingContent);
 
-        if (!contentChanged) {
-            return patchNote;
+        String existingVersion = normalize(patchNote.getReleaseVersion());
+        String incomingVersion = normalize(releaseVersion);
+        boolean versionChanged = !incomingVersion.isEmpty()
+                && !Objects.equals(existingVersion, incomingVersion);
+
+        if (!contentChanged && !versionChanged) {
+            return new ProcessResult(patchNote, false);
         }
 
         //sends new content to summary service
@@ -42,14 +50,22 @@ public class PatchNoteService {
 
         //returns summarized content to repository and formats for dataset
         patchNote.setContent(summary);
+        patchNote.setOriginalContent(newContent);
+        patchNote.setReleaseVersion(releaseVersion);
         patchNote.setSourceUrl(sourceUrl);
         //Sets current time as last updated to track when notes are created/modified
         patchNote.setLastUpdated(LocalDateTime.now());
 
         PatchNote saved = patchNoteRepository.save(patchNote);
 
-        return saved;
+        return new ProcessResult(saved, true);
+    }
+
+    private String normalize(String value) {
+        return value == null ? "" : value.trim();
+    }
+
+    public record ProcessResult(PatchNote patchNote, boolean updated) {
     }
 }
-
 

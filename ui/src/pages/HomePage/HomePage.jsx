@@ -167,7 +167,6 @@ function HomePage() {
 
 
 
-
   if (loading) {
     return (
       <div className="homepage">

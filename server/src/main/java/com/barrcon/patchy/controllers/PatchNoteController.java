@@ -48,6 +48,7 @@ public class PatchNoteController {
                 String techName = item.getTechName();
                 String content = item.getContent();
                 String url = item.getUrl();
+                String releaseVersion = item.getReleaseVersion();
 
                 Optional<Tech> techOptional = techRepository.findByName(techName);
                 if (techOptional.isEmpty()) {
@@ -57,9 +58,10 @@ public class PatchNoteController {
                 }
 
                 Tech tech = techOptional.get();
-                PatchNote result = patchNoteService.processAndSave(tech, content, url);
+                PatchNoteService.ProcessResult result = patchNoteService.processAndSave(
+                        tech, content, url, releaseVersion);
 
-                if (result.getLastUpdated() != null) {
+                if (result.updated()) {
                     updatedCount++;
                 } else {
                     skippedCount++;
@@ -86,6 +88,8 @@ public class PatchNoteController {
                         pn.getId(),
                         pn.getTech().getName(),
                         pn.getContent(),
+                        pn.getOriginalContent(),
+                        pn.getReleaseVersion(),
                         pn.getSourceUrl(),
                         pn.getCreatedAt(),
                         pn.getLastUpdated()
@@ -124,6 +128,8 @@ public class PatchNoteController {
                             pn.getId(),
                             pn.getTech().getName(),
                             pn.getContent(),
+                            pn.getOriginalContent(),
+                            pn.getReleaseVersion(),
                             pn.getSourceUrl(),
                             pn.getCreatedAt(),
                             pn.getLastUpdated()
@@ -156,6 +162,8 @@ public class PatchNoteController {
                         pn.getId(),
                         pn.getTech().getName(),
                         pn.getContent(),
+                        pn.getOriginalContent(),
+                        pn.getReleaseVersion(),
                         pn.getSourceUrl(),
                         pn.getCreatedAt(),
                         pn.getLastUpdated()

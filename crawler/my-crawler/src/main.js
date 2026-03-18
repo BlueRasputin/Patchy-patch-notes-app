@@ -40,48 +40,122 @@ const crawler = new PlaywrightCrawler({
                 return;
             }
 
-            const content = await page.evaluate((techName) => {
+            const extracted = await page.evaluate((techName) => {
                 //Remove formatting and scripts that may interfere with text extraction
                 const scripts = document.querySelectorAll('script, style, nav, header, footer');
                 scripts.forEach(el => el.remove());
-                
 
+                const extractStructuredSpringContent = () => {
+                    const title = document.querySelector('.column.is-9.pr-6 .blog-post.mb-4 h1')?.textContent?.trim();
+                    const body = document.querySelector('.column.is-9.pr-6 .markdown');
+                    if (!body) {
+                        return null;
+                    }
 
+                    const parts = [];
+                    if (title) {
+                        parts.push(title);
+                    }
 
-                let mainContent;
-                // Custom selectors for each patchnotes page to limit redundant or irrelevant information
-                if (techName === 'React') {
-                    mainContent = document.querySelector('.min-w-0 isolate');
-                } else if (techName === 'Java') {
-                    mainContent = document.querySelector('.cc01w1 cwidth');
-                } else if (techName === 'Python') {
-                    mainContent = document.querySelector('.main-content');
-                } else if (techName === 'Node.js') {
-                    mainContent = document.querySelector('.layouts-module_mzYk8q_postLayout');
-                } else if (techName === 'Ruby on Rails') {
-                    mainContent = document.querySelector('.Box-body');
-                }else if (techName === 'Spring') {
-                    mainContent = document.querySelector('.column is-9 pr-6');
+                    const nodes = Array.from(body.querySelectorAll('h2, h3, p, li'));
+                    for (const node of nodes) {
+                        const clone = node.cloneNode(true);
+                        clone.querySelectorAll('a[href^=\"#\"]').forEach((anchor) => anchor.remove());
+
+                        const text = clone.textContent.replace(/\s+/g, ' ').trim();
+                        if (!text) {
+                            continue;
+                        }
+
+                        if (
+                            text.includes('Spring Batch Home') ||
+                            text.includes('Source on Github') ||
+                            text.includes('Reference documentation')
+                        ) {
+                            continue;
+                        }
+
+                        parts.push(text);
+                    }
+
+                    return parts.join('\n');
+                };
+
+                const selectMainContent = (name) => {
+                    // Custom selectors for each patch notes page to limit redundant or irrelevant information.
+                    if (name === 'React') {
+                        return document.querySelector('.min-w-0.isolate, article, main');
+                    }
+                    if (name === 'Java') {
+                        const sections = Array.from(document.querySelectorAll('.cc01w1.cwidth'));
+                        if (sections.length > 0) {
+                            const combined = document.createElement('div');
+                            sections.forEach((section) => combined.appendChild(section.cloneNode(true)));
+                            return combined;
+                        }
+                        return document.querySelector('.f11w1, main, article');
+                    }
+                    if (name === 'Python') {
+                        return document.querySelector('.main-content, article, main');
+                    }
+                    if (name === 'Node.js') {
+                        return document.querySelector('.layouts-module_mzYk8q_postLayout, article, main');
+                    }
+                    if (name === 'Ruby on Rails') {
+                        return document.querySelector('.Box-body, main, article');
+                    }
+                    if (name === 'Spring') {
+                        return document.querySelector('.column.is-9.pr-6 .blog-post, .column.is-9.pr-6, main');
+                    }
+                    return document.querySelector('main, article, .content');
+                };
+
+                let normalizedContent;
+
+                if (techName === 'Spring') {
+                    const springContent = extractStructuredSpringContent();
+                    normalizedContent = springContent
+                        ? springContent.replace(/\s+/g, ' ').trim()
+                        : '';
                 } else {
-                    mainContent = document.querySelector('main, article, .content');
+                    const mainContent = selectMainContent(techName);
+                    const workingNode = mainContent ? mainContent.cloneNode(true) : document.body.cloneNode(true);
+
+                    const content = workingNode.textContent;
+                    normalizedContent = content.replace(/\s+/g, ' ').trim();
                 }
 
-                const content = mainContent ? mainContent.textContent : document.body.textContent;
-                return content.replace(/\s+/g, ' ').trim();
+                const headingCandidates = [
+                    document.querySelector('h1')?.textContent,
+                    document.querySelector('title')?.textContent
+                ].filter(Boolean);
+
+                const versionRegex = /\bv?\d+\.\d+(\.\d+)?([-.][A-Za-z0-9]+)?\b/;
+                let releaseVersion = null;
+                for (const heading of headingCandidates) {
+                    const match = heading.match(versionRegex);
+                    if (match) {
+                        releaseVersion = match[0];
+                        break;
+                    }
+                }
+
+                return { content: normalizedContent, releaseVersion };
             }, source.techName);
 
-            if (content && content.length > 100) {
+            if (extracted.content && extracted.content.length > 100) {
                 // save data to local storage (in case of failure to connect to backend)
                 await pushData({
                     techName: source.techName,
                     url: request.loadedUrl,
-                    content: content,
+                    content: extracted.content,
+                    releaseVersion: extracted.releaseVersion,
                     scrapedAt: new Date().toISOString()
                 });
                 
-                log.info(`Saved content for ${source.techName} (${content.length} chars)`);
+                log.info(`Saved content for ${source.techName} (${extracted.content.length} chars)`);
             } else {
-                log.warning(`Insufficient content found for ${source.techName} (${content ? content.length : 0} chars)`);
+                log.warning(`Insufficient content found for ${source.techName} (${extracted.content ? extracted.content.length : 0} chars)`);
             }
 
         } catch (error) {
