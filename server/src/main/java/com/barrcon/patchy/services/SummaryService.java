@@ -10,13 +10,10 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Service
 public class SummaryService {
 
-    private static final Logger log = LoggerFactory.getLogger(SummaryService.class);
     private final String claudeApiKey;
     private static final String CLAUDE_API_URL = "https://api.anthropic.com/v1/messages";
 
@@ -28,7 +25,7 @@ public class SummaryService {
                 .load();
         this.claudeApiKey = dotenv.get("claude.api.key");
     }
-
+    //Claude API call to generate summaries for patch notes
     public String generateSummary(String content) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost request = new HttpPost(CLAUDE_API_URL);
@@ -44,7 +41,7 @@ public class SummaryService {
             JSONArray messages = new JSONArray();
             JSONObject message = new JSONObject();
             message.put("role", "user");
-            message.put("content", "Summarize these patch notes concisely and organize them in a bulletted list, with line breaks to separate sections" + content);
+            message.put("content", "Summarize these patch notes concisely and organize them in a bulleted list, with line breaks to separate sections:" + content);
             messages.put(message);
             requestBody.put("messages", messages);
 
@@ -60,7 +57,6 @@ public class SummaryService {
             }
 
         } catch (Exception e) {
-            log.error("Failed to generate summary: {}", e.getMessage(), e);
             throw new RuntimeException("Claude API call failed", e);
         }
     }

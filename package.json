@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "crawlee": "^3.15.1",
+    "playwright": "^1.56.0"
+  },
+  "scripts": {
+    "start": "node ./crawler/my-crawler/src/main.js"
+  }
+}

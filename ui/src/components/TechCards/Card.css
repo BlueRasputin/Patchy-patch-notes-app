@@ -1,49 +1,14 @@
-
-
-
 .tech-card {
-  border: 8px solid #d3c3a0;
-  border-image: repeating-linear-gradient(
-    45deg,
-    #b47e57 0px,
-    #a36244 4px,
-    #705030 8px,
-    #926341 12px
-  ) 8;
-  border-radius: 16px;
-  padding: 20px;
+  background: url('./src/assets/parchment-texture.png');
+  background-repeat: repeat;
+  background-position: center;
+  
+  padding: 24px;
   margin: 32px 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  box-shadow: 
-    0 2px 4px rgba(0,0,0,0.1),
-    inset 0 0 0 2px #654321;
-  background: rgb(65, 44, 6);
-  color: #e2c7a8;
   position: relative;
+  color: #3a2817;
 }
 
-.tech-card::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: -8px;
-  right: -8px;
-  bottom: -8px;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    rgba(139, 69, 19, 0.3) 2px,
-    transparent 4px
-  ),
-  repeating-linear-gradient(
-    90deg,
-    transparent 0px,
-    rgba(160, 82, 45, 0.3) 2px,
-    transparent 4px
-  );
-  border-radius: 20px;
-  z-index: -1;
-}
 
 .card-header {
   display: flex;
@@ -54,40 +19,49 @@
 
 .tech-title {
   margin: 0;
-  color: #e2c7a8;
+  color: #2d1f0f;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 2px rgba(255,248,220,0.5);
 }
 
 .version-badge {
-  background: #007bff;
-  color: white;
+  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+  color: #f5f0e1;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 0.875rem;
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+  border: 1px solid #654321;
 }
 
 .card-body {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .patch-description {
   margin: 0;
-  line-height: 1.5;
-  color: #d6c8b7;
+  line-height: 1.6;
+  color: #4a3525;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
 
-
+.patch-description h1,
 .patch-description h2,
 .patch-description h3 {
-  color: #f4e4c1;
+  color: #2d1f0f;
   margin: 12px 0 6px 0;
+  text-shadow: 1px 1px 2px rgba(255,248,220,0.4);
 }
 
 .patch-description h2 {
   font-size: 1.1rem;
-  border-bottom: 1px solid #8B4513;
-  padding-bottom: 2px;
+  border-bottom: 2px solid #a68660;
+  padding-bottom: 4px;
 }
 
 .patch-description h3 {
@@ -95,17 +69,18 @@
 }
 
 .patch-description strong {
-  color: #f4e4c1;
+  color: #1b130a;
   font-weight: bold;
 }
 
 .patch-description ul {
   margin: 8px 0;
-  padding-left: 16px;
+  padding-left: 20px;
 }
 
 .patch-description li {
   margin: 4px 0;
+  color: #221913;
 }
 
 .cards-container {
@@ -117,19 +92,21 @@
 .card-footer {
   text-align: right;
   font-size: 0.875rem;
-  
-  align: bottom;
-
-}
-
-.tech-title {
-  font-family: 'Cinzel', serif;
-  font-weight: 700;
-  font-size: 1.5rem;
-  color:#ebe5dd
+  border-top: 2px solid rgba(166, 134, 96, 0.4);
+  padding-top: 12px;
+  margin-top: 16px;
 }
 
 .source-link {
-  color:#ebe5dd;
+  color: #8b4513;
   text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(255,248,220,0.3);
+}
+
+.source-link:hover {
+  color: #654321;
+  text-decoration: underline;
+  text-shadow: 1px 1px 3px rgba(255,248,220,0.5);
 }

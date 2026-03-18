@@ -25,6 +25,12 @@ function NavBar() {
           <Link to="/TheBay" className={isMobile ? 'icon-the-bay' : ''}>{isMobile ? '' : 'THE BAY'}</Link>
         </li>
         <li>
+          <Link to="/PackageInsights" className={isMobile ? 'icon-insights' : ''}>{isMobile ? '' : 'PACKAGE INSIGHTS'}</Link>
+        </li>
+        <li>
+          <Link to="/Compare" className={isMobile ? 'icon-compare' : ''}>{isMobile ? '' : 'COMPARE'}</Link>
+        </li>
+        <li>
           <Link to="/About" className={isMobile ? 'icon-about' : ''}>{isMobile ? '' : 'ABOUT'}</Link>
         </li>
         <li>

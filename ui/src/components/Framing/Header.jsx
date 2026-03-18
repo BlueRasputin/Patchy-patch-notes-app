@@ -29,28 +29,35 @@ function Header() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       
        <div className="Header">
-                <img className="logo" src="./src/assets/icons/Patchy-logo.png" alt="Patchy_Logo" />
-                
-                <ul className="user-nav">
-                    {checkUserLoggedIn() ? (
-                        // Display welcome message and logout link when logged in
-                        <>
-                        
-                            {userState?.username && (
-                                <li className="welcome-message">
-                                    Ahoy, {userState.username}!
-                                </li>
-                            )}
-                            <li><Link to="/Logout">Logout</Link></li>
-                        </>
-                    ) : (
-                        // Show login/register buttons when not logged in
-                        <>
-                            <li><Link to="/Login">Login</Link></li>
-                            <li><Link to="/Register">Register</Link></li>
-                        </>
-                    )}
-                </ul>
+       <div className="logo-section">
+           <img className="logo" src="./src/assets/icons/Patchy-logo-2.png" alt="Patchy_Logo" />
+       </div>
+                <div className="title-section">
+                    <h1 className="site-title">Patchy</h1>
+                    <p className="site-tagline">Find yer heading in seas of changelogs</p>
+                </div>
+                <div className="user-nav">
+                    <ul>
+                        {checkUserLoggedIn() ? (
+                            // Display welcome message and logout link when logged in
+                            <>
+                            
+                                {userState?.username && (
+                                    <li className="welcome-message">
+                                        Ahoy, {userState.username}!
+                                    </li>
+                                )}
+                                <li><Link to="/Logout">Logout</Link></li>
+                            </>
+                        ) : (
+                            // Show login/register buttons when not logged in
+                            <>
+                                <li><Link to="/Login">Login</Link></li>
+                                <li><Link to="/Register">Register</Link></li>
+                            </>
+                        )}
+                    </ul>
+                </div>
             </div>
         </>
     )

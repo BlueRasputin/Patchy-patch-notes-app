@@ -4,6 +4,7 @@ import { useAuth } from "../../Services/authContext";
 import './HomePage.css';
 import { toast } from 'react-toastify';
 import Card from "../../components/TechCards/Card"; 
+import LoadingSpinner from '../../components/LoadingIcon/LoadingSpinner';
 
 function HomePage() {
   const { isAuthenticated } = useAuth(); 
@@ -16,7 +17,7 @@ function HomePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch tech list to select from
+        // Fetch full tech list
         const techResponse = await fetch("http://localhost:8080/tech", {
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -166,12 +167,15 @@ function HomePage() {
 
 
 
-
   if (loading) {
     return (
       <div className="homepage">
         <h2>Loading...</h2>
         <p>Fetching technologies and patch notes...</p>
+        <LoadingSpinner 
+          message="Loading Yer Bay..."
+          subtitle="Scouring the seas for yer tech updates..."
+        />
       </div>
     );
   }
