@@ -1,31 +1,27 @@
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 import { PlaywrightCrawler, Dataset } from 'crawlee';
-// list of sources for the ccrawler to scrape patch notes from
-const sources = [
-    { 
-        url: 'https://react.dev/blog/2025/10/01/react-19-2',
-        techName: 'React'
-    },
-    { 
-        url: 'https://www.oracle.com/java/technologies/javase/25all-relnotes.html',
-        techName: 'Java'
-    },
-    { 
-        url: 'https://www.python.org/downloads/release/python-3139/',
-        techName: 'Python'
-    },
-    { 
-        url: 'https://nodejs.org/en/blog/release/v24.10.0',
-        techName: 'Node.js'
-    },
-    { 
-        url: 'https://github.com/rails/rails/releases/tag/v8.1.0',
-        techName: 'Ruby on Rails'
-    },
-    { 
-        url: 'https://spring.io/blog/2025/10/09/spring-batch-6-0-0-m4-released',
-        techName: 'Spring'
-    }
-];
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const techCatalogPath = path.resolve(__dirname, '../../../server/src/main/resources/tech-catalog.json');
+const targetTechs = new Set(
+    (process.env.TARGET_TECHS ?? '')
+        .split(',')
+        .map((value) => value.trim().toLowerCase())
+        .filter(Boolean)
+);
+const skipBackendUpload = process.env.SKIP_BACKEND_UPLOAD === 'true';
+
+const sources = JSON.parse(readFileSync(techCatalogPath, 'utf8'))
+    .filter((entry) => targetTechs.size === 0 || targetTechs.has(entry.name.toLowerCase()))
+    .map((entry) => ({
+    techName: entry.name,
+    url: entry.patchNotesUrl,
+    contentSelector: entry.contentSelector,
+    contentStrategy: entry.contentStrategy ?? 'default'
+}));
 
 
 
@@ -40,7 +36,7 @@ const crawler = new PlaywrightCrawler({
                 return;
             }
 
-            const extracted = await page.evaluate((techName) => {
+            const extracted = await page.evaluate((sourceConfig) => {
                 //Remove formatting and scripts that may interfere with text extraction
                 const scripts = document.querySelectorAll('script, style, nav, header, footer');
                 scripts.forEach(el => el.remove());
@@ -81,12 +77,48 @@ const crawler = new PlaywrightCrawler({
                     return parts.join('\n');
                 };
 
-                const selectMainContent = (name) => {
-                    // Custom selectors for each patch notes page to limit redundant or irrelevant information.
-                    if (name === 'React') {
-                        return document.querySelector('.min-w-0.isolate, article, main');
+                const extractLatestSectionContent = () => {
+                    const container = document.querySelector(sourceConfig.contentSelector || 'main, article, .content');
+                    if (!container) {
+                        return null;
                     }
-                    if (name === 'Java') {
+
+                    const versionHeadingRegex = /\b\d+\.\d+(\.\d+)?\b/;
+                    const firstHeading = Array.from(container.querySelectorAll('h1, h2, h3'))
+                        .find((heading) => versionHeadingRegex.test(heading.textContent?.trim() ?? ''));
+                    if (!firstHeading) {
+                        return null;
+                    }
+
+                    const parts = [];
+                    let currentNode = firstHeading;
+
+                    while (currentNode) {
+                        if (
+                            currentNode !== firstHeading &&
+                            currentNode.matches &&
+                            currentNode.matches('h1, h2') &&
+                            versionHeadingRegex.test(currentNode.textContent?.trim() ?? '')
+                        ) {
+                            break;
+                        }
+
+                        const clone = currentNode.cloneNode(true);
+                        clone.querySelectorAll('script, style, nav, header, footer').forEach((node) => node.remove());
+
+                        const text = clone.textContent?.replace(/\s+/g, ' ').trim();
+                        if (text) {
+                            parts.push(text);
+                        }
+
+                        currentNode = currentNode.nextElementSibling;
+                    }
+
+                    return parts.join('\n');
+                };
+
+                const selectMainContent = () => {
+                    if (sourceConfig.contentStrategy === 'java-sections') {
                         const sections = Array.from(document.querySelectorAll('.cc01w1.cwidth'));
                         if (sections.length > 0) {
                             const combined = document.createElement('div');
@@ -95,42 +127,38 @@ const crawler = new PlaywrightCrawler({
                         }
                         return document.querySelector('.f11w1, main, article');
                     }
-                    if (name === 'Python') {
-                        return document.querySelector('.main-content, article, main');
-                    }
-                    if (name === 'Node.js') {
-                        return document.querySelector('.layouts-module_mzYk8q_postLayout, article, main');
-                    }
-                    if (name === 'Ruby on Rails') {
-                        return document.querySelector('.Box-body, main, article');
-                    }
-                    if (name === 'Spring') {
-                        return document.querySelector('.column.is-9.pr-6 .blog-post, .column.is-9.pr-6, main');
-                    }
-                    return document.querySelector('main, article, .content');
+
+                    return document.querySelector(sourceConfig.contentSelector || 'main, article, .content');
                 };
 
                 let normalizedContent;
 
-                if (techName === 'Spring') {
+                if (sourceConfig.contentStrategy === 'spring-blog') {
                     const springContent = extractStructuredSpringContent();
                     normalizedContent = springContent
                         ? springContent.replace(/\s+/g, ' ').trim()
                         : '';
+                } else if (sourceConfig.contentStrategy === 'latest-section') {
+                    const latestSection = extractLatestSectionContent();
+                    normalizedContent = latestSection
+                        ? latestSection.replace(/\s+/g, ' ').trim()
+                        : '';
                 } else {
-                    const mainContent = selectMainContent(techName);
+                    const mainContent = selectMainContent();
                     const workingNode = mainContent ? mainContent.cloneNode(true) : document.body.cloneNode(true);
 
                     const content = workingNode.textContent;
                     normalizedContent = content.replace(/\s+/g, ' ').trim();
                 }
 
+                const versionRegex = /\bv?\d+\.\d+(\.\d+)?([-.][A-Za-z0-9]+)?\b/;
                 const headingCandidates = [
                     document.querySelector('h1')?.textContent,
+                    ...Array.from(document.querySelectorAll('h2, h3'))
+                        .slice(0, 12)
+                        .map((heading) => heading.textContent),
                     document.querySelector('title')?.textContent
                 ].filter(Boolean);
-
-                const versionRegex = /\bv?\d+\.\d+(\.\d+)?([-.][A-Za-z0-9]+)?\b/;
                 let releaseVersion = null;
                 for (const heading of headingCandidates) {
                     const match = heading.match(versionRegex);
@@ -141,7 +169,7 @@ const crawler = new PlaywrightCrawler({
                 }
 
                 return { content: normalizedContent, releaseVersion };
-            }, source.techName);
+            }, source);
 
             if (extracted.content && extracted.content.length > 100) {
                 // save data to local storage (in case of failure to connect to backend)
@@ -162,7 +190,7 @@ const crawler = new PlaywrightCrawler({
             log.error(`Error processing ${request.loadedUrl}:`, error.message);
         }
     },
-    maxRequestsPerCrawl: 10,
+    maxRequestsPerCrawl: Math.max(sources.length, 1),
     headless: true,
 });
 
@@ -174,7 +202,7 @@ const results = await dataset.getData();
 
 console.log(`Plundered ${results.items.length} patch note pages`);
 
-if (results.items.length > 0) {
+if (results.items.length > 0 && !skipBackendUpload) {
     try {
         console.log('Sending data to backend...');
         // send data to backend
@@ -194,6 +222,8 @@ if (results.items.length > 0) {
         console.error('Network error:', error.message);
         console.log('Data saved locally in ./storage/datasets/default/');
     }
+} else if (results.items.length > 0) {
+    console.log('Skipping backend upload because SKIP_BACKEND_UPLOAD=true');
 } else {
     console.log('No data to send to backend');
 }

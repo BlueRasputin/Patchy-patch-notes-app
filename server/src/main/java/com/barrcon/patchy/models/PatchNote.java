@@ -20,6 +20,12 @@ public class PatchNote extends AbstractEntity {
     @Column(name = "release_version")
     private String releaseVersion;
 
+    @Column(name = "categories", columnDefinition = "TEXT")
+    private String categories;
+
+    @Column(name = "summary_sections", columnDefinition = "LONGTEXT")
+    private String summarySections;
+
     @Column(nullable = false)
     private String sourceUrl;
 
@@ -92,5 +98,21 @@ public class PatchNote extends AbstractEntity {
 
     public void setReleaseVersion(String releaseVersion) {
         this.releaseVersion = releaseVersion;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
+    public String getSummarySections() {
+        return summarySections;
+    }
+
+    public void setSummarySections(String summarySections) {
+        this.summarySections = summarySections;
     }
 }

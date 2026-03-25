@@ -21,6 +21,8 @@ public class PackageInsightsService {
 
     private final TechRepository techRepository;
     private final PatchNoteRepository patchNoteRepository;
+    private final PatchNoteCategoryService patchNoteCategoryService;
+    private final PatchNoteSectionService patchNoteSectionService;
 
     private static final Map<String, String> PACKAGE_TO_TECH = Map.ofEntries(
             Map.entry("react", "React"),
@@ -37,9 +39,14 @@ public class PackageInsightsService {
             Map.entry("java", "Java")
     );
 
-    public PackageInsightsService(TechRepository techRepository, PatchNoteRepository patchNoteRepository) {
+    public PackageInsightsService(TechRepository techRepository,
+                                  PatchNoteRepository patchNoteRepository,
+                                  PatchNoteCategoryService patchNoteCategoryService,
+                                  PatchNoteSectionService patchNoteSectionService) {
         this.techRepository = techRepository;
         this.patchNoteRepository = patchNoteRepository;
+        this.patchNoteCategoryService = patchNoteCategoryService;
+        this.patchNoteSectionService = patchNoteSectionService;
     }
 
     public List<PackageInsightMatchDTO> generateMatches(PackageInsightsRequestDTO request) {
@@ -85,6 +92,8 @@ public class PackageInsightsService {
                     patchNote.getContent(),
                     patchNote.getOriginalContent(),
                     patchNote.getReleaseVersion(),
+                    resolveCategories(patchNote),
+                    patchNoteSectionService.parse(patchNote.getSummarySections()),
                     patchNote.getSourceUrl(),
                     patchNote.getCreatedAt(),
                     patchNote.getLastUpdated()
@@ -122,5 +131,14 @@ public class PackageInsightsService {
 
     private String normalize(String value) {
         return value.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
+    }
+
+    private List<String> resolveCategories(PatchNote patchNote) {
+        List<String> storedCategories = patchNoteCategoryService.parseStoredCategories(patchNote.getCategories());
+        if (!storedCategories.isEmpty()) {
+            return storedCategories;
+        }
+
+        return patchNoteCategoryService.detectCategories(patchNote.getOriginalContent());
     }
 }

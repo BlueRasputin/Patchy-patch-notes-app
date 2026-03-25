@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Card from "../../components/TechCards/Card";
+import { clearToolkitProfile, loadToolkitProfile, saveToolkitProfile } from "../../Services/toolkitProfile";
 import "./PackageInsights.css";
 
 function PackageInsights() {
@@ -8,6 +9,7 @@ function PackageInsights() {
   const [packageInsights, setPackageInsights] = useState([]);
   const [insightsLoading, setInsightsLoading] = useState(false);
   const [insightsError, setInsightsError] = useState("");
+  const [savedProfile, setSavedProfile] = useState(loadToolkitProfile());
 
   const parsePackageJson = (rawInput) => {
     const parsed = JSON.parse(rawInput);
@@ -37,6 +39,8 @@ function PackageInsights() {
 
       const insightMatches = await response.json();
       setPackageInsights(insightMatches);
+      const profile = saveToolkitProfile(insightMatches);
+      setSavedProfile(profile);
 
       if (insightMatches.length === 0) {
         toast.info("No tracked tech matches were found in this package.json yet.");
@@ -71,12 +75,30 @@ function PackageInsights() {
     await fetchPackageInsights(packageJsonInput);
   };
 
+  const handleClearProfile = () => {
+    clearToolkitProfile();
+    setSavedProfile({ matchedTechNames: [], savedAt: null });
+    setPackageInsights([]);
+    toast.info("Cleared saved toolkit relevance profile.");
+  };
+
   return (
     <div className="package-insights-page">
       <h2>Package Insights</h2>
       <p className="instruction">
         Upload your package.json or paste it below to get summaries matched to your toolkit.
       </p>
+
+      {savedProfile.matchedTechNames.length > 0 && (
+        <div className="saved-profile-banner">
+          <p>
+            Saved toolkit profile: {savedProfile.matchedTechNames.join(", ")}
+          </p>
+          <button type="button" onClick={handleClearProfile}>
+            Clear Saved Profile
+          </button>
+        </div>
+      )}
 
       <form className="package-insights-form" onSubmit={handlePackageSubmit}>
         <input

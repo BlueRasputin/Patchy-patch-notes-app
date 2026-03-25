@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,6 +19,12 @@ public class PatchNoteService {
 
     @Autowired
     private SummaryService summaryService;
+
+    @Autowired
+    private PatchNoteCategoryService patchNoteCategoryService;
+
+    @Autowired
+    private PatchNoteSectionService patchNoteSectionService;
 
     public ProcessResult processAndSave(Tech tech, String newContent, String sourceUrl, String releaseVersion) {
         Optional<PatchNote> existingNoteOpt = patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech);
@@ -46,12 +53,20 @@ public class PatchNoteService {
         }
 
         //sends new content to summary service
-        String summary = summaryService.generateSummary(newContent);
+        SummaryService.SummaryResult summaryResult = summaryService.generateSummary(newContent);
+        List<String> detectedCategories = summaryResult.sections().isEmpty()
+                ? patchNoteCategoryService.detectCategories(newContent)
+                : summaryResult.sections().stream()
+                .map(section -> section.getCategory())
+                .distinct()
+                .toList();
 
         //returns summarized content to repository and formats for dataset
-        patchNote.setContent(summary);
+        patchNote.setContent(summaryResult.summary());
         patchNote.setOriginalContent(newContent);
         patchNote.setReleaseVersion(releaseVersion);
+        patchNote.setCategories(patchNoteCategoryService.serializeCategories(detectedCategories));
+        patchNote.setSummarySections(patchNoteSectionService.serialize(summaryResult.sections()));
         patchNote.setSourceUrl(sourceUrl);
         //Sets current time as last updated to track when notes are created/modified
         patchNote.setLastUpdated(LocalDateTime.now());
@@ -68,4 +83,3 @@ public class PatchNoteService {
     public record ProcessResult(PatchNote patchNote, boolean updated) {
     }
 }
-

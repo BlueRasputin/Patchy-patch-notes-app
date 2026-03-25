@@ -68,4 +68,28 @@ Future development plans:
 
 
 
+Tech catalog automation:
+
+Patchy now uses a shared catalog file at `server/src/main/resources/tech-catalog.json` to drive both tech seeding and crawler targets.
+
+To add a new dev tool or resource:
+
+1. Add one entry to `server/src/main/resources/tech-catalog.json`
+2. Set:
+   * `name`: display name stored in the tech table
+   * `patchNotesUrl`: canonical release notes or updates URL
+   * `contentSelector`: CSS selector for the main release-note body
+   * `contentStrategy`: extraction mode, usually `default`
+3. Restart the backend so missing techs are inserted automatically
+4. Run the crawler to begin collecting patch notes for the new source
+
+Notes:
+
+* `tech_table_sample_data.sql` is now just sample/bootstrap data. The backend will sync missing tech names from the catalog on startup.
+* Most sources should use `contentStrategy: "default"`.
+* Use a custom strategy only when a site has unstable or highly structured markup, like the existing `spring-blog` and `java-sections` handlers in `crawler/my-crawler/src/main.js`.
+* The selector still matters. Adding a source is automated, but choosing a stable patch-note URL and reliable content selector still requires judgment.
+
+
+
 

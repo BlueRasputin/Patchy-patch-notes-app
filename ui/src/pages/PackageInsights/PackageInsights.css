@@ -16,6 +16,25 @@
   max-width: 760px;
 }
 
+.saved-profile-banner {
+  align-items: center;
+  background: rgba(245, 240, 225, 0.12);
+  border: 1px solid rgba(245, 240, 225, 0.2);
+  border-radius: 12px;
+  color: #f5f0e1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  max-width: 760px;
+  padding: 0.9rem 1rem;
+}
+
+.saved-profile-banner p {
+  margin: 0;
+}
+
 .package-insights-form textarea {
   width: 100%;
   border-radius: 8px;

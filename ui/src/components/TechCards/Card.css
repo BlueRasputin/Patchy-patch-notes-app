@@ -42,6 +42,36 @@
   margin-bottom: 16px;
 }
 
+.category-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.category-badge {
+  background: rgba(101, 67, 33, 0.12);
+  border: 1px solid rgba(101, 67, 33, 0.3);
+  border-radius: 999px;
+  color: #4c321b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 4px 10px;
+  text-transform: uppercase;
+}
+
+.note-status-banner {
+  background: rgba(139, 69, 19, 0.14);
+  border: 1px solid rgba(101, 67, 33, 0.22);
+  border-radius: 8px;
+  color: #5c3a1d;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  padding: 8px 10px;
+}
+
 .patch-description {
   margin: 0;
   line-height: 1.6;
@@ -83,6 +113,11 @@
   color: #221913;
 }
 
+.filtered-empty-state {
+  font-style: italic;
+  opacity: 0.8;
+}
+
 .cards-container {
   display: grid;
   gap: 16px;
@@ -109,4 +144,9 @@
   color: #654321;
   text-decoration: underline;
   text-shadow: 1px 1px 3px rgba(255,248,220,0.5);
+}
+
+.source-link-disabled {
+  opacity: 0.7;
+  text-decoration: none;
 }
