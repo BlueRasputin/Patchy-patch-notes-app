@@ -8,6 +8,7 @@ import "./PackageInsights.css";
 function PackageInsights() {
   const [packageJsonInput, setPackageJsonInput] = useState("");
   const [packageInsights, setPackageInsights] = useState([]);
+  const [unmatchedPackages, setUnmatchedPackages] = useState([]);
   const [insightsLoading, setInsightsLoading] = useState(false);
   const [insightsError, setInsightsError] = useState("");
   const [savedProfile, setSavedProfile] = useState(loadToolkitProfile());
@@ -36,18 +37,20 @@ function PackageInsights() {
         throw new Error("Failed to generate personalized patch notes.");
       }
 
-      const insightMatches = await response.json();
-      setPackageInsights(insightMatches);
-      const profile = saveToolkitProfile(insightMatches);
+      const { matches, unmatchedPackages: unmatched } = await response.json();
+      setPackageInsights(matches);
+      setUnmatchedPackages(unmatched);
+      const profile = saveToolkitProfile(matches);
       setSavedProfile(profile);
 
-      if (insightMatches.length === 0) {
+      if (matches.length === 0) {
         toast.info("No tracked tech matches were found in this package.json yet.");
       } else {
-        toast.success(`Generated ${insightMatches.length} personalized patch note matches.`);
+        toast.success(`Generated ${matches.length} personalized patch note matches.`);
       }
     } catch (fetchError) {
       setPackageInsights([]);
+      setUnmatchedPackages([]);
       if (fetchError instanceof SyntaxError) {
         setInsightsError("Invalid JSON format. Check your package.json and try again.");
       } else {
@@ -78,6 +81,7 @@ function PackageInsights() {
     clearToolkitProfile();
     setSavedProfile({ matchedTechNames: [], savedAt: null });
     setPackageInsights([]);
+    setUnmatchedPackages([]);
     toast.info("Cleared saved toolkit relevance profile.");
   };
 
@@ -117,6 +121,12 @@ function PackageInsights() {
       </form>
 
       {insightsError && <div className="error-banner">{insightsError}</div>}
+
+      {unmatchedPackages.length > 0 && (
+        <p className="unmatched-packages">
+          Not tracked yet: {unmatchedPackages.join(", ")}. We use this to grow the catalog.
+        </p>
+      )}
 
       {packageInsights.length > 0 && (
         <div className="package-insight-results">

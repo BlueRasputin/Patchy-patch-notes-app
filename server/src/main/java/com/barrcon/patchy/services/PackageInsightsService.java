@@ -2,10 +2,13 @@ package com.barrcon.patchy.services;
 
 import com.barrcon.patchy.dto.PackageInsightMatchDTO;
 import com.barrcon.patchy.dto.PackageInsightsRequestDTO;
+import com.barrcon.patchy.dto.PackageInsightsResponseDTO;
 import com.barrcon.patchy.models.PatchNote;
 import com.barrcon.patchy.models.Tech;
 import com.barrcon.patchy.repositories.PatchNoteRepository;
 import com.barrcon.patchy.repositories.TechRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +19,8 @@ import java.util.Optional;
 
 @Service
 public class PackageInsightsService {
+
+    private static final Logger log = LoggerFactory.getLogger(PackageInsightsService.class);
 
     private final TechRepository techRepository;
     private final PatchNoteRepository patchNoteRepository;
@@ -58,21 +63,26 @@ public class PackageInsightsService {
         this.patchNoteService = patchNoteService;
     }
 
-    public List<PackageInsightMatchDTO> generateMatches(PackageInsightsRequestDTO request) {
+    public PackageInsightsResponseDTO generateInsights(PackageInsightsRequestDTO request) {
         List<PackageInsightMatchDTO> matches = new ArrayList<>();
+        List<String> unmatched = new ArrayList<>();
 
-        if (request == null) {
-            return matches;
+        if (request != null) {
+            collectMatches(matches, unmatched, request.getDependencies(), "dependencies");
+            collectMatches(matches, unmatched, request.getDevDependencies(), "devDependencies");
+            collectMatches(matches, unmatched, request.getPeerDependencies(), "peerDependencies");
         }
 
-        collectMatches(matches, request.getDependencies(), "dependencies");
-        collectMatches(matches, request.getDevDependencies(), "devDependencies");
-        collectMatches(matches, request.getPeerDependencies(), "peerDependencies");
+        // Telemetry for improving the package-to-tech mapping over time
+        if (!unmatched.isEmpty()) {
+            log.info("Unmatched packages from package.json insights: {}", unmatched);
+        }
 
-        return matches;
+        return new PackageInsightsResponseDTO(matches, unmatched);
     }
 
     private void collectMatches(List<PackageInsightMatchDTO> matches,
+                                List<String> unmatched,
                                 Map<String, String> dependencies,
                                 String dependencyType) {
         if (dependencies == null || dependencies.isEmpty()) {
@@ -82,6 +92,7 @@ public class PackageInsightsService {
         for (Map.Entry<String, String> entry : dependencies.entrySet()) {
             Optional<Tech> techOpt = resolveTech(entry.getKey());
             if (techOpt.isEmpty()) {
+                unmatched.add(entry.getKey());
                 continue;
             }
 
