@@ -22,6 +22,8 @@
 - Rework the UI toward GitHub's look and feel: clean typography, neutral palette, familiar card/list layouts, light and dark modes.
 - Keep selected pirate elements as accents (logo, naming, small flourishes) rather than the dominant theme.
 - Make the app friendlier: clearer navigation, readable patch note cards, sensible empty/loading states.
+- Move the full tech catalog to its own page: a scrollable list of every tech with caret expanders to open each one's latest patch note, viewable without logging in; favorites still require an account.
+- Keep The Bay as a list of the user's techs, using the same caret expanders so notes are easy to parse instead of a wall of full-size cards.
 
 ## Phase 4: Embeddable Patchy
 - Build an embeddable version of Patchy (script tag or iframe widget) that developers can drop into their own site.
