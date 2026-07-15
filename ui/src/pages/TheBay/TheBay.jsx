@@ -1,10 +1,10 @@
-
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchBay } from '../../Services/bayService';
 import Card from '../../components/TechCards/Card';
 import './TheBay.css';
 import LoadingSpinner from '../../components/LoadingIcon/LoadingSpinner';
 import { toast } from 'react-toastify';
+import { apiFetch } from '../../Services/api';
 
 const TheBay = () => {
   const [loading, setLoading] = useState(true);
@@ -13,10 +13,7 @@ const TheBay = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponse = await fetch(`http://localhost:8080/api/currentUserId`, {
-          headers: { "Content-Type": "application/json" },
-          credentials: "include"
-        });
+        const userResponse = await apiFetch("/api/currentUserId");
 
         if (!userResponse.ok) {
           throw new Error("Argh! Ye got to be logged in to view yer Bay!");
@@ -36,8 +33,6 @@ const TheBay = () => {
     fetchData();
   }, []);
 
-
-  //Loading state in case fetching takes time
   if (loading) {
     return (
       <div className="the-bay">

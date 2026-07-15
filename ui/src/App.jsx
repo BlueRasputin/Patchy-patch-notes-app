@@ -14,35 +14,27 @@ import ComparePatchNotes from './pages/ComparePatchNotes/ComparePatchNotes.jsx';
 import Header from './components/Framing/Header.jsx';
 import NavBar from './components/Framing/NavBar.jsx';
 import Footer from './components/Framing/Footer.jsx';
-import {AuthUserProvider} from './Services/AuthUserProvider.jsx';
-
-
 
 function App() {
-
   return (
     <>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <AuthUserProvider>
-        <Router>
+      <Router>
         <Header />
         <NavBar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/register" element={<RegisterForm />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/TheBay" element={<TheBay />} />
-            <Route path="/PackageInsights" element={<PackageInsights />} />
-            <Route path="/Compare" element={<ComparePatchNotes />} />
-            <Route path="/About" element={<About />} />
-            <Route path="/UserProfile" element={<UserProfile />} />
-          </Routes>
-          <Footer />
-        </Router>
-        <ToastContainer position="top-left" autoClose={3000} />
-      </AuthUserProvider>
-      
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/TheBay" element={<TheBay />} />
+          <Route path="/PackageInsights" element={<PackageInsights />} />
+          <Route path="/Compare" element={<ComparePatchNotes />} />
+          <Route path="/About" element={<About />} />
+          <Route path="/UserProfile" element={<UserProfile />} />
+        </Routes>
+        <Footer />
+      </Router>
+      <ToastContainer position="top-left" autoClose={3000} />
     </>
   );
 }

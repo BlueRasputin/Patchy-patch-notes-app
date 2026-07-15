@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Card from "../../components/TechCards/Card";
+import { apiFetch } from "../../Services/api";
 import "./ComparePatchNotes.css";
 
 function ComparePatchNotes() {
@@ -12,10 +13,7 @@ function ComparePatchNotes() {
   useEffect(() => {
     const fetchTechList = async () => {
       try {
-        const response = await fetch("http://localhost:8080/tech", {
-          headers: { "Content-Type": "application/json" },
-          credentials: "include"
-        });
+        const response = await apiFetch("/tech");
 
         if (!response.ok) {
           throw new Error("Failed to load technologies.");
@@ -50,10 +48,7 @@ function ComparePatchNotes() {
       setLoading(true);
       setError("");
       const query = selectedTechIds.map((id) => `techIds=${id}`).join("&");
-      const response = await fetch(`http://localhost:8080/api/patch-notes/compare?${query}`, {
-        headers: { "Content-Type": "application/json" },
-        credentials: "include"
-      });
+      const response = await apiFetch(`/api/patch-notes/compare?${query}`);
 
       if (!response.ok) {
         throw new Error("Failed to compare patch notes.");

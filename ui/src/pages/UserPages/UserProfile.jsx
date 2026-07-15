@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../Services/authContext';
 import { useNavigate } from 'react-router-dom';
 import './AuthPage.css';
 import { toast } from 'react-toastify';
+import { apiFetch } from '../../Services/api';
 
 const UserProfile = () => {
     const { userState, isAuthenticated, login } = useAuth();
@@ -21,7 +22,6 @@ const UserProfile = () => {
             return;
         }
 
-        // check UserState and set 
         if (userState) {
             setUsername(userState.username || '');
         }
@@ -40,35 +40,16 @@ const UserProfile = () => {
         }
 
         try {
-            // Get user id from logged in user
-            const userResponse = await fetch(`http://localhost:8080/api/currentUserId`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-            });
-            // Check if user is logred in
+            const userResponse = await apiFetch("/api/currentUserId");
             if (!userResponse.ok) {
                 throw new Error("Argh! Ye need to be logged in to change yer username!");
             }
 
             const userId = await userResponse.json();
 
-            // Prepare update data
-            const updateData = {
-                username: username
-            };
-
-
-            // Update user id
-            const response = await fetch(`http://localhost:8080/users/${userId}`, {
+            const response = await apiFetch(`/users/${userId}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify(updateData),
+                body: JSON.stringify({ username }),
             });
 
             if (!response.ok) {
@@ -76,10 +57,8 @@ const UserProfile = () => {
             }
 
             const updatedUser = await response.json();
-            
-            // Update the auth context with new user data
             login(updatedUser);
-            
+
             setSuccess("Yer profile has been updated successfully, matey!");
             toast.success("Username updated successfully!");
 

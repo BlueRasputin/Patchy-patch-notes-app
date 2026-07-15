@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("/tech")
@@ -39,13 +37,6 @@ public class TechController {
     @PostMapping
     public ResponseEntity<Tech> createTech(@RequestBody Tech tech) {
         return ResponseEntity.ok(techRepository.save(tech));
-    }
-
-
-    @PostMapping("/{id}")
-    public ResponseEntity<Void> addTech(@PathVariable Long id) {
-        techRepository.findById(id);
-        return ResponseEntity.ok().build();
     }
 
     //Delete tech from tech table

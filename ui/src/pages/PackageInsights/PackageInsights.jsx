@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Card from "../../components/TechCards/Card";
 import { clearToolkitProfile, loadToolkitProfile, saveToolkitProfile } from "../../Services/toolkitProfile";
+import { apiFetch } from "../../Services/api";
 import "./PackageInsights.css";
 
 function PackageInsights() {
@@ -26,10 +27,8 @@ function PackageInsights() {
       setInsightsError("");
 
       const requestBody = parsePackageJson(rawInput);
-      const response = await fetch("http://localhost:8080/api/insights/package-json", {
+      const response = await apiFetch("/api/insights/package-json", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify(requestBody)
       });
 

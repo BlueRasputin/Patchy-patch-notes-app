@@ -1,5 +1,3 @@
-
-
 import './Card.css';
 import { extractVisibleContent } from '../../Services/patchNoteSections';
 
@@ -12,15 +10,15 @@ const Card = ({ patchNote, activeSectionFilters = [] }) => {
     Array.isArray(patchNote.sections) ? patchNote.sections : []
   );
 
+  // Renders the summary's lightweight markdown (headings, bold, bullets)
   const formatContent = (content) => {
     if (!content) return '';
-    
+
     return content
       .split('\n')
       .map((line, index) => {
         const trimmedLine = line.trim();
-        
-        // formatting for patchnotes
+
         if (trimmedLine.startsWith('# ')) {
           return <h1 key={index} className="md-h1">{trimmedLine.replace('# ', '')}</h1>;
         }
@@ -30,27 +28,19 @@ const Card = ({ patchNote, activeSectionFilters = [] }) => {
         if (trimmedLine.startsWith('### ')) {
           return <h3 key={index} className="md-h3">{trimmedLine.replace('### ', '')}</h3>;
         }
-
-        
         if (trimmedLine.includes('**')) {
           const parts = trimmedLine.split('**');
-          const formatted = parts.map((part, i) => 
+          const formatted = parts.map((part, i) =>
             i % 2 === 1 ? <strong key={i}>{part}</strong> : part
           );
           return <p key={index}>{formatted}</p>;
         }
-        
-        
         if (trimmedLine.startsWith('- ')) {
           return <li key={index}>{trimmedLine.replace('- ', '')}</li>;
         }
-        
-        
         if (trimmedLine === '') {
           return <br key={index} />;
         }
-        
-        
         return <p key={index}>{trimmedLine}</p>;
       });
   };

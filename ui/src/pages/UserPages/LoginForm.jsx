@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../../Services/authContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { apiFetch } from '../../Services/api';
 
 import './AuthPage.css';
 
@@ -16,29 +17,18 @@ const LoginForm = () => {
         e.preventDefault();
         setError('');
 
-        const user = {
-            username,
-            password
-        };
-
         try {
-            const response = await fetch("http://localhost:8080/api/login", { 
+            const response = await apiFetch("/api/login", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json", 
-                },
-                credentials:"include",
-                body: JSON.stringify(user),
-                
+                body: JSON.stringify({ username, password }),
             });
             if (response.ok) {
                 const userData = await response.json();
-                login(userData); // Save user data in context
+                login(userData);
                 toast.success('Ahoy! Captain on Deck!');
-                // Redirect user to bay after successful login
                 redirect('/TheBay');
             } else {
-                setError('Argh! Couldn\'t log ye in: ' + response.error);
+                setError('Argh! Couldn\'t log ye in: check yer username and password.');
             }
         } catch (error) {
             setError('Argh! Couldn\'t log ye in: ' + error.message);

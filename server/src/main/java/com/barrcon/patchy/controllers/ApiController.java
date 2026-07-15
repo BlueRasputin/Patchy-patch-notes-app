@@ -37,31 +37,16 @@ public class ApiController {
             return null;
         }
         Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            return null;
-        }
-        System.out.println("User retrieved from session: " + user.get().getUsername());
-        return user.get();
+        return user.orElse(null);
     }
 
     private static void setUserInSession(HttpSession session, User user) {
         session.setAttribute(userSessionKey, user.getId());
     }
 
-
-    public ResponseEntity<User> getCurrentUser(HttpSession session) {
-        User user = getUserFromSession(session);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
     @GetMapping("/currentUserId")
     public ResponseEntity<Long> getCurrentUserId (HttpSession session) {
         User user = getUserFromSession(session);
-        System.out.println("Current user ID: " + (user != null ? user.getId() : "null"));
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -71,7 +56,6 @@ public class ApiController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody @Valid RegisterFormDTO registerFormDTO, Errors errors, HttpServletRequest request) {
         if (errors.hasErrors()) {
-            System.out.println(errors.getAllErrors());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -114,9 +98,6 @@ public class ApiController {
         }
         // Set user in session
         setUserInSession(request.getSession(), theUser);
-
-        System.out.println("User authenticated: " + theUser.getUsername());
-        System.out.println("User ID in session: " + request.getSession().getAttribute(userSessionKey));
 
         return new ResponseEntity<>(theUser, HttpStatus.OK);
     }

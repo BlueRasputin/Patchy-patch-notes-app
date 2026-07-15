@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../../Services/authContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { apiFetch } from '../../Services/api';
 
 import './AuthPage.css';
 
@@ -32,22 +33,17 @@ const RegisterForm = () => {
         };
         
         try {
-            const registerResponse = await fetch("http://localhost:8080/api/register", {
+            const registerResponse = await apiFetch("/api/register", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
                 body: JSON.stringify(user),
             });
             if (!registerResponse.ok) {
                 throw new Error("Argh! Couldn't register ye!")
             }
 
-            //logging in the user after successful registration
-            const loginResponse = await fetch("http://localhost:8080/api/login", {
+            // Log the user in right after successful registration
+            const loginResponse = await apiFetch("/api/login", {
                 method: "POST",
-                headers:{"Content-Type": "application/json"},
-                credentials: "include",
                 body: JSON.stringify(user)
             });
             if (loginResponse.ok) {
@@ -55,9 +51,8 @@ const RegisterForm = () => {
                 login(userData);
                 toast.success('Ahoy! Welcome Aboard!');
                 redirect('/');
-                
             } else {
-                setError(registerResponse.error || 'Login failed');
+                setError('Registered, but automatic login failed. Please log in.');
             }
         } catch (error) {
             setError('Argh! Registration failed: ' + error.message);

@@ -1,42 +1,29 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../../Services/authContext';
 import { toast } from 'react-toastify';
-
+import { apiFetch } from '../../Services/api';
 
 const Logout = () => {
     const redirect = useNavigate();
-    const { logout } = useAuth(); 
+    const { logout } = useAuth();
 
     useEffect(() => {
-        const Logout = async () => {
+        const runLogout = async () => {
             try {
-                
-                await fetch("http://localhost:8080/api/logout", { 
-                    method: "GET", 
-                    credentials: "include" 
-                });
-            
-                if (logout) {
-                    logout();
-                }
-                
-                redirect("/");
-                
-            } catch (error) {
-                error
+                await apiFetch("/api/logout");
+            } catch {
                 toast.error("Argh! There was an error logging you out.");
-                if (logout) {
-                    logout();
-                }
+            } finally {
+                logout();
                 redirect("/");
             }
         };
 
-        Logout();
+        runLogout();
     }, [redirect, logout]);
 
-    return null; 
-}; 
+    return null;
+};
 
 export default Logout;

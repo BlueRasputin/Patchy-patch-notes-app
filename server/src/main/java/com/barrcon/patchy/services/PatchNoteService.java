@@ -1,5 +1,6 @@
 package com.barrcon.patchy.services;
 
+import com.barrcon.patchy.dto.PatchNoteResponseDTO;
 import com.barrcon.patchy.models.PatchNote;
 import com.barrcon.patchy.models.Tech;
 import com.barrcon.patchy.repositories.PatchNoteRepository;
@@ -29,14 +30,7 @@ public class PatchNoteService {
     public ProcessResult processAndSave(Tech tech, String newContent, String sourceUrl, String releaseVersion) {
         Optional<PatchNote> existingNoteOpt = patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech);
 
-
-        PatchNote patchNote;
-        if (existingNoteOpt.isPresent()) {
-            patchNote = existingNoteOpt.get();
-        } else {
-            patchNote = new PatchNote(tech, sourceUrl);
-        }
-
+        PatchNote patchNote = existingNoteOpt.orElseGet(() -> new PatchNote(tech, sourceUrl));
 
         String normalizedIncomingContent = normalize(newContent);
         String normalizedExistingContent = normalize(patchNote.getOriginalContent());
@@ -52,7 +46,6 @@ public class PatchNoteService {
             return new ProcessResult(patchNote, false);
         }
 
-        //sends new content to summary service
         SummaryService.SummaryResult summaryResult = summaryService.generateSummary(newContent);
         List<String> detectedCategories = summaryResult.sections().isEmpty()
                 ? patchNoteCategoryService.detectCategories(newContent)
@@ -61,19 +54,42 @@ public class PatchNoteService {
                 .distinct()
                 .toList();
 
-        //returns summarized content to repository and formats for dataset
         patchNote.setContent(summaryResult.summary());
         patchNote.setOriginalContent(newContent);
         patchNote.setReleaseVersion(releaseVersion);
         patchNote.setCategories(patchNoteCategoryService.serializeCategories(detectedCategories));
         patchNote.setSummarySections(patchNoteSectionService.serialize(summaryResult.sections()));
         patchNote.setSourceUrl(sourceUrl);
-        //Sets current time as last updated to track when notes are created/modified
         patchNote.setLastUpdated(LocalDateTime.now());
 
         PatchNote saved = patchNoteRepository.save(patchNote);
 
         return new ProcessResult(saved, true);
+    }
+
+    public PatchNoteResponseDTO toResponseDTO(PatchNote patchNote) {
+        return new PatchNoteResponseDTO(
+                patchNote.getId(),
+                patchNote.getTech().getName(),
+                patchNote.getContent(),
+                patchNote.getOriginalContent(),
+                patchNote.getReleaseVersion(),
+                resolveCategories(patchNote),
+                patchNoteSectionService.parse(patchNote.getSummarySections()),
+                patchNote.getSourceUrl(),
+                patchNote.getCreatedAt(),
+                patchNote.getLastUpdated()
+        );
+    }
+
+    // Older rows have no stored categories, so fall back to keyword detection
+    private List<String> resolveCategories(PatchNote patchNote) {
+        List<String> storedCategories = patchNoteCategoryService.parseStoredCategories(patchNote.getCategories());
+        if (!storedCategories.isEmpty()) {
+            return storedCategories;
+        }
+
+        return patchNoteCategoryService.detectCategories(patchNote.getOriginalContent());
     }
 
     private String normalize(String value) {

@@ -1,14 +1,14 @@
-
 import { useState, useEffect } from "react";
 import { useAuth } from "../../Services/authContext";
 import './HomePage.css';
 import { toast } from 'react-toastify';
-import Card from "../../components/TechCards/Card"; 
+import Card from "../../components/TechCards/Card";
 import LoadingSpinner from '../../components/LoadingIcon/LoadingSpinner';
 import { loadToolkitProfile } from "../../Services/toolkitProfile";
+import { apiFetch } from "../../Services/api";
 
 function HomePage() {
-  const { isAuthenticated } = useAuth(); 
+  const { isAuthenticated } = useAuth();
   const [tech, setTech] = useState([]);
   const [patchNotes, setPatchNotes] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -18,13 +18,11 @@ function HomePage() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const availableCategories = [
-    ...Array.from(
-      new Set(
-        patchNotes.flatMap((note) => Array.isArray(note.categories) ? note.categories : [])
-      )
-    ).sort()
-  ];
+  const availableCategories = Array.from(
+    new Set(
+      patchNotes.flatMap((note) => Array.isArray(note.categories) ? note.categories : [])
+    )
+  ).sort();
 
   const categoryFilteredPatchNotes = selectedCategories.length === 0
     ? patchNotes
@@ -41,49 +39,27 @@ function HomePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch full tech list
-        const techResponse = await fetch("http://localhost:8080/tech", {
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        });
+        const techResponse = await apiFetch("/tech");
         if (!techResponse.ok) throw new Error("Argh! Couldn't fetch yer tech!");
-        const techData = await techResponse.json();
-        setTech(techData);
+        setTech(await techResponse.json());
 
-        // Fetch patch notes to display on homepage
-        const patchNotesResponse = await fetch("http://localhost:8080/api/patch-notes", {
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        });
+        const patchNotesResponse = await apiFetch("/api/patch-notes");
         if (!patchNotesResponse.ok) throw new Error("Argh! Couldn't fetch patch notes!");
+        setPatchNotes(await patchNotesResponse.json());
 
-        const patchNotesData = await patchNotesResponse.json();
-        setPatchNotes(patchNotesData);
-        console.log(patchNotesData);
-
-        // Fetch user favorites if user is authenticated
         if (isAuthenticated()) {
-          const userResponse = await fetch("http://localhost:8080/api/currentUserId", {
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-          });
-          
+          const userResponse = await apiFetch("/api/currentUserId");
           if (userResponse.ok) {
             const userId = await userResponse.json();
-            
-            const favoritesResponse = await fetch(`http://localhost:8080/users/${userId}/favorites`, {
-              headers: { "Content-Type": "application/json" },
-              credentials: "include",
-            });
-            
+            const favoritesResponse = await apiFetch(`/users/${userId}/favorites`);
             if (favoritesResponse.ok) {
               const favoritesData = await favoritesResponse.json();
-              setSelectedTechIds(new Set(favoritesData.map((tech) => tech.id)));
+              setSelectedTechIds(new Set(favoritesData.map((favorite) => favorite.id)));
             }
           }
         }
-      } catch (error) {
-        setError(`Ye got to be Logged in to add tech to yer bay! ${error.message}`);
+      } catch (fetchError) {
+        setError(fetchError.message);
       } finally {
         setLoading(false);
       }
@@ -92,6 +68,7 @@ function HomePage() {
     fetchData();
   }, [isAuthenticated]);
 
+  // Re-read the toolkit profile when returning from the Package Insights page
   useEffect(() => {
     const syncToolkitProfile = () => {
       setToolkitProfile(loadToolkitProfile());
@@ -109,111 +86,54 @@ function HomePage() {
     ));
   };
 
-
-
-  // toggle tech selection to add/remove from favorites and display in The Bay
+  // Add or remove a tech from the user's favorites (shown in The Bay)
   const toggleTech = async (techId) => {
     if (!isAuthenticated()) {
       setError("Please log in to modify your favorite technologies!");
       return;
     }
 
-    const isCurrentlySelected = selectedTechIds.has(techId);
-    
-    if (isCurrentlySelected) {
-      await handleRemoveFavorite(techId);
-      setSelectedTechIds((prev) => {
-        const newSet = new Set(prev);
-        newSet.delete(techId);
-        return newSet;
-      });
-    } else {
-      await handleAddFavorite(techId);
-      setSelectedTechIds((prev) => {
-        const newSet = new Set(prev);
-        newSet.add(techId);
-        return newSet;
-      });
-    }
-  };
+    const removing = selectedTechIds.has(techId);
 
-
-
-
-
-  //function to handle removing a favorite tech
-  const handleRemoveFavorite = async (techId) => {
     try {
-      const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-
-      if (!userInSession.ok) {
+      const userResponse = await apiFetch("/api/currentUserId");
+      if (!userResponse.ok) {
         throw new Error("Argh! Ye need to be logged in to modify yer bay!");
       }
+      const userId = await userResponse.json();
 
-      const userId = await userInSession.json();
-
-      const response = await fetch(`http://localhost:8080/users/${userId}/favorites/${techId}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+      const response = await apiFetch(`/users/${userId}/favorites/${techId}`, {
+        method: removing ? "DELETE" : "POST",
       });
-
       if (!response.ok) {
-        throw new Error("Argh! Failed to remove yer favorite!");
+        throw new Error(removing
+          ? "Argh! Failed to remove yer favorite!"
+          : "Argh! Failed to add yer favorite!");
       }
 
-      toast.success("Technology removed from yer Bay!");
-    } catch (error) {
-      toast.error(`Error: ${error.message}`);
+      setSelectedTechIds((previous) => {
+        const next = new Set(previous);
+        if (removing) {
+          next.delete(techId);
+        } else {
+          next.add(techId);
+        }
+        return next;
+      });
+      toast.success(removing
+        ? "Technology removed from yer Bay!"
+        : "Technology added to yer Bay!");
+    } catch (toggleError) {
+      toast.error(`Error: ${toggleError.message}`);
     }
   };
-
-
-
-
-  //function to handle adding a favorite tech
-  const handleAddFavorite = async (techId) => {
-    try {
-      const userInSession = await fetch(`http://localhost:8080/api/currentUserId`, {
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-
-      if (!userInSession.ok) {
-        throw new Error("Argh! Ye need to be logged in to modify yer bay!");
-      }
-
-      const userId = await userInSession.json();
-
-      const response = await fetch(`http://localhost:8080/users/${userId}/favorites/${techId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error("Argh! Failed to add yer favorite!");
-      }
-
-      toast.success("Technology added to yer Bay!");
-    } catch (error) {
-      toast.error(`Error: ${error.message}`);
-    }
-  };
-
-
-
-
 
   if (loading) {
     return (
       <div className="homepage">
         <h2>Loading...</h2>
         <p>Fetching technologies and patch notes...</p>
-        <LoadingSpinner 
+        <LoadingSpinner
           message="Loading Yer Bay..."
           subtitle="Scouring the seas for yer tech updates..."
         />

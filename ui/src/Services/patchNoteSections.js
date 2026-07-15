@@ -12,7 +12,7 @@ const CATEGORY_ALIASES = {
 const normalizeHeading = (line) =>
   line
     .replace(/^[-*#\s]+/, "")
-    .replace(/[:\-]+$/, "")
+    .replace(/[:-]+$/, "")
     .trim()
     .toLowerCase();
 
