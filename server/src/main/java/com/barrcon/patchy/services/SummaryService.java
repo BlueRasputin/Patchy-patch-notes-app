@@ -1,7 +1,7 @@
 package com.barrcon.patchy.services;
 
 import com.barrcon.patchy.dto.PatchNoteSectionDTO;
-import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.beans.factory.annotation.Value;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -21,13 +21,8 @@ public class SummaryService {
     private final String claudeApiKey;
     private static final String CLAUDE_API_URL = "https://api.anthropic.com/v1/messages";
 
-    public SummaryService() {
-        Dotenv dotenv = Dotenv.configure()
-                .directory("src/main/resources")
-                .filename("app.env")
-                .ignoreIfMissing()
-                .load();
-        this.claudeApiKey = dotenv.get("claude.api.key");
+    public SummaryService(@Value("${claude.api.key:}") String claudeApiKey) {
+        this.claudeApiKey = claudeApiKey;
     }
     //Claude API call to generate summaries for patch notes
     public SummaryResult generateSummary(String content) {
