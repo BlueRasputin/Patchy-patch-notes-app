@@ -1,0 +1,98 @@
+[
+  {
+    "name": "React",
+    "patchNotesUrl": "https://react.dev/blog/2025/10/01/react-19-2",
+    "contentSelector": ".min-w-0.isolate, article, main",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Java",
+    "patchNotesUrl": "https://www.oracle.com/java/technologies/javase/25all-relnotes.html",
+    "contentSelector": ".cc01w1.cwidth",
+    "contentStrategy": "java-sections"
+  },
+  {
+    "name": "Python",
+    "patchNotesUrl": "https://www.python.org/downloads/release/python-3139/",
+    "contentSelector": ".main-content, article, main",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Node.js",
+    "patchNotesUrl": "https://nodejs.org/en/blog/release/v24.10.0",
+    "contentSelector": ".layouts-module_mzYk8q_postLayout, article, main",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Ruby on Rails",
+    "patchNotesUrl": "https://github.com/rails/rails/releases/tag/v8.1.0",
+    "contentSelector": ".Box-body, main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Spring",
+    "patchNotesUrl": "https://spring.io/blog/2025/10/09/spring-batch-6-0-0-m4-released",
+    "contentSelector": ".column.is-9.pr-6 .markdown",
+    "contentStrategy": "spring-blog"
+  },
+  {
+    "name": "TypeScript",
+    "patchNotesUrl": "https://devblogs.microsoft.com/typescript/",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "VS Code",
+    "patchNotesUrl": "https://code.visualstudio.com/updates",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Vite",
+    "patchNotesUrl": "https://vite.dev/blog/",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Next.js",
+    "patchNotesUrl": "https://github.com/vercel/next.js/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Angular",
+    "patchNotesUrl": "https://github.com/angular/angular/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Vue",
+    "patchNotesUrl": "https://github.com/vuejs/core/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Docker",
+    "patchNotesUrl": "https://docs.docker.com/desktop/release-notes/",
+    "contentSelector": "article.prose, article, main",
+    "contentStrategy": "latest-section"
+  },
+  {
+    "name": "Kubernetes",
+    "patchNotesUrl": "https://github.com/kubernetes/kubernetes/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Tailwind CSS",
+    "patchNotesUrl": "https://github.com/tailwindlabs/tailwindcss/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "npm",
+    "patchNotesUrl": "https://github.com/npm/cli/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  }
+]

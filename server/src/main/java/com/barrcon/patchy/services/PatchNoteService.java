@@ -3,18 +3,16 @@ package com.barrcon.patchy.services;
 import com.barrcon.patchy.models.PatchNote;
 import com.barrcon.patchy.models.Tech;
 import com.barrcon.patchy.repositories.PatchNoteRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class PatchNoteService {
-
-    private static final Logger log = LoggerFactory.getLogger(PatchNoteService.class);
 
     @Autowired
     private PatchNoteRepository patchNoteRepository;
@@ -22,42 +20,66 @@ public class PatchNoteService {
     @Autowired
     private SummaryService summaryService;
 
-    public PatchNote processAndSave(Tech tech, String newContent, String sourceUrl) {
+    @Autowired
+    private PatchNoteCategoryService patchNoteCategoryService;
+
+    @Autowired
+    private PatchNoteSectionService patchNoteSectionService;
+
+    public ProcessResult processAndSave(Tech tech, String newContent, String sourceUrl, String releaseVersion) {
         Optional<PatchNote> existingNoteOpt = patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech);
 
 
         PatchNote patchNote;
         if (existingNoteOpt.isPresent()) {
             patchNote = existingNoteOpt.get();
-            log.info("Found existing patch note for tech: {}", tech.getName());
         } else {
             patchNote = new PatchNote(tech, sourceUrl);
-            log.info("Creating new patch note for tech: {}", tech.getName());
         }
 
 
-        boolean contentChanged = existingNoteOpt.isEmpty() ||
-                !existingNoteOpt.get().getContent().equals(newContent);
+        String normalizedIncomingContent = normalize(newContent);
+        String normalizedExistingContent = normalize(patchNote.getOriginalContent());
+        boolean contentChanged = existingNoteOpt.isEmpty()
+                || !Objects.equals(normalizedExistingContent, normalizedIncomingContent);
 
-        if (!contentChanged) {
-            log.info("No changes detected for {} - skipping", tech.getName());
-            return patchNote;
+        String existingVersion = normalize(patchNote.getReleaseVersion());
+        String incomingVersion = normalize(releaseVersion);
+        boolean versionChanged = !incomingVersion.isEmpty()
+                && !Objects.equals(existingVersion, incomingVersion);
+
+        if (!contentChanged && !versionChanged) {
+            return new ProcessResult(patchNote, false);
         }
 
-        log.info("New content detected for {} - generating summary", tech.getName());
+        //sends new content to summary service
+        SummaryService.SummaryResult summaryResult = summaryService.generateSummary(newContent);
+        List<String> detectedCategories = summaryResult.sections().isEmpty()
+                ? patchNoteCategoryService.detectCategories(newContent)
+                : summaryResult.sections().stream()
+                .map(section -> section.getCategory())
+                .distinct()
+                .toList();
 
-        String summary = summaryService.generateSummary(newContent);
-
-
-        patchNote.setContent(summary);
+        //returns summarized content to repository and formats for dataset
+        patchNote.setContent(summaryResult.summary());
+        patchNote.setOriginalContent(newContent);
+        patchNote.setReleaseVersion(releaseVersion);
+        patchNote.setCategories(patchNoteCategoryService.serializeCategories(detectedCategories));
+        patchNote.setSummarySections(patchNoteSectionService.serialize(summaryResult.sections()));
         patchNote.setSourceUrl(sourceUrl);
+        //Sets current time as last updated to track when notes are created/modified
         patchNote.setLastUpdated(LocalDateTime.now());
 
         PatchNote saved = patchNoteRepository.save(patchNote);
-        log.info("Saved new patch note for {} with ID: {}", tech.getName(), saved.getId());
 
-        return saved;
+        return new ProcessResult(saved, true);
+    }
+
+    private String normalize(String value) {
+        return value == null ? "" : value.trim();
+    }
+
+    public record ProcessResult(PatchNote patchNote, boolean updated) {
     }
 }
-
-

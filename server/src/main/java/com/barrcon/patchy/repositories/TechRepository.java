@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface TechRepository extends CrudRepository<Tech, Long> {
     Optional<Tech> findByName(String name);
+    Optional<Tech> findByNameIgnoreCase(String name);
 }

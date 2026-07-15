@@ -128,6 +128,18 @@ body {
         display: inline-block;
         margin-right: 4px;
     }
+
+    .icon-insights::before {
+        content: 'PKG';
+        display: inline-block;
+        margin-right: 4px;
+    }
+
+    .icon-compare::before {
+        content: 'CMP';
+        display: inline-block;
+        margin-right: 4px;
+    }
     
     .icon-about::before {
         content: url(../../assets/icons/icon-about.png);
@@ -140,8 +152,5 @@ body {
         margin-right: 4px;
     }
 }
-
-
-
 
 

@@ -27,7 +27,7 @@ const TheBay = () => {
         
         setBayFeed(patchNotes);
       } catch (err) {
-        toast.error(`Error loading Bay data: ${err.message}`);
+        toast.error(`Problem loading Yer Bay: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -36,6 +36,8 @@ const TheBay = () => {
     fetchData();
   }, []);
 
+
+  //Loading state in case fetching takes time
   if (loading) {
     return (
       <div className="the-bay">
@@ -43,7 +45,7 @@ const TheBay = () => {
           <h1>The Bay</h1>
           <p className="bay-subtitle">Your personalized list of patch notes</p>
         </div>
-        <LoadingSpinner 
+        <LoadingSpinner
           message="Loading Yer Bay..."
           subtitle="Scouring the seas for yer tech updates..."
         />

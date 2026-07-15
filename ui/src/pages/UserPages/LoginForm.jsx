@@ -38,10 +38,10 @@ const LoginForm = () => {
                 // Redirect user to bay after successful login
                 redirect('/TheBay');
             } else {
-                console.error(response.error);
+                setError('Argh! Couldn\'t log ye in: ' + response.error);
             }
         } catch (error) {
-            console.error('Argh! Couldn\'t log ye in', error);
+            setError('Argh! Couldn\'t log ye in: ' + error.message);
         }
     };
 

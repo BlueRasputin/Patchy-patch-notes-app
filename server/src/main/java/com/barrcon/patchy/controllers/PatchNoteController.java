@@ -8,16 +8,17 @@ import com.barrcon.patchy.repositories.PatchNoteRepository;
 import com.barrcon.patchy.repositories.TechRepository;
 import com.barrcon.patchy.repositories.UserRepository;
 import com.barrcon.patchy.services.PatchNoteService;
+import com.barrcon.patchy.services.PatchNoteCategoryService;
+import com.barrcon.patchy.services.PatchNoteSectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -37,6 +38,12 @@ public class PatchNoteController {
     @Autowired
     private PatchNoteService patchNoteService;
 
+    @Autowired
+    private PatchNoteCategoryService patchNoteCategoryService;
+
+    @Autowired
+    private PatchNoteSectionService patchNoteSectionService;
+    //Receives crawled patch note data from crawler service
     @PostMapping("/api/process-crawled-notes")
     public ResponseEntity<String> processCrawledNotes(@RequestBody List<CrawledNoteDTO> crawledData) {
 
@@ -49,6 +56,7 @@ public class PatchNoteController {
                 String techName = item.getTechName();
                 String content = item.getContent();
                 String url = item.getUrl();
+                String releaseVersion = item.getReleaseVersion();
 
                 Optional<Tech> techOptional = techRepository.findByName(techName);
                 if (techOptional.isEmpty()) {
@@ -58,9 +66,10 @@ public class PatchNoteController {
                 }
 
                 Tech tech = techOptional.get();
-                PatchNote result = patchNoteService.processAndSave(tech, content, url);
+                PatchNoteService.ProcessResult result = patchNoteService.processAndSave(
+                        tech, content, url, releaseVersion);
 
-                if (result.getLastUpdated() != null) {
+                if (result.updated()) {
                     updatedCount++;
                 } else {
                     skippedCount++;
@@ -87,6 +96,10 @@ public class PatchNoteController {
                         pn.getId(),
                         pn.getTech().getName(),
                         pn.getContent(),
+                        pn.getOriginalContent(),
+                        pn.getReleaseVersion(),
+                        resolveCategories(pn),
+                        patchNoteSectionService.parse(pn.getSummarySections()),
                         pn.getSourceUrl(),
                         pn.getCreatedAt(),
                         pn.getLastUpdated()
@@ -96,7 +109,7 @@ public class PatchNoteController {
         return ResponseEntity.ok(responseDTOs);
     }
 
-
+    //Return a list of user-favorite patchnotes to the front end
     @GetMapping("/api/users/{userId}/patch-notes")
     public ResponseEntity<List<PatchNoteResponseDTO>> getUserPatchNotes(@PathVariable Long userId) {
 
@@ -125,6 +138,10 @@ public class PatchNoteController {
                             pn.getId(),
                             pn.getTech().getName(),
                             pn.getContent(),
+                            pn.getOriginalContent(),
+                            pn.getReleaseVersion(),
+                            resolveCategories(pn),
+                            patchNoteSectionService.parse(pn.getSummarySections()),
                             pn.getSourceUrl(),
                             pn.getCreatedAt(),
                             pn.getLastUpdated()
@@ -136,6 +153,47 @@ public class PatchNoteController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    @GetMapping("/api/patch-notes/compare")
+    public ResponseEntity<List<PatchNoteResponseDTO>> comparePatchNotes(
+            @RequestParam List<Long> techIds) {
+
+        if (techIds == null || techIds.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<PatchNoteResponseDTO> comparedNotes = techIds.stream()
+                .map(techRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(tech -> patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(pn -> new PatchNoteResponseDTO(
+                        pn.getId(),
+                        pn.getTech().getName(),
+                        pn.getContent(),
+                        pn.getOriginalContent(),
+                        pn.getReleaseVersion(),
+                        resolveCategories(pn),
+                        patchNoteSectionService.parse(pn.getSummarySections()),
+                        pn.getSourceUrl(),
+                        pn.getCreatedAt(),
+                        pn.getLastUpdated()
+                ))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(comparedNotes);
+    }
+
+    private List<String> resolveCategories(PatchNote patchNote) {
+        List<String> storedCategories = patchNoteCategoryService.parseStoredCategories(patchNote.getCategories());
+        if (!storedCategories.isEmpty()) {
+            return storedCategories;
+        }
+
+        return patchNoteCategoryService.detectCategories(patchNote.getOriginalContent());
     }
 
 }

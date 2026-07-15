@@ -56,3 +56,56 @@ li {
   margin: 20px 0;
   justify-content: space-between;
 }
+
+.patch-notes-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.patch-note-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.patch-note-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.toolkit-toggle {
+  align-items: center;
+  color: #f5f0e1;
+  display: flex;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.toolkit-toggle input {
+  margin: 0;
+}
+
+.toolkit-filter-summary {
+  color: #f2ddb2;
+  margin: 12px 0 8px;
+}
+
+.filter-chip {
+  background: rgba(245, 240, 225, 0.14);
+  border: 1px solid rgba(245, 240, 225, 0.24);
+  border-radius: 999px;
+  color: #f5f0e1;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 8px 14px;
+}
+
+.filter-chip.active {
+  background: linear-gradient(145deg, #8B4513 0%, #A0522D 50%, #654321 100%);
+  border-color: rgba(245, 240, 225, 0.36);
+}

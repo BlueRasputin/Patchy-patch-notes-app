@@ -9,6 +9,8 @@ import UserProfile from './pages/UserPages/UserProfile.jsx';
 import LoginForm from './pages/UserPages/LoginForm.jsx';
 import RegisterForm from './pages/UserPages/RegisterForm.jsx';
 import Logout from './pages/UserPages/Logout.jsx';
+import PackageInsights from './pages/PackageInsights/PackageInsights.jsx';
+import ComparePatchNotes from './pages/ComparePatchNotes/ComparePatchNotes.jsx';
 import Header from './components/Framing/Header.jsx';
 import NavBar from './components/Framing/NavBar.jsx';
 import Footer from './components/Framing/Footer.jsx';
@@ -31,6 +33,8 @@ function App() {
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/TheBay" element={<TheBay />} />
+            <Route path="/PackageInsights" element={<PackageInsights />} />
+            <Route path="/Compare" element={<ComparePatchNotes />} />
             <Route path="/About" element={<About />} />
             <Route path="/UserProfile" element={<UserProfile />} />
           </Routes>
@@ -44,4 +48,3 @@ function App() {
 }
 
 export default App;
-

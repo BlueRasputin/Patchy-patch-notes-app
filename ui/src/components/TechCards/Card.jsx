@@ -1,8 +1,17 @@
 
 
 import './Card.css';
+import { extractVisibleContent } from '../../Services/patchNoteSections';
 
-const Card = ({ patchNote }) => {
+const Card = ({ patchNote, activeSectionFilters = [] }) => {
+  const categories = Array.isArray(patchNote.categories) ? patchNote.categories : [];
+  const hasSummary = Boolean(patchNote.content);
+  const visibleContent = extractVisibleContent(
+    patchNote.content,
+    activeSectionFilters,
+    Array.isArray(patchNote.sections) ? patchNote.sections : []
+  );
+
   const formatContent = (content) => {
     if (!content) return '';
     
@@ -50,23 +59,46 @@ const Card = ({ patchNote }) => {
     <div className="tech-card">
       <div className="card-header">
         <h3 className="tech-title">{patchNote.techName}</h3>
+        {patchNote.releaseVersion && (
+          <span className="version-badge">{patchNote.releaseVersion}</span>
+        )}
       </div>
+
+      {categories.length > 0 && (
+        <div className="category-badges">
+          {categories.map((category) => (
+            <span key={category} className="category-badge">{category}</span>
+          ))}
+        </div>
+      )}
+
+      {patchNote.statusLabel && (
+        <div className="note-status-banner">{patchNote.statusLabel}</div>
+      )}
     
       <div className="card-body">
         <div className="patch-description">
-          {formatContent(patchNote.content)}
+          {!hasSummary
+            ? <p className="filtered-empty-state">Patch note not collected yet for this tech.</p>
+            : visibleContent.hasMatches
+            ? formatContent(visibleContent.content)
+            : <p className="filtered-empty-state">No matching sections for the selected filters.</p>}
         </div>
       </div>
       
       <div className="card-footer">
-        <a 
-          href={patchNote.sourceUrl} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="source-link"
-        >
-          View Original Docs →
-        </a>
+        {patchNote.sourceUrl ? (
+          <a 
+            href={patchNote.sourceUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="source-link"
+          >
+            View Original Docs →
+          </a>
+        ) : (
+          <span className="source-link source-link-disabled">Source URL not available yet</span>
+        )}
       </div>
     </div>
   );

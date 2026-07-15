@@ -1,0 +1,9 @@
+{
+	"id": "KXNqwz5YK0ZNdAH",
+	"json": "{\"id\":\"KXNqwz5YK0ZNdAH\",\"url\":\"https://www.oracle.com/java/technologies/javase/25all-relnotes.html\",\"loadedUrl\":\"https://www.oracle.com/java/technologies/javase/25all-relnotes.html\",\"uniqueKey\":\"https://www.oracle.com/java/technologies/javase/25all-relnotes.html\",\"method\":\"GET\",\"noRetry\":false,\"retryCount\":0,\"errorMessages\":[],\"headers\":{},\"userData\":{\"__crawlee\":{\"state\":4}},\"handledAt\":\"2025-10-14T01:41:07.355Z\"}",
+	"method": "GET",
+	"orderNo": null,
+	"retryCount": 0,
+	"uniqueKey": "https://www.oracle.com/java/technologies/javase/25all-relnotes.html",
+	"url": "https://www.oracle.com/java/technologies/javase/25all-relnotes.html"
+}

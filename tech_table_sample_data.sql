@@ -4,4 +4,14 @@ INSERT INTO patchy.techs (name) VALUES
 ('React'),
 ('Python'),
 ('Spring'),
-('Java');
+('Java'),
+('TypeScript'),
+('VS Code'),
+('Vite'),
+('Next.js'),
+('Angular'),
+('Vue'),
+('Docker'),
+('Kubernetes'),
+('Tailwind CSS'),
+('npm');

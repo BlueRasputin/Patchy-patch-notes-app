@@ -1,0 +1,144 @@
+package com.barrcon.patchy.services;
+
+import com.barrcon.patchy.dto.PackageInsightMatchDTO;
+import com.barrcon.patchy.dto.PackageInsightsRequestDTO;
+import com.barrcon.patchy.dto.PatchNoteResponseDTO;
+import com.barrcon.patchy.models.PatchNote;
+import com.barrcon.patchy.models.Tech;
+import com.barrcon.patchy.repositories.PatchNoteRepository;
+import com.barrcon.patchy.repositories.TechRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+
+@Service
+public class PackageInsightsService {
+
+    private final TechRepository techRepository;
+    private final PatchNoteRepository patchNoteRepository;
+    private final PatchNoteCategoryService patchNoteCategoryService;
+    private final PatchNoteSectionService patchNoteSectionService;
+
+    private static final Map<String, String> PACKAGE_TO_TECH = Map.ofEntries(
+            Map.entry("react", "React"),
+            Map.entry("react-dom", "React"),
+            Map.entry("next", "React"),
+            Map.entry("spring-boot", "Spring"),
+            Map.entry("spring-framework", "Spring"),
+            Map.entry("rails", "Ruby on Rails"),
+            Map.entry("node", "Node.js"),
+            Map.entry("nodejs", "Node.js"),
+            Map.entry("python", "Python"),
+            Map.entry("django", "Python"),
+            Map.entry("flask", "Python"),
+            Map.entry("java", "Java")
+    );
+
+    public PackageInsightsService(TechRepository techRepository,
+                                  PatchNoteRepository patchNoteRepository,
+                                  PatchNoteCategoryService patchNoteCategoryService,
+                                  PatchNoteSectionService patchNoteSectionService) {
+        this.techRepository = techRepository;
+        this.patchNoteRepository = patchNoteRepository;
+        this.patchNoteCategoryService = patchNoteCategoryService;
+        this.patchNoteSectionService = patchNoteSectionService;
+    }
+
+    public List<PackageInsightMatchDTO> generateMatches(PackageInsightsRequestDTO request) {
+        List<PackageInsightMatchDTO> matches = new ArrayList<>();
+
+        if (request == null) {
+            return matches;
+        }
+
+        collectMatches(matches, request.getDependencies(), "dependencies");
+        collectMatches(matches, request.getDevDependencies(), "devDependencies");
+        collectMatches(matches, request.getPeerDependencies(), "peerDependencies");
+
+        return matches;
+    }
+
+    private void collectMatches(List<PackageInsightMatchDTO> matches,
+                                Map<String, String> dependencies,
+                                String dependencyType) {
+        if (dependencies == null || dependencies.isEmpty()) {
+            return;
+        }
+
+        Map<String, String> orderedDeps = new LinkedHashMap<>(dependencies);
+        for (Map.Entry<String, String> entry : orderedDeps.entrySet()) {
+            String packageName = entry.getKey();
+            String packageVersion = entry.getValue();
+
+            Optional<Tech> techOpt = resolveTech(packageName);
+            if (techOpt.isEmpty()) {
+                continue;
+            }
+
+            Optional<PatchNote> patchNoteOpt = patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(techOpt.get());
+            if (patchNoteOpt.isEmpty()) {
+                continue;
+            }
+
+            PatchNote patchNote = patchNoteOpt.get();
+            PatchNoteResponseDTO patchNoteDTO = new PatchNoteResponseDTO(
+                    patchNote.getId(),
+                    patchNote.getTech().getName(),
+                    patchNote.getContent(),
+                    patchNote.getOriginalContent(),
+                    patchNote.getReleaseVersion(),
+                    resolveCategories(patchNote),
+                    patchNoteSectionService.parse(patchNote.getSummarySections()),
+                    patchNote.getSourceUrl(),
+                    patchNote.getCreatedAt(),
+                    patchNote.getLastUpdated()
+            );
+
+            matches.add(new PackageInsightMatchDTO(
+                    packageName,
+                    packageVersion,
+                    dependencyType,
+                    patchNoteDTO
+            ));
+        }
+    }
+
+    private Optional<Tech> resolveTech(String packageName) {
+        if (packageName == null || packageName.isBlank()) {
+            return Optional.empty();
+        }
+
+        String normalized = normalize(packageName);
+        String techName = PACKAGE_TO_TECH.get(normalized);
+
+        if (techName != null) {
+            return techRepository.findByNameIgnoreCase(techName);
+        }
+
+        for (Tech tech : techRepository.findAll()) {
+            if (normalized.contains(normalize(tech.getName()))) {
+                return Optional.of(tech);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    private String normalize(String value) {
+        return value.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
+    }
+
+    private List<String> resolveCategories(PatchNote patchNote) {
+        List<String> storedCategories = patchNoteCategoryService.parseStoredCategories(patchNote.getCategories());
+        if (!storedCategories.isEmpty()) {
+            return storedCategories;
+        }
+
+        return patchNoteCategoryService.detectCategories(patchNote.getOriginalContent());
+    }
+}
