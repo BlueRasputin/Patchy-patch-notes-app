@@ -1,9 +1,0 @@
-{
-	"id": "YgKbVoxy45CU5zk",
-	"json": "{\"id\":\"YgKbVoxy45CU5zk\",\"url\":\"https://rubyonrails.org/releases/\",\"loadedUrl\":\"https://rubyonrails.org/releases/\",\"uniqueKey\":\"https://rubyonrails.org/releases\",\"method\":\"GET\",\"noRetry\":false,\"retryCount\":0,\"errorMessages\":[],\"headers\":{},\"userData\":{\"__crawlee\":{\"state\":4}},\"handledAt\":\"2025-10-14T01:41:07.802Z\"}",
-	"method": "GET",
-	"orderNo": null,
-	"retryCount": 0,
-	"uniqueKey": "https://rubyonrails.org/releases",
-	"url": "https://rubyonrails.org/releases/"
-}

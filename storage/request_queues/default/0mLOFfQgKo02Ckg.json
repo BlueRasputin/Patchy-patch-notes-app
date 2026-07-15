@@ -1,9 +1,0 @@
-{
-	"id": "0mLOFfQgKo02Ckg",
-	"json": "{\"id\":\"0mLOFfQgKo02Ckg\",\"url\":\"https://www.python.org/downloads/\",\"loadedUrl\":\"https://www.python.org/downloads/\",\"uniqueKey\":\"https://www.python.org/downloads\",\"method\":\"GET\",\"noRetry\":false,\"retryCount\":0,\"errorMessages\":[],\"headers\":{},\"userData\":{\"__crawlee\":{\"state\":4}},\"handledAt\":\"2025-10-14T01:41:07.294Z\"}",
-	"method": "GET",
-	"orderNo": null,
-	"retryCount": 0,
-	"uniqueKey": "https://www.python.org/downloads",
-	"url": "https://www.python.org/downloads/"
-}

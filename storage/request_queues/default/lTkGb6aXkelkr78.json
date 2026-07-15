@@ -1,9 +1,0 @@
-{
-	"id": "lTkGb6aXkelkr78",
-	"json": "{\"id\":\"lTkGb6aXkelkr78\",\"url\":\"https://github.com/facebook/react/releases\",\"loadedUrl\":\"https://github.com/facebook/react/releases\",\"uniqueKey\":\"https://github.com/facebook/react/releases\",\"method\":\"GET\",\"noRetry\":false,\"retryCount\":0,\"errorMessages\":[],\"headers\":{},\"userData\":{\"__crawlee\":{\"state\":4}},\"handledAt\":\"2025-10-14T01:41:06.609Z\"}",
-	"method": "GET",
-	"orderNo": null,
-	"retryCount": 0,
-	"uniqueKey": "https://github.com/facebook/react/releases",
-	"url": "https://github.com/facebook/react/releases"
-}
