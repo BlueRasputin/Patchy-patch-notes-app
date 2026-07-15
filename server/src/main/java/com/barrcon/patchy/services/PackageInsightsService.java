@@ -35,8 +35,20 @@ public class PackageInsightsService {
             Map.entry("python", "Python"),
             Map.entry("django", "Python"),
             Map.entry("flask", "Python"),
-            Map.entry("java", "Java")
+            Map.entry("java", "Java"),
+            Map.entry("golang", "Go"),
+            Map.entry("go", "Go"),
+            Map.entry("php", "PHP"),
+            Map.entry("dotnet", ".NET"),
+            Map.entry("bun", "Bun"),
+            Map.entry("pg", "PostgreSQL"),
+            Map.entry("postgres", "PostgreSQL"),
+            Map.entry("ioredis", "Redis")
     );
+
+    // Tech names shorter than this only match via the explicit map above;
+    // substring matching on names like "Go" would hit packages like "mongodb".
+    private static final int MIN_SUBSTRING_MATCH_LENGTH = 4;
 
     public PackageInsightsService(TechRepository techRepository,
                                   PatchNoteRepository patchNoteRepository,
@@ -100,7 +112,9 @@ public class PackageInsightsService {
         }
 
         for (Tech tech : techRepository.findAll()) {
-            if (normalized.contains(normalize(tech.getName()))) {
+            String normalizedTechName = normalize(tech.getName());
+            if (normalizedTechName.length() >= MIN_SUBSTRING_MATCH_LENGTH
+                    && normalized.contains(normalizedTechName)) {
                 return Optional.of(tech);
             }
         }

@@ -94,5 +94,125 @@
     "patchNotesUrl": "https://github.com/npm/cli/releases",
     "contentSelector": "main, article",
     "contentStrategy": "default"
+  },
+  {
+    "name": "Go",
+    "patchNotesUrl": "https://go.dev/doc/devel/release",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Rust",
+    "patchNotesUrl": "https://github.com/rust-lang/rust/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": ".NET",
+    "patchNotesUrl": "https://github.com/dotnet/core/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "PHP",
+    "patchNotesUrl": "https://www.php.net/ChangeLog-8.php",
+    "contentSelector": "#layout-content, main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Swift",
+    "patchNotesUrl": "https://github.com/swiftlang/swift/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Kotlin",
+    "patchNotesUrl": "https://github.com/JetBrains/kotlin/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Ruby",
+    "patchNotesUrl": "https://github.com/ruby/ruby/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Express",
+    "patchNotesUrl": "https://github.com/expressjs/express/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Svelte",
+    "patchNotesUrl": "https://github.com/sveltejs/svelte/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "ESLint",
+    "patchNotesUrl": "https://github.com/eslint/eslint/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Jest",
+    "patchNotesUrl": "https://github.com/jestjs/jest/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Electron",
+    "patchNotesUrl": "https://github.com/electron/electron/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Deno",
+    "patchNotesUrl": "https://github.com/denoland/deno/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Bun",
+    "patchNotesUrl": "https://github.com/oven-sh/bun/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "pnpm",
+    "patchNotesUrl": "https://github.com/pnpm/pnpm/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Redis",
+    "patchNotesUrl": "https://github.com/redis/redis/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "PostgreSQL",
+    "patchNotesUrl": "https://www.postgresql.org/docs/release/",
+    "contentSelector": "#docContent, main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Terraform",
+    "patchNotesUrl": "https://github.com/hashicorp/terraform/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Laravel",
+    "patchNotesUrl": "https://github.com/laravel/framework/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
+  },
+  {
+    "name": "Flutter",
+    "patchNotesUrl": "https://github.com/flutter/flutter/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default"
   }
 ]
