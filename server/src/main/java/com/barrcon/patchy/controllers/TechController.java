@@ -1,8 +1,10 @@
 package com.barrcon.patchy.controllers;
 
 
+import com.barrcon.patchy.dto.TechCatalogEntryDTO;
 import com.barrcon.patchy.models.Tech;
 import com.barrcon.patchy.repositories.TechRepository;
+import com.barrcon.patchy.services.TechCatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,20 @@ public class TechController {
     @Autowired
     private TechRepository techRepository;
 
+    @Autowired
+    private TechCatalogService techCatalogService;
+
     //get full list of tech
     @GetMapping
     public ResponseEntity<List<Tech>> getAllTech() {
         return ResponseEntity.ok((List<Tech>) techRepository.findAll());
+    }
+
+    // Tech names + patch note URLs, used by the browser extension to
+    // recognize which sites belong to tracked techs
+    @GetMapping("/catalog")
+    public ResponseEntity<List<TechCatalogEntryDTO>> getCatalog() {
+        return ResponseEntity.ok(techCatalogService.loadCatalog());
     }
 
 

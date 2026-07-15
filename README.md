@@ -105,3 +105,18 @@ Patchy ships an embeddable, read-only patch note feed at `/embed`. Drop it into 
 
 * `techs` is a comma-separated list of tracked tech names (case-insensitive). Omit it to show every tracked tech.
 * The embed inherits the viewer's light/dark preference and renders no Patchy navigation, only the feed.
+
+## Browser extension (MVP)
+
+A Manifest V3 Chrome extension lives in `extension/`. It recognizes when the
+current tab belongs to a tracked tech (matched against the tech catalog),
+shows Patchy's latest summary for it, and can submit the page's content for
+summarization ("Summarize this page" — deduped server-side, so unchanged
+pages cost nothing).
+
+To install locally:
+
+1. Start the backend (`cd server && ./mvnw spring-boot:run`)
+2. Open `chrome://extensions`, enable Developer mode
+3. "Load unpacked" → select the `extension/` folder
+4. Visit a tracked site (e.g. react.dev) and click the Patchy icon

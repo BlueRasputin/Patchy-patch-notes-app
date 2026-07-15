@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Patchy",
+  "version": "0.1.0",
+  "description": "See AI-summarized patch notes for the dev tool site you're on.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Patchy patch notes"
+  },
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["http://localhost:8080/*"]
+}
