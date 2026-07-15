@@ -66,11 +66,26 @@ public class PatchNoteController {
 
     @GetMapping("/api/patch-notes")
     public ResponseEntity<List<PatchNoteResponseDTO>> getAllPatchNotes() {
-        List<PatchNoteResponseDTO> responseDTOs = patchNoteRepository.findAllByOrderByCreatedAtDesc().stream()
+        List<PatchNoteResponseDTO> responseDTOs = patchNoteRepository.findLatestPerTech().stream()
                 .map(patchNoteService::toResponseDTO)
                 .toList();
 
         return ResponseEntity.ok(responseDTOs);
+    }
+
+    // Full release history for one tech, newest first
+    @GetMapping("/api/patch-notes/history")
+    public ResponseEntity<List<PatchNoteResponseDTO>> getPatchNoteHistory(@RequestParam Long techId) {
+        Optional<Tech> techOpt = techRepository.findById(techId);
+        if (techOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<PatchNoteResponseDTO> history = patchNoteRepository.findByTechOrderByCreatedAtDesc(techOpt.get()).stream()
+                .map(patchNoteService::toResponseDTO)
+                .toList();
+
+        return ResponseEntity.ok(history);
     }
 
     // Latest patch note for each of the user's favorite techs

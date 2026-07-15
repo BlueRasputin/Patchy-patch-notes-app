@@ -68,3 +68,40 @@
 .tech-entry[open] summary::before {
   content: "\25BE";
 }
+
+.release-history {
+  margin: 0.75rem 0 0.5rem;
+}
+
+.release-history > summary {
+  color: var(--fg-muted);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.release-history-entry {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 0.5rem 0;
+}
+
+.release-history-entry > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  background: var(--bg-subtle);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.release-history-entry[open] > summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.release-history-date {
+  color: var(--fg-muted);
+  font-weight: 400;
+}

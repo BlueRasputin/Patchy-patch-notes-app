@@ -6,6 +6,46 @@ import LoadingSpinner from "../../components/LoadingIcon/LoadingSpinner";
 import { apiFetch } from "../../Services/api";
 import "./Techs.css";
 
+// Older releases for one tech, fetched the first time the user opens it
+function ReleaseHistory({ techId }) {
+  const [history, setHistory] = useState(null);
+  const [failed, setFailed] = useState(false);
+
+  const loadHistory = async () => {
+    if (history !== null) return;
+    try {
+      const response = await apiFetch(`/api/patch-notes/history?techId=${techId}`);
+      if (!response.ok) throw new Error();
+      setHistory(await response.json());
+    } catch {
+      setFailed(true);
+    }
+  };
+
+  const olderNotes = (history ?? []).slice(1);
+
+  return (
+    <details className="release-history" onToggle={(event) => event.target.open && loadHistory()}>
+      <summary>Release history</summary>
+      {failed && <p className="instruction">Couldn't load release history.</p>}
+      {history !== null && olderNotes.length === 0 && !failed && (
+        <p className="instruction">No earlier releases recorded yet.</p>
+      )}
+      {olderNotes.map((note) => (
+        <details className="release-history-entry" key={note.id}>
+          <summary>
+            {note.releaseVersion || "unversioned"}
+            <span className="release-history-date">
+              {note.createdAt ? new Date(note.createdAt).toLocaleDateString() : ""}
+            </span>
+          </summary>
+          <Card patchNote={note} />
+        </details>
+      ))}
+    </details>
+  );
+}
+
 function Techs() {
   const { isAuthenticated } = useAuth();
   const [techList, setTechList] = useState([]);
@@ -136,7 +176,12 @@ function Techs() {
               </summary>
               <div className="tech-entry-body">
                 {note
-                  ? <Card patchNote={note} />
+                  ? (
+                    <>
+                      <Card patchNote={note} />
+                      <ReleaseHistory techId={tech.id} />
+                    </>
+                  )
                   : <p className="instruction">No patch note collected for {tech.name} yet.</p>}
               </div>
             </details>

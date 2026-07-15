@@ -3,8 +3,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "patch_notes",
-    uniqueConstraints = @UniqueConstraint(columnNames = "tech_id"))
+@Table(name = "patch_notes")
 public class PatchNote extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)

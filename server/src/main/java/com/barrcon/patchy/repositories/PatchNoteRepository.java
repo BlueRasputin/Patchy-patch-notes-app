@@ -2,6 +2,7 @@ package com.barrcon.patchy.repositories;
 
 import com.barrcon.patchy.models.PatchNote;
 import com.barrcon.patchy.models.Tech;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,10 +12,15 @@ import java.util.Optional;
 @Repository
 public interface PatchNoteRepository extends CrudRepository<PatchNote, Long> {
 
-    // Find patch notes for a specific tech
-    List<PatchNote> findByTech(Tech tech);
-
-    List<PatchNote> findAllByOrderByCreatedAtDesc();
+    List<PatchNote> findByTechOrderByCreatedAtDesc(Tech tech);
 
     Optional<PatchNote> findFirstByTechOrderByCreatedAtDesc(Tech tech);
+
+    // Newest note per tech, for feeds (notes are append-only history)
+    @Query("""
+            select p from PatchNote p
+            where p.createdAt = (select max(p2.createdAt) from PatchNote p2 where p2.tech = p.tech)
+            order by p.createdAt desc
+            """)
+    List<PatchNote> findLatestPerTech();
 }

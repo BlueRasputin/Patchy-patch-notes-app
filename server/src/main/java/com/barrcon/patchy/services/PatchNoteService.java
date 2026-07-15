@@ -28,23 +28,23 @@ public class PatchNoteService {
     private PatchNoteSectionService patchNoteSectionService;
 
     public ProcessResult processAndSave(Tech tech, String newContent, String sourceUrl, String releaseVersion) {
-        Optional<PatchNote> existingNoteOpt = patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech);
-
-        PatchNote patchNote = existingNoteOpt.orElseGet(() -> new PatchNote(tech, sourceUrl));
+        Optional<PatchNote> latestNoteOpt = patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech);
 
         String normalizedIncomingContent = normalize(newContent);
-        String normalizedExistingContent = normalize(patchNote.getOriginalContent());
-        boolean contentChanged = existingNoteOpt.isEmpty()
-                || !Objects.equals(normalizedExistingContent, normalizedIncomingContent);
+        boolean contentChanged = latestNoteOpt.isEmpty()
+                || !Objects.equals(normalize(latestNoteOpt.get().getOriginalContent()), normalizedIncomingContent);
 
-        String existingVersion = normalize(patchNote.getReleaseVersion());
+        String existingVersion = latestNoteOpt.map(note -> normalize(note.getReleaseVersion())).orElse("");
         String incomingVersion = normalize(releaseVersion);
         boolean versionChanged = !incomingVersion.isEmpty()
                 && !Objects.equals(existingVersion, incomingVersion);
 
         if (!contentChanged && !versionChanged) {
-            return new ProcessResult(patchNote, false);
+            return new ProcessResult(latestNoteOpt.get(), false);
         }
+
+        // Append a new note so per-tech release history is preserved
+        PatchNote patchNote = new PatchNote(tech, sourceUrl);
 
         SummaryService.SummaryResult summaryResult = summaryService.generateSummary(newContent);
         List<String> detectedCategories = summaryResult.sections().isEmpty()
