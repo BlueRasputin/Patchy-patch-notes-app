@@ -1,156 +1,44 @@
-
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-}
-
 .nav {
     width: 100%;
-    background: linear-gradient(135deg, 
-        #f4f1e8 0%,     
-        #e8dcc0 25%,   
-        #ddd0a7 50%,    
-        #d4c5a0 75%,    
-        #c9b896 100%    
-    );
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0;
-    font-weight: bold;
-    position: relative;
-    box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.4),
-        inset 0 -3px 0 rgba(139, 69, 19, 0.6);
-    border-bottom: 4px solid #8B4513;
-    overflow: hidden;
-}
-
-
-.nav::after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(
-        ellipse 200px 100px at 90% 50%,
-        transparent 0%,
-        transparent 60%,
-        rgba(139, 69, 19, 0.2) 70%,
-        rgba(139, 69, 19, 0.1) 100%
-    );
-    pointer-events: none;
-    z-index: 1;
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border);
 }
 
 .nav ul {
-    padding: 1rem 2rem;
-    margin: 0;
-    align-items: center;
-    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
     list-style: none;
-    display: flex;
-    gap: 2rem;
-    font-weight: bold;
-    position: relative;
-    z-index: 2;
+    margin: 0;
+    padding: 0 1rem;
 }
 
-.nav li {
-    background: linear-gradient(145deg, 
-        #8B4513 0%,     
-        #A0522D 50%,    
-        #654321 100%    
-    );
-    align-items: center;
-    font-family: 'Cinzel', serif;
-    padding: 12px 18px;
-    font-weight: 600;
-    display: flex;
-    color: #f4e4bc;
+.nav a {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    color: var(--fg);
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+}
+
+.nav a:hover {
+    border-bottom-color: var(--border);
     text-decoration: none;
-    border: 2px solid #654321;
-    border-radius: 8px;
-    position: relative;
-    transition: all 0.3s ease;
-    box-shadow: 
-        0 4px 8px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    cursor: pointer;
 }
 
-
-
-.nav li:hover {
-    background: linear-gradient(145deg, 
-        #A0522D 0%,     
-        #CD853F 50%,    
-        #8B4513 100%    
-    );
-    color: #FFD700;
-    transform: translateY(-2px);
-    box-shadow: 
-        0 6px 15px rgba(0, 0, 0, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3),
-        0 0 15px rgba(255, 215, 0, 0.4);
-    border-color: #FFD700;
+.nav a.active {
+    border-bottom-color: var(--brass);
+    font-weight: 600;
 }
-
-
-
-
 
 @media (max-width: 768px) {
     .nav ul {
-        padding: 0.8rem 1rem;
-        gap: 1rem;
-    }
-    
-    .nav li {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-    
-    .icon-home::before {
-        content: url(../../assets/icons/icon-chest.png);
-        display: inline-block;
-        margin-right: 4px;
-    }
-    
-    .icon-the-bay::before {
-        content: url(../../assets/icons/icon-ship.png);
-        display: inline-block;
-        margin-right: 4px;
+        padding: 0 0.25rem;
     }
 
-    .icon-insights::before {
-        content: 'PKG';
-        display: inline-block;
-        margin-right: 4px;
-    }
-
-    .icon-compare::before {
-        content: 'CMP';
-        display: inline-block;
-        margin-right: 4px;
-    }
-    
-    .icon-about::before {
-        content: url(../../assets/icons/icon-about.png);
-        display: inline-block;
-        margin-right: 4px;
-    }
-    .icon-user-profile::before {
-        content: url(../../assets/icons/icon-pirate.png);
-        display: inline-block;
-        margin-right: 4px;
+    .nav a {
+        padding: 0.5rem 0.6rem;
+        font-size: 13px;
     }
 }
-
-

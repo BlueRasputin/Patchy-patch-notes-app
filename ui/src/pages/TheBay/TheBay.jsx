@@ -61,10 +61,17 @@ const TheBay = () => {
       <div className="card-container">
         {bayFeed.length > 0 ? (
           bayFeed.map((note) => (
-            <Card 
-              key={note.id} 
-              patchNote={note} 
-            />
+            <details className="bay-entry" key={note.id}>
+              <summary>
+                <span className="bay-entry-name">{note.techName}</span>
+                {note.releaseVersion && (
+                  <span className="bay-entry-version">{note.releaseVersion}</span>
+                )}
+              </summary>
+              <div className="bay-entry-body">
+                <Card patchNote={note} />
+              </div>
+            </details>
           ))
         ) : (
           <div className="no-data">

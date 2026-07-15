@@ -1,22 +1,14 @@
-.aboutpage {
- background: linear-gradient(180deg, 
-    #1a365d 0%,     
-    #2d5a87 30%,    
-    #1e3a5f 70%,    
-    #0f1419 100%    
-  );
-  min-height: 60vh;
-  padding: 2rem;
-  position: relative;
-  overflow-x: hidden;
+.about-body {
+  max-width: 720px;
 }
-h2 {
-  color: #ffffff;
-  font-size: 2rem;
-  margin-bottom: 1rem;
+
+.about-body h2 {
+  margin-top: 1.5rem;
 }
-h3 {
-  color: #d1d5db;
-  font-size: 1.2rem;
+
+.about-body h3 {
+  color: var(--fg-muted);
+  font-size: 1rem;
+  font-weight: 400;
   line-height: 1.6;
 }

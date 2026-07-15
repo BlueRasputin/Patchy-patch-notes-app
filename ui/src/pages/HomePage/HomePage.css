@@ -1,68 +1,10 @@
-.homepage {
-  background: linear-gradient(180deg, 
-    #1a365d 0%,     
-    #2d5a87 30%,    
-    #1e3a5f 70%,    
-    #0f1419 100%    
-  );
-  min-height: 100vh;
-  padding: 2rem;
-  position: relative;
-  overflow-x: hidden;
-}
-
-.homepage::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(circle at 20% 80%, rgba(255, 223, 0, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.1) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: -1;
-}
-
-button { 
-  background: linear-gradient(145deg, 
-        #8B4513 0%,     
-        #A0522D 50%,    
-        #654321 100%    
-    );
-    
-    font-family: 'Cinzel', serif;
-    padding: 12px 18px;
-    font-weight: 600;
-    
-}
-
-.tech-name {
-  color:rgb(211, 194, 159)
-}
-
-li {
-  position: relative;
-    
-  list-style: none;
-  margin: 12px ;
-}
-.tech-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 0;
-  margin: 20px 0;
-  justify-content: space-between;
-}
-
 .patch-notes-header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
+  margin-top: 1.5rem;
 }
 
 .patch-note-controls {
@@ -75,15 +17,15 @@ li {
 .patch-note-filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .toolkit-toggle {
-  align-items: center;
-  color: #f5f0e1;
   display: flex;
-  gap: 10px;
-  font-weight: 600;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg-muted);
+  font-size: 14px;
 }
 
 .toolkit-toggle input {
@@ -91,21 +33,29 @@ li {
 }
 
 .toolkit-filter-summary {
-  color: #f2ddb2;
+  color: var(--fg-muted);
+  font-size: 14px;
   margin: 12px 0 8px;
 }
 
 .filter-chip {
-  background: rgba(245, 240, 225, 0.14);
-  border: 1px solid rgba(245, 240, 225, 0.24);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  color: #f5f0e1;
+  color: var(--fg);
   cursor: pointer;
-  font-size: 0.85rem;
-  padding: 8px 14px;
+  font-size: 13px;
+  padding: 4px 12px;
 }
 
 .filter-chip.active {
-  background: linear-gradient(145deg, #8B4513 0%, #A0522D 50%, #654321 100%);
-  border-color: rgba(245, 240, 225, 0.36);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+}
+
+.patch-notes-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
 }
