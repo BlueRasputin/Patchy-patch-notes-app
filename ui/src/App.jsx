@@ -1,7 +1,7 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage.jsx';
 import Techs from './pages/Techs/Techs.jsx';
 import About from './pages/AboutPage/About.jsx';
@@ -12,29 +12,42 @@ import RegisterForm from './pages/UserPages/RegisterForm.jsx';
 import Logout from './pages/UserPages/Logout.jsx';
 import PackageInsights from './pages/PackageInsights/PackageInsights.jsx';
 import ComparePatchNotes from './pages/ComparePatchNotes/ComparePatchNotes.jsx';
+import Embed from './pages/Embed/Embed.jsx';
 import Header from './components/Framing/Header.jsx';
 import NavBar from './components/Framing/NavBar.jsx';
 import Footer from './components/Framing/Footer.jsx';
+
+// Header/nav/footer shell for every page except the iframe-able /embed
+function Layout() {
+  return (
+    <>
+      <Header />
+      <NavBar />
+      <Outlet />
+      <Footer />
+    </>
+  );
+}
 
 function App() {
   return (
     <>
       <Router>
-        <Header />
-        <NavBar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/Techs" element={<Techs />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/TheBay" element={<TheBay />} />
-          <Route path="/PackageInsights" element={<PackageInsights />} />
-          <Route path="/Compare" element={<ComparePatchNotes />} />
-          <Route path="/About" element={<About />} />
-          <Route path="/UserProfile" element={<UserProfile />} />
+          <Route path="/embed" element={<Embed />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/Techs" element={<Techs />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/TheBay" element={<TheBay />} />
+            <Route path="/PackageInsights" element={<PackageInsights />} />
+            <Route path="/Compare" element={<ComparePatchNotes />} />
+            <Route path="/About" element={<About />} />
+            <Route path="/UserProfile" element={<UserProfile />} />
+          </Route>
         </Routes>
-        <Footer />
       </Router>
       <ToastContainer position="top-left" autoClose={3000} />
     </>

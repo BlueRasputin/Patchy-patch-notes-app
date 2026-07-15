@@ -90,3 +90,18 @@ Notes:
 
 
 
+
+## Embedding Patchy
+
+Patchy ships an embeddable, read-only patch note feed at `/embed`. Drop it into any site with an iframe:
+
+```html
+<iframe
+  src="https://your-patchy-host/embed?techs=React,Node.js,TypeScript"
+  style="width: 100%; height: 480px; border: 1px solid #d0d7de; border-radius: 6px;"
+  title="Patchy patch notes"
+></iframe>
+```
+
+* `techs` is a comma-separated list of tracked tech names (case-insensitive). Omit it to show every tracked tech.
+* The embed inherits the viewer's light/dark preference and renders no Patchy navigation, only the feed.
