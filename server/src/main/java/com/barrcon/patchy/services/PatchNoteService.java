@@ -46,7 +46,7 @@ public class PatchNoteService {
         // Append a new note so per-tech release history is preserved
         PatchNote patchNote = new PatchNote(tech, sourceUrl);
 
-        SummaryService.SummaryResult summaryResult = summaryService.generateSummary(newContent);
+        SummaryService.SummaryResult summaryResult = summaryService.generateSummary(tech.getName(), newContent);
         List<String> detectedCategories = summaryResult.sections().isEmpty()
                 ? patchNoteCategoryService.detectCategories(newContent)
                 : summaryResult.sections().stream()

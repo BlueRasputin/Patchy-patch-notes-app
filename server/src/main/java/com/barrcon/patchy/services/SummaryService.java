@@ -21,11 +21,45 @@ public class SummaryService {
     private final String claudeApiKey;
     private static final String CLAUDE_API_URL = "https://api.anthropic.com/v1/messages";
 
+    // Crawled pages can run 40k+ chars, mostly site chrome; input tokens dominate
+    // cost, so cap what we send. ponytail: dumb truncation — smarter noise
+    // stripping in the crawler if summaries start missing late-page content.
+    private static final int MAX_CONTENT_CHARS = 30_000;
+
+    private static final String SYSTEM_PROMPT = """
+            You summarize software release notes for developers. Produce a short \
+            markdown summary plus per-category sections covering only the categories \
+            actually present. Be concise and factual; skip site navigation noise.""";
+
+    // Structured-output schema: guarantees valid JSON and enforces category names
+    private static final JSONObject OUTPUT_SCHEMA = new JSONObject("""
+            {
+              "type": "object",
+              "properties": {
+                "summary": {"type": "string", "description": "Short markdown summary of the release"},
+                "sections": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "category": {"type": "string", "enum": ["New Features", "Bug Fixes", "Breaking Changes", "Security", "Deprecations", "Performance", "Known Issues", "Documentation"]},
+                      "content": {"type": "string", "description": "Concise markdown bullets for this category"}
+                    },
+                    "required": ["category", "content"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["summary", "sections"],
+              "additionalProperties": false
+            }""");
+
     public SummaryService(@Value("${claude.api.key:}") String claudeApiKey) {
         this.claudeApiKey = claudeApiKey;
     }
+
     //Claude API call to generate summaries for patch notes
-    public SummaryResult generateSummary(String content) {
+    public SummaryResult generateSummary(String techName, String content) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost request = new HttpPost(CLAUDE_API_URL);
 
@@ -33,30 +67,27 @@ public class SummaryService {
             request.setHeader("anthropic-version", "2023-06-01");
             request.setHeader("Content-Type", "application/json");
 
+            String trimmedContent = content.length() > MAX_CONTENT_CHARS
+                    ? content.substring(0, MAX_CONTENT_CHARS)
+                    : content;
+
             JSONObject requestBody = new JSONObject();
-            requestBody.put("model", "claude-sonnet-4-20250514");
-            requestBody.put("max_tokens", 1024);
+            requestBody.put("model", "claude-sonnet-5");
+            requestBody.put("max_tokens", 2048);
+            // Summarization doesn't need reasoning; disabling thinking keeps
+            // token spend flat (Sonnet 5 runs it by default when omitted)
+            requestBody.put("thinking", new JSONObject().put("type", "disabled"));
+            requestBody.put("output_config", new JSONObject()
+                    .put("effort", "low")
+                    .put("format", new JSONObject()
+                            .put("type", "json_schema")
+                            .put("schema", OUTPUT_SCHEMA)));
+            requestBody.put("system", SYSTEM_PROMPT);
 
             JSONArray messages = new JSONArray();
             JSONObject message = new JSONObject();
             message.put("role", "user");
-            message.put("content", """
-                    Summarize these patch notes and return only valid JSON with this exact shape:
-                    {
-                      "summary": "short markdown summary",
-                      "sections": [
-                        { "category": "New Features", "content": "markdown bullets for that section" }
-                      ]
-                    }
-
-                    Rules:
-                    - Use only these category names when relevant: New Features, Bug Fixes, Breaking Changes, Security, Deprecations, Performance, Known Issues, Documentation.
-                    - Omit categories that are not present.
-                    - Keep section content concise and useful.
-                    - Return JSON only, no code fences or extra text.
-
-                    Patch notes:
-                    """ + content);
+            message.put("content", "Tech: " + techName + "\n\nPatch notes:\n" + trimmedContent);
             messages.put(message);
             requestBody.put("messages", messages);
 
