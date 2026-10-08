@@ -1,0 +1,9 @@
+name = "JuliaAnalysis"
+uuid = "a1b2c3d4-0000-4000-8000-000000000001"
+
+[deps]
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+
+[compat]
+julia = "1.10"

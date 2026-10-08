@@ -1,0 +1,8 @@
+{
+  "name": "patchy",
+  "version": "0.1.0",
+  "contextFileName": "skills/patchy/SKILL.md",
+  "mcpServers": {
+    "patchy": { "command": "node", "args": ["${extensionPath}/server.js"] }
+  }
+}

@@ -8,6 +8,7 @@ import { apiFetch } from '../../Services/api';
 const UserProfile = () => {
     const { userState, isAuthenticated, login } = useAuth();
     const [username, setUsername] = useState('');
+    const [tokens, setTokens] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -27,6 +28,13 @@ const UserProfile = () => {
         }
     }, [isAuthenticated, userState, navigate]);
 
+    useEffect(() => {
+        apiFetch("/api/me/tokens")
+            .then((response) => (response.ok ? response.json() : []))
+            .then(setTokens)
+            .catch(() => setTokens([]));
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -40,33 +48,39 @@ const UserProfile = () => {
         }
 
         try {
-            const userResponse = await apiFetch("/api/currentUserId");
-            if (!userResponse.ok) {
-                throw new Error("Argh! Ye need to be logged in to change yer username!");
-            }
-
-            const userId = await userResponse.json();
-
-            const response = await apiFetch(`/users/${userId}`, {
+            const response = await apiFetch("/api/me", {
                 method: "PUT",
                 body: JSON.stringify({ username }),
             });
 
+            if (response.status === 401) {
+                throw new Error("Argh! Ye need to be logged in to change yer profile!");
+            }
             if (!response.ok) {
-                throw new Error("Argh! Failed to update yer profile!");
+                throw new Error(await response.text() || "Argh! Failed to update yer profile!");
             }
 
             const updatedUser = await response.json();
             login(updatedUser);
 
             setSuccess("Yer profile has been updated successfully, matey!");
-            toast.success("Username updated successfully!");
+            toast.success("Profile updated successfully!");
 
         } catch (error) {
             setError(`Error: ${error.message}`);
             toast.error(`Error: ${error.message}`);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const revokeToken = async (id) => {
+        const response = await apiFetch(`/api/me/tokens/${id}`, { method: "DELETE" });
+        if (response.ok) {
+            setTokens((previous) => previous.filter((token) => token.id !== id));
+            toast.success("Editor disconnected.");
+        } else {
+            toast.error("Couldn't disconnect that editor.");
         }
     };
 
@@ -77,7 +91,7 @@ const UserProfile = () => {
     return (
         <div className="user-form">
             <div className="profile-container">
-                <h2>Yer Profile</h2>
+                <h1>Yer profile</h1>
                 <p className="profile-subtitle">Update yer account details, matey!</p>
 
                 {error && (
@@ -123,6 +137,27 @@ const UserProfile = () => {
                         </button>
                     </div>
                 </form>
+
+                <h3 className="token-heading">Connected editors</h3>
+                {tokens.length === 0 ? (
+                    <p>No editors connected. Sign in from the Patchy VS Code or IntelliJ plugin.</p>
+                ) : (
+                    <ul className="token-list">
+                        {tokens.map((token) => (
+                            <li key={token.id}>
+                                <span>
+                                    {token.name}
+                                    <small>
+                                        {token.lastUsedAt
+                                            ? ` · last used ${new Date(token.lastUsedAt).toLocaleDateString()}`
+                                            : " · never used"}
+                                    </small>
+                                </span>
+                                <button type="button" onClick={() => revokeToken(token.id)}>Disconnect</button>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
         </div>
     );

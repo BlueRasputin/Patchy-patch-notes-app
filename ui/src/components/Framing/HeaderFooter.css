@@ -12,9 +12,15 @@
     height: 3rem;
 }
 
-.logo-section {
+.brand {
     display: flex;
     align-items: center;
+    gap: 0.75rem;
+    color: var(--fg);
+}
+
+.brand:hover {
+    text-decoration: none;
 }
 
 .title-section {
@@ -26,15 +32,14 @@
 .site-title {
     font-family: "Cinzel Decorative", serif;
     font-size: 1.6rem;
+    font-weight: 700;
     line-height: 1.2;
-    margin: 0;
 }
 
 .site-tagline {
     font-size: 0.85rem;
     color: var(--brass);
     font-style: italic;
-    margin: 0;
 }
 
 .user-nav {
@@ -72,9 +77,28 @@
 }
 
 .Footer {
-    padding: 1rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding: 1rem 1.5rem 1.25rem;
     border-top: 1px solid var(--border);
     background: var(--bg-subtle);
     color: var(--fg-muted);
     font-size: 0.8rem;
+}
+
+.Footer p {
+    max-width: 70ch;
+}
+
+@media (max-width: 600px) {
+    .Header {
+        flex-wrap: wrap;
+        padding: 0.75rem 1rem;
+    }
+
+    .site-tagline {
+        display: none;
+    }
 }

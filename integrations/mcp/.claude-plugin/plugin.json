@@ -1,0 +1,6 @@
+{
+  "name": "patchy",
+  "version": "0.1.0",
+  "description": "Patch notes and breaking-change checks for every language, framework and library in your project.",
+  "author": { "name": "Barrcon" }
+}

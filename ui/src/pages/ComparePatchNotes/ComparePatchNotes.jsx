@@ -66,7 +66,7 @@ function ComparePatchNotes() {
 
   return (
     <div className="compare-page">
-      <h2>Compare Patch Notes</h2>
+      <h1>Compare patch notes</h1>
       <p className="instruction">Select at least two tools to compare their latest summaries.</p>
 
       {error && <div className="error-banner">{error}</div>}

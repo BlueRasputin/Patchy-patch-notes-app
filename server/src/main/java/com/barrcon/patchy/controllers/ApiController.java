@@ -1,20 +1,20 @@
 package com.barrcon.patchy.controllers;
 
+import com.barrcon.patchy.config.SecurityConfig;
 import com.barrcon.patchy.dto.LoginFormDTO;
 import com.barrcon.patchy.dto.RegisterFormDTO;
 import com.barrcon.patchy.models.User;
 import com.barrcon.patchy.repositories.UserRepository;
+import com.barrcon.patchy.services.CurrentUserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 
@@ -22,36 +22,24 @@ import java.util.Optional;
 public class ApiController {
 
     private final UserRepository userRepository;
+    private final CurrentUserService currentUserService;
+    private final SecurityConfig.OAuthProviders oauthProviders;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    @Autowired
-    public ApiController( UserRepository userRepository) {
+    public ApiController(UserRepository userRepository,
+                         CurrentUserService currentUserService,
+                         SecurityConfig.OAuthProviders oauthProviders) {
         this.userRepository = userRepository;
+        this.currentUserService = currentUserService;
+        this.oauthProviders = oauthProviders;
     }
 
-    private static final String userSessionKey = "user";
-
-    public User getUserFromSession(HttpSession session) {
-        Long userId = (Long) session.getAttribute(userSessionKey);
-        if (userId == null) {
-            return null;
-        }
-        Optional<User> user = userRepository.findById(userId);
-        return user.orElse(null);
+    // Which "Continue with ..." buttons the login page should show
+    @GetMapping("/auth/providers")
+    public List<String> authProviders() {
+        return oauthProviders.ids();
     }
 
-    private static void setUserInSession(HttpSession session, User user) {
-        session.setAttribute(userSessionKey, user.getId());
-    }
-
-    @GetMapping("/currentUserId")
-    public ResponseEntity<Long> getCurrentUserId (HttpSession session) {
-        User user = getUserFromSession(session);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        return new ResponseEntity<>(user.getId(),HttpStatus.OK);
-    }
     //register user controller
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody @Valid RegisterFormDTO registerFormDTO, Errors errors, HttpServletRequest request) {
@@ -59,10 +47,12 @@ public class ApiController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        User existingUser = userRepository.findByUsername(registerFormDTO.getUsername());
-        // Check if username is already claimed
-        if (existingUser != null) {
+        // Check if username or email is already claimed
+        if (userRepository.findByUsername(registerFormDTO.getUsername()) != null) {
             return new ResponseEntity<String>("Username already exists", HttpStatus.CONFLICT);
+        }
+        if (userRepository.findByEmail(registerFormDTO.getEmail()) != null) {
+            return new ResponseEntity<String>("Email already in use", HttpStatus.CONFLICT);
         }
         // obtain password and verify password from DTO
         String password = registerFormDTO.getPassword();
@@ -74,8 +64,7 @@ public class ApiController {
         // Create and save new user
         User newUser = new User(registerFormDTO.getUsername(),passwordEncoder.encode(password), registerFormDTO.getEmail());
         userRepository.save(newUser);
-        // Set user in session
-        setUserInSession(request.getSession(), newUser);
+        currentUserService.signIn(request.getSession(), newUser);
 
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
@@ -96,8 +85,11 @@ public class ApiController {
         if (theUser == null || !theUser.isMatchingPassword(loginFormDTO.getPassword())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        // Set user in session
-        setUserInSession(request.getSession(), theUser);
+        // Rotate the session id on login to prevent session fixation
+        if (request.getSession(false) != null) {
+            request.changeSessionId();
+        }
+        currentUserService.signIn(request.getSession(), theUser);
 
         return new ResponseEntity<>(theUser, HttpStatus.OK);
     }

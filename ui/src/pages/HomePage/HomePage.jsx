@@ -79,10 +79,11 @@ function HomePage() {
 
   return (
     <div className="homepage">
-      <h2>Welcome to Patchy!</h2>
+      <h1>Latest patch notes</h1>
       <p className="instruction">
-        The latest patch notes across every tracked technology.{" "}
-        Browse the <Link to="/Techs">tech catalog</Link> to follow the tools you use.
+        The newest release of every tracked technology, checked daily.{" "}
+        Follow the tools you use in the <Link to="/Techs">tech catalog</Link>, or{" "}
+        <Link to="/About">install Patchy</Link> to get these in your editor.
       </p>
 
       {error && (
@@ -93,7 +94,7 @@ function HomePage() {
 
       <section className="patch-notes-section">
         <div className="patch-notes-header">
-          <h3>Latest Patch Notes</h3>
+          <h2 className="visually-hidden">Filters</h2>
           <div className="patch-note-controls">
             <label className="toolkit-toggle">
               <input
@@ -110,6 +111,7 @@ function HomePage() {
                   key={category}
                   type="button"
                   className={selectedCategories.includes(category) ? "filter-chip active" : "filter-chip"}
+                  aria-pressed={selectedCategories.includes(category)}
                   onClick={() => toggleCategoryFilter(category)}
                 >
                   {category}

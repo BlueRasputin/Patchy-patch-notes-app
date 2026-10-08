@@ -115,3 +115,25 @@
 .source-link-disabled {
   color: var(--fg-muted);
 }
+
+.urgency-badge {
+  margin-left: auto;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 1px 8px;
+  border: 1px solid currentColor;
+}
+
+.urgency-badge + .version-badge {
+  margin-left: 0.5rem;
+}
+
+.urgency-critical {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+
+.urgency-high {
+  color: var(--brass);
+}

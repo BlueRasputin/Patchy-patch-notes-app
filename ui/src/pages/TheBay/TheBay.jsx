@@ -1,26 +1,21 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchBay } from '../../Services/bayService';
 import Card from '../../components/TechCards/Card';
 import './TheBay.css';
 import LoadingSpinner from '../../components/LoadingIcon/LoadingSpinner';
 import { toast } from 'react-toastify';
-import { apiFetch } from '../../Services/api';
+import { useAuth } from '../../Services/authContext';
 
 const TheBay = () => {
+  const { isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(true);
   const [bayFeed, setBayFeed] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponse = await apiFetch("/api/currentUserId");
-
-        if (!userResponse.ok) {
-          throw new Error("Argh! Ye got to be logged in to view yer Bay!");
-        }
-
-        const userId = await userResponse.json();
-        const patchNotes = await fetchBay(userId);
+        const patchNotes = await fetchBay(isAuthenticated());
         
         setBayFeed(patchNotes);
       } catch (err) {
@@ -31,7 +26,7 @@ const TheBay = () => {
     };
 
     fetchData();
-  }, []);
+  }, [isAuthenticated]);
 
   if (loading) {
     return (
@@ -54,7 +49,7 @@ const TheBay = () => {
         <h1>The Bay</h1>
         <p className="bay-subtitle">Yer personalized fleet of patch notes</p>
         <div className="bay-stats">
-          <span className="tech-count">{bayFeed.length} technologies tracked</span>
+          <span className="tech-count">{bayFeed.length} {bayFeed.length === 1 ? "technology" : "technologies"} tracked</span>
         </div>
       </div>
       
@@ -75,8 +70,11 @@ const TheBay = () => {
           ))
         ) : (
           <div className="no-data">
-            <h3>Ye aint got nothin in yer bay yet!</h3>
-            <p>Visit the home page to add some technologies to follow.</p>
+            <h2>Yer Bay is empty</h2>
+            <p>
+              Follow techs in the <Link to="/Techs">tech catalog</Link>, or{" "}
+              <Link to="/About">install Patchy</Link> to fill it from your projects automatically.
+            </p>
           </div>
         )}
       </div>

@@ -1,195 +1,375 @@
 [
   {
-    "name": "React",
-    "patchNotesUrl": "https://react.dev/blog/2025/10/01/react-19-2",
-    "contentSelector": ".min-w-0.isolate, article, main",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Java",
-    "patchNotesUrl": "https://www.oracle.com/java/technologies/javase/25all-relnotes.html",
-    "contentSelector": ".cc01w1.cwidth",
-    "contentStrategy": "java-sections"
-  },
-  {
-    "name": "Python",
-    "patchNotesUrl": "https://www.python.org/downloads/release/python-3139/",
-    "contentSelector": ".main-content, article, main",
-    "contentStrategy": "default"
-  },
-  {
     "name": "Node.js",
     "patchNotesUrl": "https://nodejs.org/en/blog/release/v24.10.0",
     "contentSelector": ".layouts-module_mzYk8q_postLayout, article, main",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Ruby on Rails",
-    "patchNotesUrl": "https://github.com/rails/rails/releases/tag/v8.1.0",
-    "contentSelector": ".Box-body, main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Spring",
-    "patchNotesUrl": "https://spring.io/blog/2025/10/09/spring-batch-6-0-0-m4-released",
-    "contentSelector": ".column.is-9.pr-6 .markdown",
-    "contentStrategy": "spring-blog"
+    "contentStrategy": "default",
+    "githubRepo": "nodejs/node",
+    "packages": [
+      "language:node"
+    ]
   },
   {
     "name": "TypeScript",
     "patchNotesUrl": "https://devblogs.microsoft.com/typescript/",
     "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "contentStrategy": "default",
+    "githubRepo": "microsoft/TypeScript",
+    "packages": [
+      "npm:typescript"
+    ]
   },
   {
-    "name": "VS Code",
-    "patchNotesUrl": "https://code.visualstudio.com/updates",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "Python",
+    "patchNotesUrl": "https://www.python.org/downloads/release/python-3139/",
+    "contentSelector": ".main-content, article, main",
+    "contentStrategy": "default",
+    "packages": [
+      "language:python"
+    ]
   },
   {
-    "name": "Vite",
-    "patchNotesUrl": "https://vite.dev/blog/",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Next.js",
-    "patchNotesUrl": "https://github.com/vercel/next.js/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Angular",
-    "patchNotesUrl": "https://github.com/angular/angular/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Vue",
-    "patchNotesUrl": "https://github.com/vuejs/core/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Docker",
-    "patchNotesUrl": "https://docs.docker.com/desktop/release-notes/",
-    "contentSelector": "article.prose, article, main",
-    "contentStrategy": "latest-section"
-  },
-  {
-    "name": "Kubernetes",
-    "patchNotesUrl": "https://github.com/kubernetes/kubernetes/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Tailwind CSS",
-    "patchNotesUrl": "https://github.com/tailwindlabs/tailwindcss/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "npm",
-    "patchNotesUrl": "https://github.com/npm/cli/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Go",
-    "patchNotesUrl": "https://go.dev/doc/devel/release",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Rust",
-    "patchNotesUrl": "https://github.com/rust-lang/rust/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": ".NET",
-    "patchNotesUrl": "https://github.com/dotnet/core/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "PHP",
-    "patchNotesUrl": "https://www.php.net/ChangeLog-8.php",
-    "contentSelector": "#layout-content, main, article",
-    "contentStrategy": "default"
-  },
-  {
-    "name": "Swift",
-    "patchNotesUrl": "https://github.com/swiftlang/swift/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "Java",
+    "patchNotesUrl": "https://www.oracle.com/java/technologies/javase/25all-relnotes.html",
+    "contentSelector": ".cc01w1.cwidth",
+    "contentStrategy": "java-sections",
+    "packages": [
+      "language:java"
+    ]
   },
   {
     "name": "Kotlin",
     "patchNotesUrl": "https://github.com/JetBrains/kotlin/releases",
     "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "contentStrategy": "default",
+    "githubRepo": "JetBrains/kotlin",
+    "packages": [
+      "language:kotlin",
+      "maven:kotlin-reflect",
+      "maven:kotlin-stdlib",
+      "maven:kotlin-stdlib-jdk7",
+      "maven:kotlin-stdlib-jdk8",
+      "maven:kotlin-stdlib-jre7",
+      "maven:kotlin-test",
+      "maven:kotlin-test-junit"
+    ]
   },
   {
-    "name": "Ruby",
-    "patchNotesUrl": "https://github.com/ruby/ruby/releases",
+    "name": ".NET",
+    "patchNotesUrl": "https://github.com/dotnet/core/releases",
     "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "contentStrategy": "default",
+    "githubRepo": "dotnet/runtime",
+    "packages": [
+      "language:dotnet",
+      "nuget:Microsoft.Bcl.AsyncInterfaces",
+      "nuget:Microsoft.Bcl.Cryptography",
+      "nuget:Microsoft.Bcl.TimeProvider",
+      "nuget:Microsoft.CSharp",
+      "nuget:Microsoft.Extensions.Caching.Abstractions",
+      "nuget:Microsoft.Extensions.Caching.Memory",
+      "nuget:Microsoft.Extensions.Configuration",
+      "nuget:Microsoft.Extensions.Configuration.Abstractions",
+      "nuget:Microsoft.Extensions.Configuration.Binder",
+      "nuget:Microsoft.Extensions.Configuration.CommandLine",
+      "nuget:Microsoft.Extensions.Configuration.EnvironmentVariables",
+      "nuget:Microsoft.Extensions.Configuration.FileExtensions",
+      "nuget:Microsoft.Extensions.Configuration.Json",
+      "nuget:Microsoft.Extensions.Configuration.UserSecrets",
+      "nuget:Microsoft.Extensions.DependencyInjection",
+      "nuget:Microsoft.Extensions.DependencyInjection.Abstractions",
+      "nuget:Microsoft.Extensions.DependencyModel",
+      "nuget:Microsoft.Extensions.Diagnostics",
+      "nuget:Microsoft.Extensions.Diagnostics.Abstractions",
+      "nuget:Microsoft.Extensions.Features",
+      "nuget:Microsoft.Extensions.FileProviders.Abstractions",
+      "nuget:Microsoft.Extensions.FileProviders.Composite",
+      "nuget:Microsoft.Extensions.FileProviders.Physical",
+      "nuget:Microsoft.Extensions.FileSystemGlobbing",
+      "nuget:Microsoft.Extensions.Hosting",
+      "nuget:Microsoft.Extensions.Hosting.Abstractions",
+      "nuget:Microsoft.Extensions.Http",
+      "nuget:Microsoft.Extensions.Logging",
+      "nuget:Microsoft.Extensions.Logging.Abstractions",
+      "nuget:Microsoft.Extensions.Logging.Configuration",
+      "nuget:Microsoft.Extensions.Logging.Console",
+      "nuget:Microsoft.Extensions.Logging.Debug",
+      "nuget:Microsoft.Extensions.Logging.EventLog",
+      "nuget:Microsoft.Extensions.Logging.EventSource",
+      "nuget:Microsoft.Extensions.Options",
+      "nuget:Microsoft.Extensions.Options.ConfigurationExtensions",
+      "nuget:Microsoft.Extensions.Options.DataAnnotations",
+      "nuget:Microsoft.Extensions.Primitives",
+      "nuget:Microsoft.Win32.Primitives",
+      "nuget:Microsoft.Win32.Registry",
+      "nuget:Microsoft.Win32.SystemEvents",
+      "nuget:System.AppContext",
+      "nuget:System.Buffers",
+      "nuget:System.CodeDom",
+      "nuget:System.Collections",
+      "nuget:System.Collections.Concurrent",
+      "nuget:System.Collections.Immutable",
+      "nuget:System.Collections.NonGeneric",
+      "nuget:System.Collections.Specialized",
+      "nuget:System.ComponentModel",
+      "nuget:System.ComponentModel.Annotations",
+      "nuget:System.ComponentModel.Composition",
+      "nuget:System.ComponentModel.EventBasedAsync",
+      "nuget:System.ComponentModel.Primitives",
+      "nuget:System.ComponentModel.TypeConverter",
+      "nuget:System.Composition",
+      "nuget:System.Composition.AttributedModel",
+      "nuget:System.Composition.Convention",
+      "nuget:System.Composition.Hosting",
+      "nuget:System.Composition.Runtime",
+      "nuget:System.Composition.TypedParts",
+      "nuget:System.Configuration.ConfigurationManager",
+      "nuget:System.Console",
+      "nuget:System.Data.Common",
+      "nuget:System.Data.DataSetExtensions",
+      "nuget:System.Data.OleDb",
+      "nuget:System.Diagnostics.Contracts",
+      "nuget:System.Diagnostics.Debug",
+      "nuget:System.Diagnostics.DiagnosticSource",
+      "nuget:System.Diagnostics.EventLog",
+      "nuget:System.Diagnostics.FileVersionInfo",
+      "nuget:System.Diagnostics.PerformanceCounter",
+      "nuget:System.Diagnostics.Process",
+      "nuget:System.Diagnostics.StackTrace",
+      "nuget:System.Diagnostics.TextWriterTraceListener",
+      "nuget:System.Diagnostics.Tools",
+      "nuget:System.Diagnostics.TraceSource",
+      "nuget:System.Diagnostics.Tracing",
+      "nuget:System.DirectoryServices",
+      "nuget:System.DirectoryServices.Protocols",
+      "nuget:System.Drawing.Common",
+      "nuget:System.Dynamic.Runtime",
+      "nuget:System.Formats.Asn1",
+      "nuget:System.Globalization",
+      "nuget:System.Globalization.Calendars",
+      "nuget:System.Globalization.Extensions",
+      "nuget:System.IO",
+      "nuget:System.IO.Compression",
+      "nuget:System.IO.Compression.ZipFile",
+      "nuget:System.IO.FileSystem",
+      "nuget:System.IO.FileSystem.AccessControl",
+      "nuget:System.IO.FileSystem.Primitives",
+      "nuget:System.IO.FileSystem.Watcher",
+      "nuget:System.IO.Hashing",
+      "nuget:System.IO.MemoryMappedFiles",
+      "nuget:System.IO.Packaging",
+      "nuget:System.IO.Pipelines",
+      "nuget:System.IO.Pipes",
+      "nuget:System.IO.UnmanagedMemoryStream",
+      "nuget:System.Linq",
+      "nuget:System.Linq.Expressions",
+      "nuget:System.Linq.Parallel",
+      "nuget:System.Linq.Queryable",
+      "nuget:System.Management",
+      "nuget:System.Memory",
+      "nuget:System.Memory.Data",
+      "nuget:System.Net.Http",
+      "nuget:System.Net.Http.Json",
+      "nuget:System.Net.Http.WinHttpHandler",
+      "nuget:System.Net.NameResolution",
+      "nuget:System.Net.NetworkInformation",
+      "nuget:System.Net.Primitives",
+      "nuget:System.Net.Requests",
+      "nuget:System.Net.Security",
+      "nuget:System.Net.Sockets",
+      "nuget:System.Net.WebHeaderCollection",
+      "nuget:System.Net.WebSockets",
+      "nuget:System.Net.WebSockets.Client",
+      "nuget:System.Numerics.Vectors",
+      "nuget:System.ObjectModel",
+      "nuget:System.Private.DataContractSerialization",
+      "nuget:System.Private.Uri",
+      "nuget:System.Reflection",
+      "nuget:System.Reflection.DispatchProxy",
+      "nuget:System.Reflection.Emit",
+      "nuget:System.Reflection.Emit.ILGeneration",
+      "nuget:System.Reflection.Emit.Lightweight",
+      "nuget:System.Reflection.Extensions",
+      "nuget:System.Reflection.Metadata",
+      "nuget:System.Reflection.MetadataLoadContext",
+      "nuget:System.Reflection.Primitives",
+      "nuget:System.Reflection.TypeExtensions",
+      "nuget:System.Resources.Extensions",
+      "nuget:System.Resources.Reader",
+      "nuget:System.Resources.ResourceManager",
+      "nuget:System.Runtime",
+      "nuget:System.Runtime.Caching",
+      "nuget:System.Runtime.CompilerServices.Unsafe",
+      "nuget:System.Runtime.Extensions",
+      "nuget:System.Runtime.Handles",
+      "nuget:System.Runtime.InteropServices",
+      "nuget:System.Runtime.InteropServices.RuntimeInformation",
+      "nuget:System.Runtime.Loader",
+      "nuget:System.Runtime.Numerics",
+      "nuget:System.Runtime.Serialization.Formatters",
+      "nuget:System.Runtime.Serialization.Json",
+      "nuget:System.Runtime.Serialization.Primitives",
+      "nuget:System.Runtime.Serialization.Xml",
+      "nuget:System.Security.AccessControl",
+      "nuget:System.Security.Claims",
+      "nuget:System.Security.Cryptography.Algorithms",
+      "nuget:System.Security.Cryptography.Cng",
+      "nuget:System.Security.Cryptography.Csp",
+      "nuget:System.Security.Cryptography.Encoding",
+      "nuget:System.Security.Cryptography.OpenSsl",
+      "nuget:System.Security.Cryptography.Pkcs",
+      "nuget:System.Security.Cryptography.Primitives",
+      "nuget:System.Security.Cryptography.ProtectedData",
+      "nuget:System.Security.Cryptography.X509Certificates",
+      "nuget:System.Security.Cryptography.Xml",
+      "nuget:System.Security.Permissions",
+      "nuget:System.Security.Principal",
+      "nuget:System.Security.Principal.Windows",
+      "nuget:System.Security.SecureString",
+      "nuget:System.ServiceProcess.ServiceController",
+      "nuget:System.Spatial",
+      "nuget:System.Text.Encoding",
+      "nuget:System.Text.Encoding.CodePages",
+      "nuget:System.Text.Encoding.Extensions",
+      "nuget:System.Text.Encodings.Web",
+      "nuget:System.Text.Json",
+      "nuget:System.Text.RegularExpressions",
+      "nuget:System.Threading",
+      "nuget:System.Threading.AccessControl",
+      "nuget:System.Threading.Channels",
+      "nuget:System.Threading.Overlapped",
+      "nuget:System.Threading.RateLimiting",
+      "nuget:System.Threading.Tasks",
+      "nuget:System.Threading.Tasks.Dataflow",
+      "nuget:System.Threading.Tasks.Extensions",
+      "nuget:System.Threading.Tasks.Parallel",
+      "nuget:System.Threading.Thread",
+      "nuget:System.Threading.ThreadPool",
+      "nuget:System.Threading.Timer",
+      "nuget:System.ValueTuple",
+      "nuget:System.Windows.Extensions",
+      "nuget:System.Xml.ReaderWriter",
+      "nuget:System.Xml.XDocument",
+      "nuget:System.Xml.XPath",
+      "nuget:System.Xml.XPath.XDocument",
+      "nuget:System.Xml.XPath.XmlDocument",
+      "nuget:System.Xml.XmlDocument",
+      "nuget:System.Xml.XmlSerializer"
+    ]
   },
   {
-    "name": "Express",
-    "patchNotesUrl": "https://github.com/expressjs/express/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "Spring",
+    "patchNotesUrl": "https://spring.io/blog/2025/10/09/spring-batch-6-0-0-m4-released",
+    "contentSelector": ".column.is-9.pr-6 .markdown",
+    "contentStrategy": "spring-blog",
+    "githubRepo": "spring-projects/spring-boot",
+    "packages": [
+      "maven:spring-boot",
+      "maven:spring-boot-actuator",
+      "maven:spring-boot-autoconfigure",
+      "maven:spring-boot-configuration-processor",
+      "maven:spring-boot-devtools",
+      "maven:spring-boot-loader-tools",
+      "maven:spring-boot-starter",
+      "maven:spring-boot-starter-activemq",
+      "maven:spring-boot-starter-actuator",
+      "maven:spring-boot-starter-amqp",
+      "maven:spring-boot-starter-aop",
+      "maven:spring-boot-starter-batch",
+      "maven:spring-boot-starter-cache",
+      "maven:spring-boot-starter-cloud-connectors",
+      "maven:spring-boot-starter-data-elasticsearch",
+      "maven:spring-boot-starter-data-jdbc",
+      "maven:spring-boot-starter-data-jpa",
+      "maven:spring-boot-starter-data-mongodb",
+      "maven:spring-boot-starter-data-mongodb-reactive",
+      "maven:spring-boot-starter-data-redis",
+      "maven:spring-boot-starter-data-rest",
+      "maven:spring-boot-starter-freemarker",
+      "maven:spring-boot-starter-hateoas",
+      "maven:spring-boot-starter-integration",
+      "maven:spring-boot-starter-jdbc",
+      "maven:spring-boot-starter-jersey",
+      "maven:spring-boot-starter-jetty",
+      "maven:spring-boot-starter-log4j2",
+      "maven:spring-boot-starter-logging",
+      "maven:spring-boot-starter-mail",
+      "maven:spring-boot-starter-mustache",
+      "maven:spring-boot-starter-oauth2-client",
+      "maven:spring-boot-starter-oauth2-resource-server",
+      "maven:spring-boot-starter-parent",
+      "maven:spring-boot-starter-quartz",
+      "maven:spring-boot-starter-security",
+      "maven:spring-boot-starter-test",
+      "maven:spring-boot-starter-thymeleaf",
+      "maven:spring-boot-starter-tomcat",
+      "maven:spring-boot-starter-undertow",
+      "maven:spring-boot-starter-validation",
+      "maven:spring-boot-starter-web",
+      "maven:spring-boot-starter-web-services",
+      "maven:spring-boot-starter-webflux",
+      "maven:spring-boot-starter-websocket",
+      "maven:spring-boot-test",
+      "rubygems:spring"
+    ]
   },
   {
-    "name": "Svelte",
-    "patchNotesUrl": "https://github.com/sveltejs/svelte/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "Django",
+    "packages": [
+      "pypi:django"
+    ],
+    "endoflife": "django",
+    "rank": 1
   },
   {
-    "name": "ESLint",
-    "patchNotesUrl": "https://github.com/eslint/eslint/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "Git",
+    "githubRepo": "git-for-windows/git",
+    "rank": 1
   },
   {
-    "name": "Jest",
-    "patchNotesUrl": "https://github.com/jestjs/jest/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "Docker",
+    "patchNotesUrl": "https://docs.docker.com/desktop/release-notes/",
+    "contentSelector": "article.prose, article, main",
+    "contentStrategy": "latest-section",
+    "githubRepo": "moby/moby",
+    "packages": [
+      "go:github.com/docker/docker",
+      "language:docker"
+    ]
   },
   {
-    "name": "Electron",
-    "patchNotesUrl": "https://github.com/electron/electron/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "Docker Compose",
+    "githubRepo": "docker/compose",
+    "rank": 2
   },
   {
-    "name": "Deno",
-    "patchNotesUrl": "https://github.com/denoland/deno/releases",
+    "name": "Kubernetes",
+    "patchNotesUrl": "https://github.com/kubernetes/kubernetes/releases",
     "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "contentStrategy": "default",
+    "githubRepo": "kubernetes/kubernetes"
   },
   {
-    "name": "Bun",
-    "patchNotesUrl": "https://github.com/oven-sh/bun/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "Helm",
+    "githubRepo": "helm/helm",
+    "rank": 31
   },
   {
-    "name": "pnpm",
-    "patchNotesUrl": "https://github.com/pnpm/pnpm/releases",
+    "name": "Terraform",
+    "patchNotesUrl": "https://github.com/hashicorp/terraform/releases",
     "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "contentStrategy": "default",
+    "githubRepo": "hashicorp/terraform"
   },
   {
-    "name": "Redis",
-    "patchNotesUrl": "https://github.com/redis/redis/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "Ansible",
+    "githubRepo": "ansible/ansible",
+    "rank": 32
+  },
+  {
+    "name": "nginx",
+    "githubRepo": "nginx/nginx",
+    "rank": 11
   },
   {
     "name": "PostgreSQL",
@@ -198,21 +378,2754 @@
     "contentStrategy": "default"
   },
   {
-    "name": "Terraform",
-    "patchNotesUrl": "https://github.com/hashicorp/terraform/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "MySQL",
+    "endoflife": "mysql",
+    "rank": 5
   },
   {
-    "name": "Laravel",
-    "patchNotesUrl": "https://github.com/laravel/framework/releases",
-    "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "name": "SQLite",
+    "endoflife": "sqlite",
+    "rank": 4
   },
   {
-    "name": "Flutter",
-    "patchNotesUrl": "https://github.com/flutter/flutter/releases",
+    "name": "MongoDB",
+    "endoflife": "mongodb",
+    "rank": 18
+  },
+  {
+    "name": "Redis",
+    "patchNotesUrl": "https://github.com/redis/redis/releases",
     "contentSelector": "main, article",
-    "contentStrategy": "default"
+    "contentStrategy": "default",
+    "githubRepo": "redis/redis"
+  },
+  {
+    "name": "Microsoft SQL Server",
+    "endoflife": "mssqlserver",
+    "rank": 10
+  },
+  {
+    "name": "Elasticsearch",
+    "githubRepo": "elastic/elasticsearch",
+    "rank": 24,
+    "packages": [
+      "maven:elasticsearch",
+      "maven:elasticsearch-rest-high-level-client"
+    ]
+  },
+  {
+    "name": "MariaDB",
+    "githubRepo": "MariaDB/server",
+    "rank": 16
+  },
+  {
+    "name": "Apache Kafka",
+    "packages": [
+      "maven:kafka-clients"
+    ],
+    "endoflife": "apache-kafka",
+    "rank": 50
+  },
+  {
+    "name": "RabbitMQ",
+    "githubRepo": "rabbitmq/rabbitmq-server",
+    "rank": 39
+  },
+  {
+    "name": "VS Code",
+    "patchNotesUrl": "https://code.visualstudio.com/updates",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "microsoft/vscode"
+  },
+  {
+    "name": "Visual Studio",
+    "endoflife": "visual-studio",
+    "rank": 7
+  },
+  {
+    "name": "GitHub CLI",
+    "githubRepo": "cli/cli",
+    "rank": 27
+  },
+  {
+    "name": "Homebrew",
+    "githubRepo": "Homebrew/brew",
+    "rank": 8
+  },
+  {
+    "name": "Gradle",
+    "githubRepo": "gradle/gradle",
+    "rank": 25
+  },
+  {
+    "name": "Maven",
+    "githubRepo": "apache/maven",
+    "rank": 22
+  },
+  {
+    "name": "uv",
+    "githubRepo": "astral-sh/uv",
+    "rank": 14
+  },
+  {
+    "name": "pip",
+    "changelogUrl": "https://raw.githubusercontent.com/pypa/pip/main/NEWS.rst",
+    "rank": 3
+  },
+  {
+    "name": "Poetry",
+    "githubRepo": "python-poetry/poetry",
+    "rank": 56
+  },
+  {
+    "name": "Yarn",
+    "githubRepo": "yarnpkg/berry",
+    "rank": 21
+  },
+  {
+    "name": "pnpm",
+    "patchNotesUrl": "https://github.com/pnpm/pnpm/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "pnpm/pnpm",
+    "packages": [
+      "npm:pnpm"
+    ]
+  },
+  {
+    "name": "npm",
+    "patchNotesUrl": "https://github.com/npm/cli/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "npm/cli",
+    "packages": [
+      "npm:npm"
+    ]
+  },
+  {
+    "name": "Jupyter",
+    "githubRepo": "jupyterlab/jupyterlab",
+    "rank": 36,
+    "packages": [
+      "pypi:jupyterlab"
+    ]
+  },
+  {
+    "name": "PyTorch",
+    "githubRepo": "pytorch/pytorch",
+    "rank": 40,
+    "packages": [
+      "pypi:torch"
+    ]
+  },
+  {
+    "name": "TensorFlow",
+    "githubRepo": "tensorflow/tensorflow",
+    "rank": 43,
+    "packages": [
+      "pypi:tensorflow"
+    ]
+  },
+  {
+    "name": "ASP.NET Core",
+    "githubRepo": "dotnet/aspnetcore",
+    "rank": 17,
+    "packages": [
+      "nuget:Microsoft.AspNetCore",
+      "nuget:Microsoft.AspNetCore.Antiforgery",
+      "nuget:Microsoft.AspNetCore.App.Runtime.linux-x64",
+      "nuget:Microsoft.AspNetCore.App.Runtime.win-x64",
+      "nuget:Microsoft.AspNetCore.Authentication",
+      "nuget:Microsoft.AspNetCore.Authentication.Abstractions",
+      "nuget:Microsoft.AspNetCore.Authentication.Cookies",
+      "nuget:Microsoft.AspNetCore.Authentication.Core",
+      "nuget:Microsoft.AspNetCore.Authentication.Google",
+      "nuget:Microsoft.AspNetCore.Authentication.JwtBearer",
+      "nuget:Microsoft.AspNetCore.Authentication.OpenIdConnect",
+      "nuget:Microsoft.AspNetCore.Authorization",
+      "nuget:Microsoft.AspNetCore.Authorization.Policy",
+      "nuget:Microsoft.AspNetCore.Components",
+      "nuget:Microsoft.AspNetCore.Components.Analyzers",
+      "nuget:Microsoft.AspNetCore.Components.Forms",
+      "nuget:Microsoft.AspNetCore.Components.Web",
+      "nuget:Microsoft.AspNetCore.Connections.Abstractions",
+      "nuget:Microsoft.AspNetCore.Cors",
+      "nuget:Microsoft.AspNetCore.Cryptography.Internal",
+      "nuget:Microsoft.AspNetCore.Cryptography.KeyDerivation",
+      "nuget:Microsoft.AspNetCore.DataProtection",
+      "nuget:Microsoft.AspNetCore.DataProtection.Abstractions",
+      "nuget:Microsoft.AspNetCore.Diagnostics",
+      "nuget:Microsoft.AspNetCore.Diagnostics.Abstractions",
+      "nuget:Microsoft.AspNetCore.Hosting",
+      "nuget:Microsoft.AspNetCore.Hosting.Abstractions",
+      "nuget:Microsoft.AspNetCore.Hosting.Server.Abstractions",
+      "nuget:Microsoft.AspNetCore.Html.Abstractions",
+      "nuget:Microsoft.AspNetCore.Http",
+      "nuget:Microsoft.AspNetCore.Http.Abstractions",
+      "nuget:Microsoft.AspNetCore.Http.Connections.Client",
+      "nuget:Microsoft.AspNetCore.Http.Connections.Common",
+      "nuget:Microsoft.AspNetCore.Http.Extensions",
+      "nuget:Microsoft.AspNetCore.Http.Features",
+      "nuget:Microsoft.AspNetCore.HttpOverrides",
+      "nuget:Microsoft.AspNetCore.Identity.EntityFrameworkCore",
+      "nuget:Microsoft.AspNetCore.JsonPatch",
+      "nuget:Microsoft.AspNetCore.Localization",
+      "nuget:Microsoft.AspNetCore.Metadata",
+      "nuget:Microsoft.AspNetCore.Mvc",
+      "nuget:Microsoft.AspNetCore.Mvc.Abstractions",
+      "nuget:Microsoft.AspNetCore.Mvc.Analyzers",
+      "nuget:Microsoft.AspNetCore.Mvc.ApiExplorer",
+      "nuget:Microsoft.AspNetCore.Mvc.Core",
+      "nuget:Microsoft.AspNetCore.Mvc.Cors",
+      "nuget:Microsoft.AspNetCore.Mvc.DataAnnotations",
+      "nuget:Microsoft.AspNetCore.Mvc.Formatters.Json",
+      "nuget:Microsoft.AspNetCore.Mvc.Localization",
+      "nuget:Microsoft.AspNetCore.Mvc.NewtonsoftJson",
+      "nuget:Microsoft.AspNetCore.Mvc.Razor",
+      "nuget:Microsoft.AspNetCore.Mvc.Razor.Extensions",
+      "nuget:Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
+      "nuget:Microsoft.AspNetCore.Mvc.RazorPages",
+      "nuget:Microsoft.AspNetCore.Mvc.TagHelpers",
+      "nuget:Microsoft.AspNetCore.Mvc.Testing",
+      "nuget:Microsoft.AspNetCore.Mvc.Versioning",
+      "nuget:Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer",
+      "nuget:Microsoft.AspNetCore.Mvc.ViewFeatures",
+      "nuget:Microsoft.AspNetCore.Mvc.WebApiCompatShim",
+      "nuget:Microsoft.AspNetCore.OpenApi",
+      "nuget:Microsoft.AspNetCore.Razor",
+      "nuget:Microsoft.AspNetCore.Razor.Design",
+      "nuget:Microsoft.AspNetCore.Razor.Language",
+      "nuget:Microsoft.AspNetCore.Razor.Runtime",
+      "nuget:Microsoft.AspNetCore.ResponseCaching.Abstractions",
+      "nuget:Microsoft.AspNetCore.Routing",
+      "nuget:Microsoft.AspNetCore.Routing.Abstractions",
+      "nuget:Microsoft.AspNetCore.Server.IISIntegration",
+      "nuget:Microsoft.AspNetCore.Server.Kestrel",
+      "nuget:Microsoft.AspNetCore.Server.Kestrel.Core",
+      "nuget:Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions",
+      "nuget:Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets",
+      "nuget:Microsoft.AspNetCore.SignalR.Common",
+      "nuget:Microsoft.AspNetCore.SignalR.Protocols.Json",
+      "nuget:Microsoft.AspNetCore.StaticFiles",
+      "nuget:Microsoft.AspNetCore.TestHost",
+      "nuget:Microsoft.AspNetCore.WebSockets",
+      "nuget:Microsoft.AspNetCore.WebUtilities",
+      "nuget:Microsoft.CodeAnalysis.Razor",
+      "nuget:Microsoft.Extensions.ApiDescription.Server",
+      "nuget:Microsoft.Extensions.Caching.StackExchangeRedis",
+      "nuget:Microsoft.Extensions.Diagnostics.HealthChecks",
+      "nuget:Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions",
+      "nuget:Microsoft.Extensions.FileProviders.Embedded",
+      "nuget:Microsoft.Extensions.Http.Polly",
+      "nuget:Microsoft.Extensions.Identity.Core",
+      "nuget:Microsoft.Extensions.Identity.Stores",
+      "nuget:Microsoft.Extensions.Localization",
+      "nuget:Microsoft.Extensions.Localization.Abstractions",
+      "nuget:Microsoft.Extensions.ObjectPool",
+      "nuget:Microsoft.Extensions.WebEncoders",
+      "nuget:Microsoft.JSInterop",
+      "nuget:Microsoft.Net.Http.Headers"
+    ]
+  },
+  {
+    "name": "Entity Framework Core",
+    "packages": [
+      "nuget:Microsoft.EntityFrameworkCore",
+      "nuget:Microsoft.EntityFrameworkCore.Relational",
+      "nuget:Microsoft.EntityFrameworkCore.Abstractions",
+      "nuget:Microsoft.EntityFrameworkCore.Analyzers",
+      "nuget:Microsoft.EntityFrameworkCore.Design",
+      "nuget:Microsoft.EntityFrameworkCore.SqlServer",
+      "nuget:Microsoft.EntityFrameworkCore.Tools",
+      "nuget:Microsoft.EntityFrameworkCore.InMemory",
+      "nuget:Microsoft.Data.Sqlite.Core",
+      "nuget:Microsoft.EntityFrameworkCore.Sqlite.Core",
+      "nuget:Microsoft.EntityFrameworkCore.Sqlite"
+    ],
+    "githubRepo": "dotnet/efcore",
+    "rank": 125
+  },
+  {
+    "name": "Playwright",
+    "githubRepo": "microsoft/playwright",
+    "rank": 12
+  },
+  {
+    "name": "Selenium",
+    "githubRepo": "SeleniumHQ/selenium",
+    "rank": 33,
+    "packages": [
+      "maven:selenium-api",
+      "maven:selenium-chrome-driver",
+      "maven:selenium-firefox-driver",
+      "maven:selenium-java",
+      "maven:selenium-remote-driver",
+      "maven:selenium-server",
+      "maven:selenium-support",
+      "nuget:Selenium.WebDriver",
+      "pypi:selenium",
+      "rubygems:selenium-webdriver"
+    ]
+  },
+  {
+    "name": "Jenkins",
+    "githubRepo": "jenkinsci/jenkins",
+    "rank": 42
+  },
+  {
+    "name": "Grafana",
+    "githubRepo": "grafana/grafana",
+    "rank": 30
+  },
+  {
+    "name": "Prometheus",
+    "githubRepo": "prometheus/prometheus",
+    "rank": 41
+  },
+  {
+    "name": "PowerShell",
+    "githubRepo": "PowerShell/PowerShell",
+    "rank": 13
+  },
+  {
+    "name": "Deno",
+    "patchNotesUrl": "https://github.com/denoland/deno/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "denoland/deno"
+  },
+  {
+    "name": "Bun",
+    "patchNotesUrl": "https://github.com/oven-sh/bun/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "oven-sh/bun"
+  },
+  {
+    "name": "React",
+    "patchNotesUrl": "https://react.dev/blog/2025/10/01/react-19-2",
+    "contentSelector": ".min-w-0.isolate, article, main",
+    "contentStrategy": "default",
+    "githubRepo": "facebook/react",
+    "packages": [
+      "npm:react",
+      "npm:react-dom"
+    ]
+  },
+  {
+    "name": "Next.js",
+    "patchNotesUrl": "https://github.com/vercel/next.js/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "vercel/next.js",
+    "packages": [
+      "npm:next"
+    ]
+  },
+  {
+    "name": "Vue",
+    "patchNotesUrl": "https://github.com/vuejs/core/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "vuejs/core",
+    "packages": [
+      "npm:vue"
+    ]
+  },
+  {
+    "name": "Angular",
+    "patchNotesUrl": "https://github.com/angular/angular/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "angular/angular",
+    "packages": [
+      "npm:@angular/animations",
+      "npm:@angular/common",
+      "npm:@angular/compiler",
+      "npm:@angular/compiler-cli",
+      "npm:@angular/core",
+      "npm:@angular/forms",
+      "npm:@angular/platform-browser",
+      "npm:@angular/platform-browser-dynamic",
+      "npm:@angular/router"
+    ]
+  },
+  {
+    "name": "Svelte",
+    "patchNotesUrl": "https://github.com/sveltejs/svelte/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "sveltejs/svelte",
+    "packages": [
+      "npm:svelte"
+    ]
+  },
+  {
+    "name": "React Native (npm)",
+    "packages": [
+      "npm:react-native"
+    ],
+    "githubRepo": "react/react-native",
+    "rank": 2239
+  },
+  {
+    "name": "Express",
+    "patchNotesUrl": "https://github.com/expressjs/express/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "expressjs/express",
+    "packages": [
+      "npm:express"
+    ]
+  },
+  {
+    "name": "Electron",
+    "patchNotesUrl": "https://github.com/electron/electron/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "electron/electron",
+    "packages": [
+      "npm:electron"
+    ]
+  },
+  {
+    "name": "Tailwind CSS",
+    "patchNotesUrl": "https://github.com/tailwindlabs/tailwindcss/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "tailwindlabs/tailwindcss",
+    "packages": [
+      "npm:@tailwindcss/postcss",
+      "npm:@tailwindcss/vite",
+      "npm:tailwindcss"
+    ]
+  },
+  {
+    "name": "Bootstrap",
+    "packages": [
+      "npm:bootstrap"
+    ],
+    "githubRepo": "twbs/bootstrap",
+    "rank": 1435
+  },
+  {
+    "name": "React Router",
+    "packages": [
+      "npm:react-router",
+      "npm:react-router-dom",
+      "npm:@remix-run/router"
+    ],
+    "githubRepo": "remix-run/react-router",
+    "rank": 911
+  },
+  {
+    "name": "Vue Router",
+    "packages": [
+      "npm:vue-router"
+    ],
+    "githubRepo": "vuejs/router",
+    "rank": 1917
+  },
+  {
+    "name": "Redux",
+    "packages": [
+      "npm:redux"
+    ],
+    "githubRepo": "reduxjs/redux",
+    "rank": 1367
+  },
+  {
+    "name": "React Redux",
+    "packages": [
+      "npm:react-redux"
+    ],
+    "githubRepo": "reduxjs/react-redux",
+    "rank": 1508
+  },
+  {
+    "name": "Immer",
+    "packages": [
+      "npm:immer"
+    ],
+    "githubRepo": "immerjs/immer",
+    "rank": 909
+  },
+  {
+    "name": "TanStack Query",
+    "packages": [
+      "npm:@tanstack/react-query",
+      "npm:@tanstack/vue-query",
+      "npm:@tanstack/query-core",
+      "npm:@tanstack/react-query-devtools"
+    ],
+    "githubRepo": "TanStack/query",
+    "rank": 1
+  },
+  {
+    "name": "React Icons",
+    "packages": [
+      "npm:react-icons"
+    ],
+    "githubRepo": "react-icons/react-icons",
+    "rank": 2279
+  },
+  {
+    "name": "styled-components",
+    "packages": [
+      "npm:styled-components"
+    ],
+    "githubRepo": "styled-components/styled-components",
+    "rank": 2048
+  },
+  {
+    "name": "Emotion",
+    "packages": [
+      "npm:@emotion/styled",
+      "npm:@emotion/react"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/emotion-js/emotion/HEAD/packages/react/CHANGELOG.md",
+    "rank": 2336
+  },
+  {
+    "name": "jQuery",
+    "packages": [
+      "npm:jquery"
+    ],
+    "githubRepo": "jquery/jquery",
+    "rank": 1282
+  },
+  {
+    "name": "Chart.js",
+    "packages": [
+      "npm:chart.js"
+    ],
+    "githubRepo": "chartjs/Chart.js",
+    "rank": 2845
+  },
+  {
+    "name": "Socket.IO",
+    "packages": [
+      "npm:socket.io",
+      "npm:socket.io-client"
+    ],
+    "githubRepo": "socketio/socket.io",
+    "rank": 990
+  },
+  {
+    "name": "React Navigation",
+    "packages": [
+      "npm:@react-navigation/native"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/react-navigation/react-navigation/HEAD/packages/native/CHANGELOG.md",
+    "rank": 2895
+  },
+  {
+    "name": "Vite",
+    "patchNotesUrl": "https://vite.dev/blog/",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "vitejs/vite",
+    "packages": [
+      "npm:vite"
+    ]
+  },
+  {
+    "name": "@vitejs/plugin-react",
+    "packages": [
+      "npm:@vitejs/plugin-react"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/vitejs/vite-plugin-react/HEAD/packages/plugin-react/CHANGELOG.md",
+    "rank": 2514
+  },
+  {
+    "name": "webpack",
+    "packages": [
+      "npm:webpack"
+    ],
+    "githubRepo": "webpack/webpack",
+    "rank": 1
+  },
+  {
+    "name": "esbuild",
+    "packages": [
+      "npm:esbuild"
+    ],
+    "githubRepo": "evanw/esbuild",
+    "rank": 1969
+  },
+  {
+    "name": "Rollup",
+    "packages": [
+      "npm:rollup"
+    ],
+    "githubRepo": "rollup/rollup",
+    "rank": 1127
+  },
+  {
+    "name": "PostCSS",
+    "packages": [
+      "npm:postcss"
+    ],
+    "githubRepo": "postcss/postcss",
+    "rank": 133
+  },
+  {
+    "name": "Autoprefixer",
+    "packages": [
+      "npm:autoprefixer"
+    ],
+    "githubRepo": "postcss/autoprefixer",
+    "rank": 185
+  },
+  {
+    "name": "Babel",
+    "packages": [
+      "npm:@babel/runtime",
+      "npm:@babel/parser",
+      "npm:@babel/core",
+      "npm:@babel/plugin-transform-runtime",
+      "npm:@babel/preset-env",
+      "npm:@babel/preset-react",
+      "npm:@babel/preset-typescript",
+      "npm:@babel/eslint-parser",
+      "npm:@babel/register",
+      "npm:@babel/cli",
+      "npm:@babel/polyfill"
+    ],
+    "githubRepo": "babel/babel",
+    "rank": 89
+  },
+  {
+    "name": "Sass",
+    "packages": [
+      "npm:sass"
+    ],
+    "githubRepo": "sass/dart-sass",
+    "rank": 1226
+  },
+  {
+    "name": "Terser",
+    "packages": [
+      "npm:terser"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/terser/terser/HEAD/CHANGELOG.md",
+    "rank": 719
+  },
+  {
+    "name": "typescript-eslint",
+    "packages": [
+      "npm:@typescript-eslint/parser",
+      "npm:@typescript-eslint/eslint-plugin",
+      "npm:@typescript-eslint/utils"
+    ],
+    "githubRepo": "typescript-eslint/typescript-eslint",
+    "rank": 631
+  },
+  {
+    "name": "ESLint",
+    "patchNotesUrl": "https://github.com/eslint/eslint/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "eslint/eslint",
+    "packages": [
+      "npm:@eslint/js",
+      "npm:eslint"
+    ]
+  },
+  {
+    "name": "Prettier",
+    "packages": [
+      "npm:prettier"
+    ],
+    "githubRepo": "prettier/prettier",
+    "rank": 752
+  },
+  {
+    "name": "Husky",
+    "packages": [
+      "npm:husky"
+    ],
+    "githubRepo": "typicode/husky",
+    "rank": 2175
+  },
+  {
+    "name": "lint-staged",
+    "packages": [
+      "npm:lint-staged"
+    ],
+    "githubRepo": "lint-staged/lint-staged",
+    "rank": 2403
+  },
+  {
+    "name": "Stylelint",
+    "packages": [
+      "npm:stylelint"
+    ],
+    "githubRepo": "stylelint/stylelint",
+    "rank": 2804
+  },
+  {
+    "name": "ts-node",
+    "packages": [
+      "npm:ts-node"
+    ],
+    "githubRepo": "TypeStrong/ts-node",
+    "rank": 1428
+  },
+  {
+    "name": "nodemon",
+    "packages": [
+      "npm:nodemon"
+    ],
+    "githubRepo": "remy/nodemon",
+    "rank": 1111
+  },
+  {
+    "name": "concurrently",
+    "packages": [
+      "npm:concurrently"
+    ],
+    "githubRepo": "open-cli-tools/concurrently",
+    "rank": 2172
+  },
+  {
+    "name": "cross-env",
+    "packages": [
+      "npm:cross-env"
+    ],
+    "githubRepo": "kentcdodds/cross-env",
+    "rank": 1848
+  },
+  {
+    "name": "dotenv",
+    "packages": [
+      "npm:dotenv"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/motdotla/dotenv/HEAD/CHANGELOG.md",
+    "rank": 1065
+  },
+  {
+    "name": "Jest",
+    "patchNotesUrl": "https://github.com/jestjs/jest/releases",
+    "contentSelector": "main, article",
+    "contentStrategy": "default",
+    "githubRepo": "jestjs/jest",
+    "packages": [
+      "npm:babel-jest",
+      "npm:jest",
+      "npm:jest-cli",
+      "npm:jest-environment-jsdom"
+    ]
+  },
+  {
+    "name": "Vitest",
+    "packages": [
+      "npm:vitest",
+      "npm:@vitest/coverage-v8",
+      "npm:@vitest/ui"
+    ],
+    "githubRepo": "vitest-dev/vitest",
+    "rank": 1
+  },
+  {
+    "name": "Mocha",
+    "packages": [
+      "npm:mocha"
+    ],
+    "githubRepo": "mochajs/mocha",
+    "rank": 1671
+  },
+  {
+    "name": "Chai",
+    "packages": [
+      "npm:chai"
+    ],
+    "githubRepo": "chaijs/chai",
+    "rank": 1985
+  },
+  {
+    "name": "React Testing Library",
+    "packages": [
+      "npm:@testing-library/react"
+    ],
+    "githubRepo": "testing-library/react-testing-library",
+    "rank": 1222
+  },
+  {
+    "name": "DOM Testing Library",
+    "packages": [
+      "npm:@testing-library/dom"
+    ],
+    "githubRepo": "testing-library/dom-testing-library",
+    "rank": 954
+  },
+  {
+    "name": "jest-dom",
+    "packages": [
+      "npm:@testing-library/jest-dom"
+    ],
+    "githubRepo": "testing-library/jest-dom",
+    "rank": 1242
+  },
+  {
+    "name": "user-event",
+    "packages": [
+      "npm:@testing-library/user-event"
+    ],
+    "githubRepo": "testing-library/user-event",
+    "rank": 1271
+  },
+  {
+    "name": "SuperTest",
+    "packages": [
+      "npm:supertest"
+    ],
+    "githubRepo": "forwardemail/supertest",
+    "rank": 2095
+  },
+  {
+    "name": "Sinon.JS",
+    "packages": [
+      "npm:sinon"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/sinonjs/sinon/HEAD/CHANGES.md",
+    "rank": 2200
+  },
+  {
+    "name": "ts-jest",
+    "packages": [
+      "npm:ts-jest"
+    ],
+    "githubRepo": "kulshekhar/ts-jest",
+    "rank": 2087
+  },
+  {
+    "name": "jsdom",
+    "packages": [
+      "npm:jsdom"
+    ],
+    "githubRepo": "jsdom/jsdom",
+    "rank": 937
+  },
+  {
+    "name": "Axios",
+    "packages": [
+      "npm:axios"
+    ],
+    "githubRepo": "axios/axios",
+    "rank": 2038
+  },
+  {
+    "name": "node-fetch",
+    "packages": [
+      "npm:node-fetch"
+    ],
+    "githubRepo": "node-fetch/node-fetch",
+    "rank": 676
+  },
+  {
+    "name": "GraphQL.js",
+    "packages": [
+      "npm:graphql"
+    ],
+    "githubRepo": "graphql/graphql-js",
+    "rank": 2102
+  },
+  {
+    "name": "ws",
+    "packages": [
+      "npm:ws"
+    ],
+    "githubRepo": "websockets/ws",
+    "rank": 1410
+  },
+  {
+    "name": "Prisma",
+    "packages": [
+      "npm:prisma",
+      "npm:@prisma/client"
+    ],
+    "githubRepo": "prisma/prisma",
+    "rank": 1
+  },
+  {
+    "name": "Mongoose",
+    "packages": [
+      "npm:mongoose"
+    ],
+    "githubRepo": "Automattic/mongoose",
+    "rank": 1471
+  },
+  {
+    "name": "Sequelize",
+    "packages": [
+      "npm:sequelize"
+    ],
+    "githubRepo": "sequelize/sequelize",
+    "rank": 2844
+  },
+  {
+    "name": "node-postgres",
+    "packages": [
+      "npm:pg"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/brianc/node-postgres/HEAD/CHANGELOG.md",
+    "rank": 2494
+  },
+  {
+    "name": "MongoDB Node.js Driver",
+    "packages": [
+      "npm:mongodb"
+    ],
+    "githubRepo": "mongodb/node-mongodb-native",
+    "rank": 1476
+  },
+  {
+    "name": "Firebase JS SDK",
+    "packages": [
+      "npm:firebase"
+    ],
+    "githubRepo": "firebase/firebase-js-sdk",
+    "rank": 2425
+  },
+  {
+    "name": "Octokit REST",
+    "packages": [
+      "npm:@octokit/rest"
+    ],
+    "githubRepo": "octokit/rest.js",
+    "rank": 2986
+  },
+  {
+    "name": "Lodash",
+    "packages": [
+      "npm:lodash",
+      "npm:lodash-es"
+    ],
+    "githubRepo": "lodash/lodash",
+    "rank": 616
+  },
+  {
+    "name": "date-fns",
+    "packages": [
+      "npm:date-fns"
+    ],
+    "githubRepo": "date-fns/date-fns",
+    "rank": 1561
+  },
+  {
+    "name": "Day.js",
+    "packages": [
+      "npm:dayjs"
+    ],
+    "githubRepo": "iamkun/dayjs",
+    "rank": 1971
+  },
+  {
+    "name": "Moment.js",
+    "packages": [
+      "npm:moment"
+    ],
+    "githubRepo": "moment/moment",
+    "rank": 1277
+  },
+  {
+    "name": "uuid",
+    "packages": [
+      "npm:uuid"
+    ],
+    "githubRepo": "uuidjs/uuid",
+    "rank": 1276
+  },
+  {
+    "name": "Nano ID",
+    "packages": [
+      "npm:nanoid"
+    ],
+    "githubRepo": "ai/nanoid",
+    "rank": 828
+  },
+  {
+    "name": "clsx",
+    "packages": [
+      "npm:clsx"
+    ],
+    "githubRepo": "lukeed/clsx",
+    "rank": 1878
+  },
+  {
+    "name": "Ajv",
+    "packages": [
+      "npm:ajv"
+    ],
+    "githubRepo": "ajv-validator/ajv",
+    "rank": 1182
+  },
+  {
+    "name": "jsonwebtoken",
+    "packages": [
+      "npm:jsonwebtoken"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/auth0/node-jsonwebtoken/HEAD/CHANGELOG.md",
+    "rank": 1610
+  },
+  {
+    "name": "node.bcrypt.js",
+    "packages": [
+      "npm:bcrypt"
+    ],
+    "githubRepo": "kelektiv/node.bcrypt.js",
+    "rank": 2455
+  },
+  {
+    "name": "Passport",
+    "packages": [
+      "npm:passport"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/jaredhanson/passport/HEAD/CHANGELOG.md",
+    "rank": 2516
+  },
+  {
+    "name": "cors",
+    "packages": [
+      "npm:cors"
+    ],
+    "githubRepo": "expressjs/cors",
+    "rank": 1362
+  },
+  {
+    "name": "Multer",
+    "packages": [
+      "npm:multer"
+    ],
+    "githubRepo": "expressjs/multer",
+    "rank": 2337
+  },
+  {
+    "name": "Nodemailer",
+    "packages": [
+      "npm:nodemailer"
+    ],
+    "githubRepo": "nodemailer/nodemailer",
+    "rank": 2727
+  },
+  {
+    "name": "winston",
+    "packages": [
+      "npm:winston"
+    ],
+    "githubRepo": "winstonjs/winston",
+    "rank": 2458
+  },
+  {
+    "name": "Commander.js",
+    "packages": [
+      "npm:commander"
+    ],
+    "githubRepo": "tj/commander.js",
+    "rank": 1189
+  },
+  {
+    "name": "Chalk",
+    "packages": [
+      "npm:chalk"
+    ],
+    "githubRepo": "chalk/chalk",
+    "rank": 1021
+  },
+  {
+    "name": "yargs",
+    "packages": [
+      "npm:yargs"
+    ],
+    "githubRepo": "yargs/yargs",
+    "rank": 18
+  },
+  {
+    "name": "sharp",
+    "packages": [
+      "npm:sharp"
+    ],
+    "githubRepo": "lovell/sharp",
+    "rank": 2935
+  },
+  {
+    "name": "Cheerio",
+    "packages": [
+      "npm:cheerio"
+    ],
+    "githubRepo": "cheeriojs/cheerio",
+    "rank": 1869
+  },
+  {
+    "name": "Marked",
+    "packages": [
+      "npm:marked"
+    ],
+    "githubRepo": "markedjs/marked",
+    "rank": 2008
+  },
+  {
+    "name": "highlight.js",
+    "packages": [
+      "npm:highlight.js"
+    ],
+    "githubRepo": "highlightjs/highlight.js",
+    "rank": 1635
+  },
+  {
+    "name": "js-yaml",
+    "packages": [
+      "npm:js-yaml"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/nodeca/js-yaml/HEAD/CHANGELOG.md",
+    "rank": 1198
+  },
+  {
+    "name": "Flask",
+    "packages": [
+      "pypi:flask"
+    ],
+    "githubRepo": "pallets/flask",
+    "rank": 49
+  },
+  {
+    "name": "FastAPI",
+    "packages": [
+      "pypi:fastapi"
+    ],
+    "githubRepo": "fastapi/fastapi",
+    "rank": 169
+  },
+  {
+    "name": "Starlette",
+    "packages": [
+      "pypi:starlette"
+    ],
+    "githubRepo": "Kludex/starlette",
+    "rank": 221
+  },
+  {
+    "name": "Uvicorn",
+    "packages": [
+      "pypi:uvicorn"
+    ],
+    "githubRepo": "Kludex/uvicorn",
+    "rank": 151
+  },
+  {
+    "name": "Gunicorn",
+    "packages": [
+      "pypi:gunicorn"
+    ],
+    "githubRepo": "benoitc/gunicorn",
+    "rank": 13
+  },
+  {
+    "name": "Celery",
+    "packages": [
+      "pypi:celery"
+    ],
+    "githubRepo": "celery/celery",
+    "rank": 180
+  },
+  {
+    "name": "SQLAlchemy",
+    "packages": [
+      "pypi:sqlalchemy"
+    ],
+    "githubRepo": "sqlalchemy/sqlalchemy",
+    "rank": 140
+  },
+  {
+    "name": "Alembic",
+    "packages": [
+      "pypi:alembic"
+    ],
+    "githubRepo": "sqlalchemy/alembic",
+    "rank": 145
+  },
+  {
+    "name": "Pydantic",
+    "packages": [
+      "pypi:pydantic"
+    ],
+    "githubRepo": "pydantic/pydantic",
+    "rank": 152
+  },
+  {
+    "name": "Requests",
+    "packages": [
+      "pypi:requests"
+    ],
+    "githubRepo": "psf/requests",
+    "rank": 1
+  },
+  {
+    "name": "HTTPX",
+    "packages": [
+      "pypi:httpx"
+    ],
+    "githubRepo": "encode/httpx",
+    "rank": 228
+  },
+  {
+    "name": "aiohttp",
+    "packages": [
+      "pypi:aiohttp"
+    ],
+    "githubRepo": "aio-libs/aiohttp",
+    "rank": 117
+  },
+  {
+    "name": "NumPy",
+    "packages": [
+      "pypi:numpy"
+    ],
+    "githubRepo": "numpy/numpy",
+    "rank": 3
+  },
+  {
+    "name": "pandas",
+    "packages": [
+      "pypi:pandas"
+    ],
+    "githubRepo": "pandas-dev/pandas",
+    "rank": 10
+  },
+  {
+    "name": "SciPy",
+    "packages": [
+      "pypi:scipy"
+    ],
+    "githubRepo": "scipy/scipy",
+    "rank": 17
+  },
+  {
+    "name": "scikit-learn",
+    "packages": [
+      "pypi:scikit-learn"
+    ],
+    "githubRepo": "scikit-learn/scikit-learn",
+    "rank": 28
+  },
+  {
+    "name": "Matplotlib",
+    "packages": [
+      "pypi:matplotlib"
+    ],
+    "githubRepo": "matplotlib/matplotlib",
+    "rank": 16
+  },
+  {
+    "name": "seaborn",
+    "packages": [
+      "pypi:seaborn"
+    ],
+    "githubRepo": "mwaskom/seaborn",
+    "rank": 114
+  },
+  {
+    "name": "plotly.py",
+    "packages": [
+      "pypi:plotly"
+    ],
+    "githubRepo": "plotly/plotly.py",
+    "rank": 184
+  },
+  {
+    "name": "Keras",
+    "packages": [
+      "pypi:keras"
+    ],
+    "githubRepo": "keras-team/keras",
+    "rank": 260
+  },
+  {
+    "name": "Transformers",
+    "packages": [
+      "pypi:transformers"
+    ],
+    "githubRepo": "huggingface/transformers",
+    "rank": 211
+  },
+  {
+    "name": "Datasets",
+    "packages": [
+      "pypi:datasets"
+    ],
+    "githubRepo": "huggingface/datasets",
+    "rank": 366
+  },
+  {
+    "name": "Tokenizers (Python)",
+    "packages": [
+      "pypi:tokenizers"
+    ],
+    "githubRepo": "huggingface/tokenizers",
+    "rank": 371
+  },
+  {
+    "name": "huggingface_hub",
+    "packages": [
+      "pypi:huggingface-hub"
+    ],
+    "githubRepo": "huggingface/huggingface_hub",
+    "rank": 355
+  },
+  {
+    "name": "Accelerate",
+    "packages": [
+      "pypi:accelerate"
+    ],
+    "githubRepo": "huggingface/accelerate",
+    "rank": 365
+  },
+  {
+    "name": "OpenAI Python",
+    "packages": [
+      "pypi:openai"
+    ],
+    "githubRepo": "openai/openai-python",
+    "rank": 246
+  },
+  {
+    "name": "Pillow",
+    "packages": [
+      "pypi:pillow"
+    ],
+    "githubRepo": "python-pillow/Pillow",
+    "rank": 72
+  },
+  {
+    "name": "opencv-python",
+    "packages": [
+      "pypi:opencv-python"
+    ],
+    "githubRepo": "opencv/opencv-python",
+    "rank": 111
+  },
+  {
+    "name": "pytest",
+    "packages": [
+      "pypi:pytest"
+    ],
+    "githubRepo": "pytest-dev/pytest",
+    "rank": 12
+  },
+  {
+    "name": "pytest-asyncio",
+    "packages": [
+      "pypi:pytest-asyncio"
+    ],
+    "githubRepo": "pytest-dev/pytest-asyncio",
+    "rank": 396
+  },
+  {
+    "name": "pytest-cov",
+    "packages": [
+      "pypi:pytest-cov"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/pytest-dev/pytest-cov/HEAD/CHANGELOG.rst",
+    "rank": 76
+  },
+  {
+    "name": "pytest-mock",
+    "packages": [
+      "pypi:pytest-mock"
+    ],
+    "githubRepo": "pytest-dev/pytest-mock",
+    "rank": 309
+  },
+  {
+    "name": "pytest-xdist",
+    "packages": [
+      "pypi:pytest-xdist"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/pytest-dev/pytest-xdist/HEAD/CHANGELOG.rst",
+    "rank": 305
+  },
+  {
+    "name": "Coverage.py",
+    "packages": [
+      "pypi:coverage"
+    ],
+    "githubRepo": "coveragepy/coveragepy",
+    "rank": 29
+  },
+  {
+    "name": "mypy",
+    "packages": [
+      "pypi:mypy"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/python/mypy/HEAD/CHANGELOG.md",
+    "rank": 144
+  },
+  {
+    "name": "Black",
+    "packages": [
+      "pypi:black"
+    ],
+    "githubRepo": "psf/black",
+    "rank": 58
+  },
+  {
+    "name": "isort",
+    "packages": [
+      "pypi:isort"
+    ],
+    "githubRepo": "PyCQA/isort",
+    "rank": 44
+  },
+  {
+    "name": "pre-commit",
+    "packages": [
+      "pypi:pre-commit"
+    ],
+    "githubRepo": "pre-commit/pre-commit",
+    "rank": 197
+  },
+  {
+    "name": "Pylint",
+    "packages": [
+      "pypi:pylint"
+    ],
+    "githubRepo": "pylint-dev/pylint",
+    "rank": 50
+  },
+  {
+    "name": "tox",
+    "packages": [
+      "pypi:tox"
+    ],
+    "githubRepo": "tox-dev/tox",
+    "rank": 182
+  },
+  {
+    "name": "Boto3",
+    "packages": [
+      "pypi:boto3"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/boto/boto3/HEAD/CHANGELOG.rst",
+    "rank": 85
+  },
+  {
+    "name": "python-dotenv",
+    "packages": [
+      "pypi:python-dotenv"
+    ],
+    "githubRepo": "theskumar/python-dotenv",
+    "rank": 52
+  },
+  {
+    "name": "PyJWT",
+    "packages": [
+      "pypi:pyjwt"
+    ],
+    "githubRepo": "jpadilla/pyjwt",
+    "rank": 201
+  },
+  {
+    "name": "cryptography",
+    "packages": [
+      "pypi:cryptography"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/pyca/cryptography/HEAD/CHANGELOG.rst",
+    "rank": 38
+  },
+  {
+    "name": "bcrypt",
+    "packages": [
+      "pypi:bcrypt"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/pyca/bcrypt/HEAD/CHANGELOG.rst",
+    "rank": 164
+  },
+  {
+    "name": "PyYAML",
+    "packages": [
+      "pypi:pyyaml"
+    ],
+    "githubRepo": "yaml/pyyaml",
+    "rank": 46
+  },
+  {
+    "name": "Jinja",
+    "packages": [
+      "pypi:jinja2"
+    ],
+    "githubRepo": "pallets/jinja",
+    "rank": 35
+  },
+  {
+    "name": "Click",
+    "packages": [
+      "pypi:click"
+    ],
+    "githubRepo": "pallets/click",
+    "rank": 9
+  },
+  {
+    "name": "Rich",
+    "packages": [
+      "pypi:rich"
+    ],
+    "githubRepo": "Textualize/rich",
+    "rank": 210
+  },
+  {
+    "name": "Loguru",
+    "packages": [
+      "pypi:loguru"
+    ],
+    "githubRepo": "Delgan/loguru",
+    "rank": 378
+  },
+  {
+    "name": "Tenacity",
+    "packages": [
+      "pypi:tenacity"
+    ],
+    "githubRepo": "jd/tenacity",
+    "rank": 230
+  },
+  {
+    "name": "redis-py",
+    "packages": [
+      "pypi:redis"
+    ],
+    "githubRepo": "redis/redis-py",
+    "rank": 97
+  },
+  {
+    "name": "psycopg2",
+    "packages": [
+      "pypi:psycopg2",
+      "pypi:psycopg2-binary"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/psycopg/psycopg2/HEAD/NEWS",
+    "rank": 22
+  },
+  {
+    "name": "PyMySQL",
+    "packages": [
+      "pypi:pymysql"
+    ],
+    "githubRepo": "PyMySQL/PyMySQL",
+    "rank": 386
+  },
+  {
+    "name": "PyMongo",
+    "packages": [
+      "pypi:pymongo"
+    ],
+    "githubRepo": "mongodb/mongo-python-driver",
+    "rank": 115
+  },
+  {
+    "name": "Elasticsearch (Python)",
+    "packages": [
+      "pypi:elasticsearch"
+    ],
+    "githubRepo": "elastic/elasticsearch-py",
+    "rank": 346
+  },
+  {
+    "name": "Django REST framework",
+    "packages": [
+      "pypi:djangorestframework"
+    ],
+    "githubRepo": "encode/django-rest-framework",
+    "rank": 30
+  },
+  {
+    "name": "django-cors-headers",
+    "packages": [
+      "pypi:django-cors-headers"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/adamchainz/django-cors-headers/HEAD/CHANGELOG.rst",
+    "rank": 150
+  },
+  {
+    "name": "Flask-SQLAlchemy",
+    "packages": [
+      "pypi:flask-sqlalchemy"
+    ],
+    "githubRepo": "pallets-eco/flask-sqlalchemy",
+    "rank": 322
+  },
+  {
+    "name": "Streamlit",
+    "packages": [
+      "pypi:streamlit"
+    ],
+    "githubRepo": "streamlit/streamlit",
+    "rank": 154
+  },
+  {
+    "name": "IPython",
+    "packages": [
+      "pypi:ipython"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/ipython/ipython/HEAD/docs/source/whatsnew/version9.rst",
+    "rank": 34
+  },
+  {
+    "name": "Sphinx",
+    "packages": [
+      "pypi:sphinx"
+    ],
+    "githubRepo": "sphinx-doc/sphinx",
+    "rank": 108
+  },
+  {
+    "name": "MkDocs",
+    "packages": [
+      "pypi:mkdocs"
+    ],
+    "githubRepo": "mkdocs/mkdocs",
+    "rank": 325
+  },
+  {
+    "name": "Material for MkDocs",
+    "packages": [
+      "pypi:mkdocs-material"
+    ],
+    "githubRepo": "squidfunk/mkdocs-material",
+    "rank": 400
+  },
+  {
+    "name": "Docker SDK for Python",
+    "packages": [
+      "pypi:docker"
+    ],
+    "githubRepo": "docker/docker-py",
+    "rank": 306
+  },
+  {
+    "name": "GitPython",
+    "packages": [
+      "pypi:gitpython"
+    ],
+    "githubRepo": "gitpython-developers/GitPython",
+    "rank": 233
+  },
+  {
+    "name": "Paramiko",
+    "packages": [
+      "pypi:paramiko"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/paramiko/paramiko/HEAD/sites/www/changelog.rst",
+    "rank": 215
+  },
+  {
+    "name": "Faker (Python)",
+    "packages": [
+      "pypi:faker"
+    ],
+    "githubRepo": "joke2k/faker",
+    "rank": 348
+  },
+  {
+    "name": "marshmallow",
+    "packages": [
+      "pypi:marshmallow"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/marshmallow-code/marshmallow/HEAD/CHANGELOG.rst",
+    "rank": 277
+  },
+  {
+    "name": "Dask",
+    "packages": [
+      "pypi:dask"
+    ],
+    "githubRepo": "dask/dask",
+    "rank": 385
+  },
+  {
+    "name": "NLTK",
+    "packages": [
+      "pypi:nltk"
+    ],
+    "githubRepo": "nltk/nltk",
+    "rank": 133
+  },
+  {
+    "name": "SymPy",
+    "packages": [
+      "pypi:sympy"
+    ],
+    "githubRepo": "sympy/sympy",
+    "rank": 336
+  },
+  {
+    "name": "NetworkX",
+    "packages": [
+      "pypi:networkx"
+    ],
+    "githubRepo": "networkx/networkx",
+    "rank": 137
+  },
+  {
+    "name": "statsmodels",
+    "packages": [
+      "pypi:statsmodels"
+    ],
+    "githubRepo": "statsmodels/statsmodels",
+    "rank": 268
+  },
+  {
+    "name": "PyArrow",
+    "packages": [
+      "pypi:pyarrow"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/apache/arrow/HEAD/CHANGELOG.md",
+    "rank": 272
+  },
+  {
+    "name": "websockets",
+    "packages": [
+      "pypi:websockets"
+    ],
+    "githubRepo": "python-websockets/websockets",
+    "rank": 222
+  },
+  {
+    "name": "Werkzeug",
+    "packages": [
+      "pypi:werkzeug"
+    ],
+    "githubRepo": "pallets/werkzeug",
+    "rank": 120
+  },
+  {
+    "name": "JUnit 4",
+    "packages": [
+      "maven:junit"
+    ],
+    "githubRepo": "junit-team/junit4",
+    "rank": 1
+  },
+  {
+    "name": "MySQL Connector/J",
+    "packages": [
+      "maven:mysql-connector-j",
+      "maven:mysql-connector-java"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/mysql/mysql-connector-j/HEAD/CHANGES",
+    "rank": 4
+  },
+  {
+    "name": "Lombok",
+    "packages": [
+      "maven:lombok"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/projectlombok/lombok/HEAD/doc/changelog.markdown",
+    "rank": 5
+  },
+  {
+    "name": "SLF4J",
+    "packages": [
+      "maven:slf4j-api",
+      "maven:slf4j-log4j12",
+      "maven:jcl-over-slf4j",
+      "maven:slf4j-simple",
+      "maven:jul-to-slf4j",
+      "maven:log4j-over-slf4j",
+      "maven:slf4j-jdk14",
+      "maven:slf4j-nop"
+    ],
+    "githubRepo": "qos-ch/slf4j",
+    "rank": 7
+  },
+  {
+    "name": "Gson",
+    "packages": [
+      "maven:gson"
+    ],
+    "githubRepo": "google/gson",
+    "rank": 8
+  },
+  {
+    "name": "Apache Commons Lang",
+    "packages": [
+      "maven:commons-lang3"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/apache/commons-lang/HEAD/RELEASE-NOTES.txt",
+    "rank": 10
+  },
+  {
+    "name": "Apache Commons IO",
+    "packages": [
+      "maven:commons-io"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/apache/commons-io/HEAD/RELEASE-NOTES.txt",
+    "rank": 12
+  },
+  {
+    "name": "Jackson",
+    "packages": [
+      "maven:jackson-databind",
+      "maven:jackson-core",
+      "maven:jackson-annotations",
+      "maven:jackson-datatype-jsr310",
+      "maven:jackson-dataformat-yaml",
+      "maven:jackson-module-kotlin"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/FasterXML/jackson-databind/HEAD/release-notes/VERSION-2.x",
+    "rank": 13
+  },
+  {
+    "name": "Spring Framework",
+    "packages": [
+      "maven:spring-webmvc",
+      "maven:spring-context",
+      "maven:spring-core",
+      "maven:spring-test",
+      "maven:spring-web",
+      "maven:spring-jdbc",
+      "maven:spring-orm",
+      "maven:spring-tx",
+      "maven:spring-context-support",
+      "maven:spring-beans",
+      "maven:spring-aop",
+      "maven:spring-aspects",
+      "maven:spring-expression",
+      "maven:spring-oxm",
+      "maven:spring-jms",
+      "maven:spring-framework-bom",
+      "maven:spring-messaging",
+      "maven:spring-websocket",
+      "maven:spring"
+    ],
+    "githubRepo": "spring-projects/spring-framework",
+    "rank": 16
+  },
+  {
+    "name": "Guava",
+    "packages": [
+      "maven:guava"
+    ],
+    "githubRepo": "google/guava",
+    "rank": 18
+  },
+  {
+    "name": "PostgreSQL JDBC Driver",
+    "packages": [
+      "maven:postgresql"
+    ],
+    "githubRepo": "pgjdbc/pgjdbc",
+    "rank": 23
+  },
+  {
+    "name": "Apache HttpClient",
+    "packages": [
+      "maven:httpclient5",
+      "maven:httpclient"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/apache/httpcomponents-client/HEAD/RELEASE_NOTES.txt",
+    "rank": 25
+  },
+  {
+    "name": "HikariCP",
+    "packages": [
+      "maven:HikariCP"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/brettwooldridge/HikariCP/HEAD/CHANGES",
+    "rank": 30
+  },
+  {
+    "name": "Hibernate ORM",
+    "packages": [
+      "maven:hibernate-core",
+      "maven:hibernate-entitymanager",
+      "maven:hibernate-ehcache",
+      "maven:hibernate-jpamodelgen",
+      "maven:hibernate-c3p0",
+      "maven:hibernate-envers",
+      "maven:hibernate-jcache"
+    ],
+    "githubRepo": "hibernate/hibernate-orm",
+    "rank": 30
+  },
+  {
+    "name": "Mockito",
+    "packages": [
+      "maven:mockito-core",
+      "maven:mockito-all",
+      "maven:mockito-junit-jupiter",
+      "maven:mockito-inline"
+    ],
+    "githubRepo": "mockito/mockito",
+    "rank": 31
+  },
+  {
+    "name": "Logback",
+    "packages": [
+      "maven:logback-classic",
+      "maven:logback-core",
+      "maven:logback-access"
+    ],
+    "githubRepo": "qos-ch/logback",
+    "rank": 32
+  },
+  {
+    "name": "Apache Commons Codec",
+    "packages": [
+      "maven:commons-codec"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/apache/commons-codec/HEAD/RELEASE-NOTES.txt",
+    "rank": 35
+  },
+  {
+    "name": "JUnit 5",
+    "packages": [
+      "maven:junit-jupiter-engine",
+      "maven:junit-jupiter-api",
+      "maven:junit-jupiter",
+      "maven:junit-jupiter-params",
+      "maven:junit-vintage-engine",
+      "maven:junit-platform-launcher",
+      "maven:junit-platform-runner",
+      "maven:junit-bom"
+    ],
+    "githubRepo": "junit-team/junit-framework",
+    "rank": 35
+  },
+  {
+    "name": "Fastjson",
+    "packages": [
+      "maven:fastjson"
+    ],
+    "githubRepo": "alibaba/fastjson2",
+    "rank": 39
+  },
+  {
+    "name": "Apache Commons Collections",
+    "packages": [
+      "maven:commons-collections4"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/apache/commons-collections/HEAD/RELEASE-NOTES.txt",
+    "rank": 40
+  },
+  {
+    "name": "TestNG",
+    "packages": [
+      "maven:testng"
+    ],
+    "githubRepo": "testng-team/testng",
+    "rank": 41
+  },
+  {
+    "name": "Spring Security",
+    "packages": [
+      "maven:spring-security-test",
+      "maven:spring-security-config",
+      "maven:spring-security-web",
+      "maven:spring-security-core",
+      "maven:spring-security-taglibs",
+      "maven:spring-security-data",
+      "maven:spring-security-crypto",
+      "maven:spring-security-acl"
+    ],
+    "githubRepo": "spring-projects/spring-security",
+    "rank": 42
+  },
+  {
+    "name": "Springfox",
+    "packages": [
+      "maven:springfox-swagger2",
+      "maven:springfox-swagger-ui",
+      "maven:springfox-bean-validators",
+      "maven:springfox-boot-starter"
+    ],
+    "githubRepo": "springfox/springfox",
+    "rank": 43
+  },
+  {
+    "name": "Retrofit",
+    "packages": [
+      "maven:retrofit",
+      "maven:converter-gson",
+      "maven:adapter-rxjava2"
+    ],
+    "githubRepo": "lysine-dev/retrofit",
+    "rank": 44
+  },
+  {
+    "name": "Apache Tomcat",
+    "packages": [
+      "maven:tomcat-embed-core"
+    ],
+    "endoflife": "tomcat",
+    "rank": 50
+  },
+  {
+    "name": "Hibernate Validator",
+    "packages": [
+      "maven:hibernate-validator"
+    ],
+    "githubRepo": "hibernate/hibernate-validator",
+    "rank": 57
+  },
+  {
+    "name": "Joda-Time",
+    "packages": [
+      "maven:joda-time"
+    ],
+    "githubRepo": "JodaOrg/joda-time",
+    "rank": 59
+  },
+  {
+    "name": "Apache Commons Text",
+    "packages": [
+      "maven:commons-text"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/apache/commons-text/HEAD/RELEASE-NOTES.txt",
+    "rank": 60
+  },
+  {
+    "name": "JSON-java (org.json)",
+    "packages": [
+      "maven:json"
+    ],
+    "githubRepo": "stleary/JSON-java",
+    "rank": 62
+  },
+  {
+    "name": "Log4j 2",
+    "packages": [
+      "maven:log4j-core",
+      "maven:log4j-api",
+      "maven:log4j-slf4j-impl"
+    ],
+    "githubRepo": "apache/logging-log4j2",
+    "rank": 64
+  },
+  {
+    "name": "H2 Database",
+    "githubRepo": "h2database/h2database",
+    "rank": 65,
+    "packages": [
+      "maven:h2"
+    ]
+  },
+  {
+    "name": "MyBatis Spring Boot Starter",
+    "packages": [
+      "maven:mybatis-spring-boot-starter"
+    ],
+    "githubRepo": "mybatis/spring-boot-starter",
+    "rank": 66
+  },
+  {
+    "name": "AssertJ",
+    "packages": [
+      "maven:assertj-core"
+    ],
+    "githubRepo": "assertj/assertj",
+    "rank": 68
+  },
+  {
+    "name": "REST Assured",
+    "packages": [
+      "maven:rest-assured"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/rest-assured/rest-assured/HEAD/changelog.txt",
+    "rank": 70
+  },
+  {
+    "name": "OkHttp",
+    "packages": [
+      "maven:okhttp",
+      "maven:logging-interceptor",
+      "maven:mockwebserver"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/lysine-dev/okhttp/HEAD/CHANGELOG.md",
+    "rank": 71
+  },
+  {
+    "name": "AspectJ",
+    "packages": [
+      "maven:aspectjweaver",
+      "maven:aspectjrt",
+      "maven:aspectjtools"
+    ],
+    "githubRepo": "eclipse-aspectj/aspectj",
+    "rank": 73
+  },
+  {
+    "name": "MyBatis-Spring",
+    "packages": [
+      "maven:mybatis-spring"
+    ],
+    "githubRepo": "mybatis/spring",
+    "rank": 78
+  },
+  {
+    "name": "JJWT",
+    "packages": [
+      "maven:jjwt",
+      "maven:jjwt-api",
+      "maven:jjwt-impl",
+      "maven:jjwt-jackson"
+    ],
+    "githubRepo": "jwtk/jjwt",
+    "rank": 79
+  },
+  {
+    "name": "Apache Groovy",
+    "packages": [
+      "maven:groovy"
+    ],
+    "endoflife": "apache-groovy",
+    "rank": 80
+  },
+  {
+    "name": "jsoup",
+    "packages": [
+      "maven:jsoup"
+    ],
+    "githubRepo": "jhy/jsoup",
+    "rank": 87
+  },
+  {
+    "name": "Awaitility",
+    "packages": [
+      "maven:awaitility"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/awaitility/awaitility/HEAD/changelog.txt",
+    "rank": 90
+  },
+  {
+    "name": "Druid",
+    "packages": [
+      "maven:druid",
+      "maven:druid-spring-boot-starter"
+    ],
+    "githubRepo": "alibaba/druid",
+    "rank": 92
+  },
+  {
+    "name": "Jedis",
+    "packages": [
+      "maven:jedis"
+    ],
+    "githubRepo": "redis/jedis",
+    "rank": 95
+  },
+  {
+    "name": "Butter Knife",
+    "packages": [
+      "maven:butterknife"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/JakeWharton/butterknife/HEAD/CHANGELOG.md",
+    "rank": 99
+  },
+  {
+    "name": "Hamcrest",
+    "packages": [
+      "maven:hamcrest-all",
+      "maven:hamcrest-library",
+      "maven:hamcrest-core",
+      "maven:hamcrest"
+    ],
+    "githubRepo": "hamcrest/JavaHamcrest",
+    "rank": 104
+  },
+  {
+    "name": "Newtonsoft.Json",
+    "packages": [
+      "nuget:Newtonsoft.Json"
+    ],
+    "githubRepo": "JamesNK/Newtonsoft.Json",
+    "rank": 8
+  },
+  {
+    "name": "Microsoft IdentityModel",
+    "packages": [
+      "nuget:Microsoft.IdentityModel.Tokens",
+      "nuget:Microsoft.IdentityModel.Logging",
+      "nuget:System.IdentityModel.Tokens.Jwt",
+      "nuget:Microsoft.IdentityModel.JsonWebTokens",
+      "nuget:Microsoft.IdentityModel.Abstractions",
+      "nuget:Microsoft.IdentityModel.Protocols.OpenIdConnect",
+      "nuget:Microsoft.IdentityModel.Protocols",
+      "nuget:Microsoft.IdentityModel.Validators",
+      "nuget:Microsoft.IdentityModel.Tokens.Saml",
+      "nuget:Microsoft.IdentityModel.Xml",
+      "nuget:Microsoft.IdentityModel.LoggingExtensions"
+    ],
+    "githubRepo": "AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
+    "rank": 29
+  },
+  {
+    "name": "MSBuild",
+    "githubRepo": "dotnet/msbuild",
+    "rank": 35,
+    "packages": [
+      "nuget:Microsoft.Build",
+      "nuget:Microsoft.Build.Framework",
+      "nuget:Microsoft.Build.Tasks.Core",
+      "nuget:Microsoft.Build.Utilities.Core",
+      "nuget:Microsoft.NET.StringTools"
+    ]
+  },
+  {
+    "name": "Serilog",
+    "packages": [
+      "nuget:Serilog"
+    ],
+    "githubRepo": "serilog/serilog",
+    "rank": 73
+  },
+  {
+    "name": "MSAL.NET",
+    "packages": [
+      "nuget:Microsoft.Identity.Client",
+      "nuget:Microsoft.Identity.Client.Extensions.Msal"
+    ],
+    "githubRepo": "AzureAD/microsoft-authentication-library-for-dotnet",
+    "rank": 96
+  },
+  {
+    "name": "VSTest",
+    "packages": [
+      "nuget:Microsoft.TestPlatform.ObjectModel",
+      "nuget:Microsoft.NET.Test.Sdk",
+      "nuget:Microsoft.CodeCoverage",
+      "nuget:Microsoft.TestPlatform.TestHost"
+    ],
+    "githubRepo": "microsoft/vstest",
+    "rank": 142
+  },
+  {
+    "name": "AWS SDK for .NET",
+    "packages": [
+      "nuget:AWSSDK.Core",
+      "nuget:AWSSDK.S3",
+      "nuget:AWSSDK.Polly",
+      "nuget:AWSSDK.SecurityToken",
+      "nuget:AWSSDK.SQS",
+      "nuget:AWSSDK.Extensions.NETCore.Setup",
+      "nuget:AWSSDK.DynamoDBv2",
+      "nuget:AWSSDK.SecretsManager",
+      "nuget:AWSSDK.SimpleNotificationService",
+      "nuget:AWSSDK.SimpleSystemsManagement"
+    ],
+    "githubRepo": "aws/aws-sdk-net",
+    "rank": 144
+  },
+  {
+    "name": "Castle Core",
+    "packages": [
+      "nuget:Castle.Core"
+    ],
+    "githubRepo": "castleproject/Core",
+    "rank": 160
+  },
+  {
+    "name": "Polly",
+    "packages": [
+      "nuget:Polly",
+      "nuget:Polly.Core",
+      "nuget:Polly.Extensions",
+      "nuget:Polly.RateLimiting"
+    ],
+    "githubRepo": "App-vNext/Polly",
+    "rank": 163
+  },
+  {
+    "name": "OpenAPI.NET",
+    "packages": [
+      "nuget:Microsoft.OpenApi"
+    ],
+    "githubRepo": "microsoft/OpenAPI.NET",
+    "rank": 164
+  },
+  {
+    "name": "Microsoft.Data.SqlClient",
+    "packages": [
+      "nuget:Microsoft.Data.SqlClient",
+      "nuget:Microsoft.SqlServer.Server"
+    ],
+    "githubRepo": "dotnet/SqlClient",
+    "rank": 168
+  },
+  {
+    "name": "Swashbuckle.AspNetCore",
+    "packages": [
+      "nuget:Swashbuckle.AspNetCore.SwaggerGen",
+      "nuget:Swashbuckle.AspNetCore.Swagger",
+      "nuget:Swashbuckle.AspNetCore.SwaggerUI",
+      "nuget:Swashbuckle.AspNetCore",
+      "nuget:Swashbuckle.AspNetCore.Annotations",
+      "nuget:Swashbuckle.AspNetCore.Newtonsoft"
+    ],
+    "githubRepo": "domaindrivendev/Swashbuckle.AspNetCore",
+    "rank": 172
+  },
+  {
+    "name": "Newtonsoft.Json.Bson",
+    "packages": [
+      "nuget:Newtonsoft.Json.Bson"
+    ],
+    "githubRepo": "JamesNK/Newtonsoft.Json.Bson",
+    "rank": 186
+  },
+  {
+    "name": "Application Insights .NET",
+    "packages": [
+      "nuget:Microsoft.ApplicationInsights",
+      "nuget:Microsoft.ApplicationInsights.PerfCounterCollector",
+      "nuget:Microsoft.ApplicationInsights.DependencyCollector",
+      "nuget:Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel",
+      "nuget:Microsoft.ApplicationInsights.WindowsServer",
+      "nuget:Microsoft.Extensions.Logging.ApplicationInsights",
+      "nuget:Microsoft.ApplicationInsights.EventCounterCollector",
+      "nuget:Microsoft.ApplicationInsights.AspNetCore"
+    ],
+    "githubRepo": "microsoft/ApplicationInsights-dotnet",
+    "rank": 190
+  },
+  {
+    "name": "xUnit",
+    "packages": [
+      "nuget:xunit.extensibility.core",
+      "nuget:xunit.extensibility.execution",
+      "nuget:xunit.core",
+      "nuget:xunit.abstractions",
+      "nuget:xunit.assert",
+      "nuget:xunit"
+    ],
+    "githubRepo": "xunit/xunit",
+    "rank": 196
+  },
+  {
+    "name": "Moq",
+    "packages": [
+      "nuget:Moq"
+    ],
+    "githubRepo": "devlooped/moq",
+    "rank": 202
+  },
+  {
+    "name": "Serilog.Sinks.File",
+    "packages": [
+      "nuget:Serilog.Sinks.File"
+    ],
+    "githubRepo": "serilog/serilog-sinks-file",
+    "rank": 203
+  },
+  {
+    "name": "StackExchange.Redis",
+    "packages": [
+      "nuget:StackExchange.Redis"
+    ],
+    "githubRepo": "StackExchange/StackExchange.Redis",
+    "rank": 206
+  },
+  {
+    "name": "Serilog.Sinks.Console",
+    "packages": [
+      "nuget:Serilog.Sinks.Console"
+    ],
+    "githubRepo": "serilog/serilog-sinks-console",
+    "rank": 207
+  },
+  {
+    "name": "gRPC for .NET",
+    "packages": [
+      "nuget:Grpc.Core.Api",
+      "nuget:Grpc.Net.Common",
+      "nuget:Grpc.Net.Client",
+      "nuget:Grpc.Net.ClientFactory",
+      "nuget:Grpc.AspNetCore.Server",
+      "nuget:Grpc.AspNetCore.Server.ClientFactory",
+      "nuget:Grpc.AspNetCore",
+      "nuget:Grpc.Auth"
+    ],
+    "githubRepo": "grpc/grpc-dotnet",
+    "rank": 212
+  },
+  {
+    "name": "AutoMapper",
+    "packages": [
+      "nuget:AutoMapper"
+    ],
+    "githubRepo": "LuckyPennySoftware/AutoMapper",
+    "rank": 216
+  },
+  {
+    "name": "Serilog.Extensions.Logging",
+    "packages": [
+      "nuget:Serilog.Extensions.Logging"
+    ],
+    "githubRepo": "serilog/serilog-extensions-logging",
+    "rank": 218
+  },
+  {
+    "name": "Humanizer",
+    "packages": [
+      "nuget:Humanizer.Core",
+      "nuget:Humanizer"
+    ],
+    "githubRepo": "Humanizr/Humanizer",
+    "rank": 222
+  },
+  {
+    "name": "xunit.runner.visualstudio",
+    "packages": [
+      "nuget:xunit.runner.visualstudio"
+    ],
+    "githubRepo": "xunit/visualstudio.xunit",
+    "rank": 226
+  },
+  {
+    "name": "FluentValidation",
+    "packages": [
+      "nuget:FluentValidation",
+      "nuget:FluentValidation.DependencyInjectionExtensions"
+    ],
+    "githubRepo": "FluentValidation/FluentValidation",
+    "rank": 231
+  },
+  {
+    "name": "Coverlet",
+    "packages": [
+      "nuget:coverlet.collector",
+      "nuget:coverlet.msbuild"
+    ],
+    "githubRepo": "coverlet-coverage/coverlet",
+    "rank": 233
+  },
+  {
+    "name": "xunit.analyzers",
+    "packages": [
+      "nuget:xunit.analyzers"
+    ],
+    "githubRepo": "xunit/xunit.analyzers",
+    "rank": 234
+  },
+  {
+    "name": "Npgsql",
+    "packages": [
+      "nuget:Npgsql"
+    ],
+    "githubRepo": "npgsql/npgsql",
+    "rank": 240
+  },
+  {
+    "name": "Serilog.Settings.Configuration",
+    "packages": [
+      "nuget:Serilog.Settings.Configuration"
+    ],
+    "githubRepo": "serilog/serilog-settings-configuration",
+    "rank": 241
+  },
+  {
+    "name": "Serilog.Formatting.Compact",
+    "packages": [
+      "nuget:Serilog.Formatting.Compact"
+    ],
+    "githubRepo": "serilog/serilog-formatting-compact",
+    "rank": 242
+  },
+  {
+    "name": "Serilog.Extensions.Hosting",
+    "packages": [
+      "nuget:Serilog.Extensions.Hosting"
+    ],
+    "githubRepo": "serilog/serilog-extensions-hosting",
+    "rank": 253
+  },
+  {
+    "name": "OpenTelemetry .NET",
+    "packages": [
+      "nuget:OpenTelemetry.Api",
+      "nuget:OpenTelemetry",
+      "nuget:OpenTelemetry.Api.ProviderBuilderExtensions",
+      "nuget:OpenTelemetry.Extensions.Hosting",
+      "nuget:OpenTelemetry.Exporter.OpenTelemetryProtocol",
+      "nuget:OpenTelemetry.Exporter.Console"
+    ],
+    "githubRepo": "open-telemetry/opentelemetry-dotnet",
+    "rank": 260
+  },
+  {
+    "name": "Serilog.AspNetCore",
+    "packages": [
+      "nuget:Serilog.AspNetCore"
+    ],
+    "githubRepo": "serilog/serilog-aspnetcore",
+    "rank": 272
+  },
+  {
+    "name": "FluentAssertions",
+    "packages": [
+      "nuget:FluentAssertions"
+    ],
+    "githubRepo": "fluentassertions/fluentassertions",
+    "rank": 279
+  },
+  {
+    "name": "Dapper",
+    "packages": [
+      "nuget:Dapper"
+    ],
+    "githubRepo": "DapperLib/Dapper",
+    "rank": 280
+  },
+  {
+    "name": "Serilog.Sinks.Debug",
+    "packages": [
+      "nuget:Serilog.Sinks.Debug"
+    ],
+    "githubRepo": "serilog/serilog-sinks-debug",
+    "rank": 281
+  },
+  {
+    "name": "NUnit",
+    "packages": [
+      "nuget:NUnit"
+    ],
+    "githubRepo": "nunit/nunit",
+    "rank": 302
+  },
+  {
+    "name": "NLog",
+    "packages": [
+      "nuget:NLog"
+    ],
+    "githubRepo": "NLog/NLog",
+    "rank": 320
+  },
+  {
+    "name": "Azure WebJobs SDK",
+    "packages": [
+      "nuget:Microsoft.Azure.WebJobs",
+      "nuget:Microsoft.Azure.WebJobs.Core",
+      "nuget:Microsoft.Azure.WebJobs.Host.Storage"
+    ],
+    "githubRepo": "Azure/azure-webjobs-sdk",
+    "rank": 321
+  },
+  {
+    "name": "Google APIs Client Library for .NET",
+    "packages": [
+      "nuget:Google.Apis.Auth",
+      "nuget:Google.Apis.Core",
+      "nuget:Google.Apis"
+    ],
+    "githubRepo": "googleapis/google-api-dotnet-client",
+    "rank": 326
+  },
+  {
+    "name": "RestSharp",
+    "packages": [
+      "nuget:RestSharp"
+    ],
+    "githubRepo": "restsharp/RestSharp",
+    "rank": 328
+  },
+  {
+    "name": "Autofac",
+    "packages": [
+      "nuget:Autofac"
+    ],
+    "githubRepo": "autofac/Autofac",
+    "rank": 330
+  },
+  {
+    "name": "YamlDotNet",
+    "packages": [
+      "nuget:YamlDotNet"
+    ],
+    "githubRepo": "aaubry/YamlDotNet",
+    "rank": 337
+  },
+  {
+    "name": "NUnit3TestAdapter",
+    "packages": [
+      "nuget:NUnit3TestAdapter"
+    ],
+    "githubRepo": "nunit/nunit3-vs-adapter",
+    "rank": 338
+  },
+  {
+    "name": "WCF Client",
+    "packages": [
+      "nuget:System.Private.ServiceModel",
+      "nuget:System.ServiceModel.Http",
+      "nuget:System.ServiceModel.NetTcp",
+      "nuget:System.ServiceModel.Duplex",
+      "nuget:System.ServiceModel.Security"
+    ],
+    "githubRepo": "dotnet/wcf",
+    "rank": 343
+  },
+  {
+    "name": "Zod",
+    "packages": [
+      "npm:zod"
+    ],
+    "githubRepo": "colinhacks/zod"
+  },
+  {
+    "name": "Zustand",
+    "packages": [
+      "npm:zustand"
+    ],
+    "githubRepo": "pmndrs/zustand"
+  },
+  {
+    "name": "Cypress",
+    "packages": [
+      "npm:cypress"
+    ],
+    "githubRepo": "cypress-io/cypress"
+  },
+  {
+    "name": "NestJS",
+    "packages": [
+      "npm:@nestjs/core",
+      "npm:@nestjs/common",
+      "npm:@nestjs/cli",
+      "npm:@nestjs/testing"
+    ],
+    "githubRepo": "nestjs/nest"
+  },
+  {
+    "name": "Nuxt",
+    "packages": [
+      "npm:nuxt"
+    ],
+    "githubRepo": "nuxt/nuxt"
+  },
+  {
+    "name": "Astro",
+    "packages": [
+      "npm:astro"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/withastro/astro/HEAD/packages/astro/CHANGELOG.md"
+  },
+  {
+    "name": "SvelteKit",
+    "packages": [
+      "npm:@sveltejs/kit"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/sveltejs/kit/HEAD/packages/kit/CHANGELOG.md"
+  },
+  {
+    "name": "Hono",
+    "packages": [
+      "npm:hono"
+    ],
+    "githubRepo": "honojs/hono"
+  },
+  {
+    "name": "tRPC",
+    "packages": [
+      "npm:@trpc/server",
+      "npm:@trpc/client",
+      "npm:@trpc/react-query"
+    ],
+    "githubRepo": "trpc/trpc"
+  },
+  {
+    "name": "OpenAI Node SDK",
+    "packages": [
+      "npm:openai"
+    ],
+    "githubRepo": "openai/openai-node"
+  },
+  {
+    "name": "Anthropic TypeScript SDK",
+    "packages": [
+      "npm:@anthropic-ai/sdk"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/HEAD/CHANGELOG.md"
+  },
+  {
+    "name": "Vercel AI SDK",
+    "packages": [
+      "npm:ai"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/vercel/ai/HEAD/packages/ai/CHANGELOG.md"
+  },
+  {
+    "name": "LangChain.js",
+    "packages": [
+      "npm:langchain"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/langchain-ai/langchainjs/HEAD/libs/langchain/CHANGELOG.md"
+  },
+  {
+    "name": "Motion",
+    "packages": [
+      "npm:framer-motion",
+      "npm:motion"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/motiondivision/motion/HEAD/CHANGELOG.md"
+  },
+  {
+    "name": "Three.js",
+    "packages": [
+      "npm:three"
+    ],
+    "githubRepo": "mrdoob/three.js"
+  },
+  {
+    "name": "Lucide",
+    "packages": [
+      "npm:lucide-react",
+      "npm:lucide"
+    ],
+    "githubRepo": "lucide-icons/lucide"
+  },
+  {
+    "name": "Puppeteer",
+    "packages": [
+      "npm:puppeteer",
+      "npm:puppeteer-core"
+    ],
+    "changelogUrl": "https://raw.githubusercontent.com/puppeteer/puppeteer/HEAD/packages/puppeteer/CHANGELOG.md"
+  },
+  {
+    "name": "Storybook",
+    "packages": [
+      "npm:storybook",
+      "npm:@storybook/react"
+    ],
+    "githubRepo": "storybookjs/storybook"
+  },
+  {
+    "name": "Biome",
+    "packages": [
+      "npm:@biomejs/biome"
+    ],
+    "githubRepo": "biomejs/biome"
+  },
+  {
+    "name": "Typer",
+    "packages": [
+      "pypi:typer"
+    ],
+    "githubRepo": "fastapi/typer"
+  },
+  {
+    "name": "Anthropic Python SDK",
+    "packages": [
+      "pypi:anthropic"
+    ],
+    "githubRepo": "anthropics/anthropic-sdk-python"
+  },
+  {
+    "name": "Google Gen AI SDK",
+    "packages": [
+      "pypi:google-genai"
+    ],
+    "githubRepo": "googleapis/python-genai"
   }
 ]

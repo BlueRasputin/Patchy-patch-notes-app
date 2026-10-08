@@ -7,8 +7,10 @@ public class PatchNoteResponseDTO {
     private Long id;
     private String techName;
     private String content;
-    private String originalContent;
     private String releaseVersion;
+    private String headline;
+    // critical | high | normal | low; null until summarized
+    private String urgency;
     private List<String> categories;
     private List<PatchNoteSectionDTO> sections;
     private String sourceUrl;
@@ -19,15 +21,16 @@ public class PatchNoteResponseDTO {
     public PatchNoteResponseDTO() {}
 
 
-    public PatchNoteResponseDTO(Long id, String techName, String content, String originalContent,
-                                String releaseVersion, List<String> categories,
+    public PatchNoteResponseDTO(Long id, String techName, String content,
+                                String releaseVersion, String headline, String urgency, List<String> categories,
                                 List<PatchNoteSectionDTO> sections, String sourceUrl,
                                 LocalDateTime createdAt, LocalDateTime lastUpdated) {
         this.id = id;
         this.techName = techName;
         this.content = content;
-        this.originalContent = originalContent;
         this.releaseVersion = releaseVersion;
+        this.headline = headline;
+        this.urgency = urgency;
         this.categories = categories;
         this.sections = sections;
         this.sourceUrl = sourceUrl;
@@ -41,10 +44,12 @@ public class PatchNoteResponseDTO {
     public void setTechName(String techName) { this.techName = techName; }
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
-    public String getOriginalContent() { return originalContent; }
-    public void setOriginalContent(String originalContent) { this.originalContent = originalContent; }
     public String getReleaseVersion() { return releaseVersion; }
     public void setReleaseVersion(String releaseVersion) { this.releaseVersion = releaseVersion; }
+    public String getHeadline() { return headline; }
+    public void setHeadline(String headline) { this.headline = headline; }
+    public String getUrgency() { return urgency; }
+    public void setUrgency(String urgency) { this.urgency = urgency; }
     public List<String> getCategories() { return categories; }
     public void setCategories(List<String> categories) { this.categories = categories; }
     public List<PatchNoteSectionDTO> getSections() { return sections; }

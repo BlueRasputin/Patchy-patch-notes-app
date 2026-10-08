@@ -4,6 +4,7 @@ import { useAuth } from "../../Services/authContext";
 import Card from "../../components/TechCards/Card";
 import LoadingSpinner from "../../components/LoadingIcon/LoadingSpinner";
 import { apiFetch } from "../../Services/api";
+import { loadLocalBay, saveLocalBay } from "../../Services/localBay";
 import "./Techs.css";
 
 // Older releases for one tech, fetched the first time the user opens it
@@ -69,15 +70,14 @@ function Techs() {
         setNotesByTech(Object.fromEntries(notes.map((note) => [note.techName, note])));
 
         if (isAuthenticated()) {
-          const userResponse = await apiFetch("/api/currentUserId");
-          if (userResponse.ok) {
-            const userId = await userResponse.json();
-            const favoritesResponse = await apiFetch(`/users/${userId}/favorites`);
-            if (favoritesResponse.ok) {
-              const favorites = await favoritesResponse.json();
-              setFavoriteTechIds(new Set(favorites.map((favorite) => favorite.id)));
-            }
+          const favoritesResponse = await apiFetch("/api/me/favorites");
+          if (favoritesResponse.ok) {
+            const favorites = await favoritesResponse.json();
+            setFavoriteTechIds(new Set(favorites.map((favorite) => favorite.id)));
           }
+        } else {
+          const localBay = loadLocalBay();
+          setFavoriteTechIds(new Set(techData.filter((tech) => localBay.has(tech.name)).map((tech) => tech.id)));
         }
       } catch (fetchError) {
         setError(fetchError.message);
@@ -89,24 +89,30 @@ function Techs() {
     fetchData();
   }, [isAuthenticated]);
 
-  // Add or remove a tech from the user's favorites (shown in The Bay)
-  const toggleFavorite = async (techId) => {
+  // Add or remove a tech from the user's favorites (shown in The Bay).
+  // Without an account the Bay lives in this browser.
+  const toggleFavorite = async (tech) => {
+    const techId = tech.id;
     const removing = favoriteTechIds.has(techId);
 
     try {
-      const userResponse = await apiFetch("/api/currentUserId");
-      if (!userResponse.ok) {
-        throw new Error("Argh! Ye need to be logged in to modify yer bay!");
-      }
-      const userId = await userResponse.json();
-
-      const response = await apiFetch(`/users/${userId}/favorites/${techId}`, {
-        method: removing ? "DELETE" : "POST",
-      });
-      if (!response.ok) {
-        throw new Error(removing
-          ? "Argh! Failed to remove yer favorite!"
-          : "Argh! Failed to add yer favorite!");
+      if (!isAuthenticated()) {
+        const localBay = loadLocalBay();
+        if (removing) {
+          localBay.delete(tech.name);
+        } else {
+          localBay.add(tech.name);
+        }
+        saveLocalBay(localBay);
+      } else {
+          const response = await apiFetch(`/api/me/favorites/${techId}`, {
+          method: removing ? "DELETE" : "POST",
+        });
+        if (!response.ok) {
+          throw new Error(removing
+            ? "Argh! Failed to remove yer favorite!"
+            : "Argh! Failed to add yer favorite!");
+        }
       }
 
       setFavoriteTechIds((previous) => {
@@ -139,12 +145,11 @@ function Techs() {
 
   return (
     <div className="techs-page">
-      <h2>Tech Catalog</h2>
+      <h1>Tech catalog</h1>
       <p className="instruction">
-        Every technology Patchy tracks. Expand one to read its latest patch note
-        {isAuthenticated()
-          ? ", or check it to follow it in The Bay."
-          : ". Log in to follow techs in The Bay."}
+        Every technology Patchy tracks. Expand one to read its latest patch note,
+        or check it to follow it in The Bay
+        {isAuthenticated() ? "." : " (saved in this browser; log in to sync it everywhere)."}
       </p>
 
       {error && <div className="error-banner">{error}</div>}
@@ -153,38 +158,37 @@ function Techs() {
         {techList.map((tech) => {
           const note = notesByTech[tech.name];
           return (
-            <details className="tech-entry" key={tech.id}>
-              <summary>
-                <span className="tech-entry-name">{tech.name}</span>
-                {note?.releaseVersion && (
-                  <span className="tech-entry-version">{note.releaseVersion}</span>
-                )}
-                <span className="tech-entry-spacer" />
-                {isAuthenticated() && (
-                  <label
-                    className="tech-entry-follow"
-                    onClick={(event) => event.stopPropagation()}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={favoriteTechIds.has(tech.id)}
-                      onChange={() => toggleFavorite(tech.id)}
-                    />
-                    Following
-                  </label>
-                )}
-              </summary>
-              <div className="tech-entry-body">
-                {note
-                  ? (
-                    <>
-                      <Card patchNote={note} />
-                      <ReleaseHistory techId={tech.id} />
-                    </>
-                  )
-                  : <p className="instruction">No patch note collected for {tech.name} yet.</p>}
-              </div>
-            </details>
+            // The follow checkbox sits beside <summary>, not inside it:
+            // interactive controls inside a summary confuse screen readers
+            <div className="tech-entry" key={tech.id}>
+              <details>
+                <summary>
+                  <span className="tech-entry-name">{tech.name}</span>
+                  {note?.releaseVersion && (
+                    <span className="tech-entry-version">{note.releaseVersion}</span>
+                  )}
+                </summary>
+                <div className="tech-entry-body">
+                  {note
+                    ? (
+                      <>
+                        <Card patchNote={note} />
+                        <ReleaseHistory techId={tech.id} />
+                      </>
+                    )
+                    : <p className="instruction">No patch note collected for {tech.name} yet.</p>}
+                </div>
+              </details>
+              <label className="tech-entry-follow">
+                <input
+                  type="checkbox"
+                  checked={favoriteTechIds.has(tech.id)}
+                  onChange={() => toggleFavorite(tech)}
+                  aria-label={`Follow ${tech.name}`}
+                />
+                Following
+              </label>
+            </div>
           );
         })}
       </div>

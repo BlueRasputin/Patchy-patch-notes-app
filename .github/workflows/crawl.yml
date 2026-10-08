@@ -1,0 +1,27 @@
+# Daily Playwright crawl of every page the backend lists at /tech/crawl-targets: catalog techs
+# without GitHub releases (Java, Python, Go, Swift, PostgreSQL) plus discovered techs whose
+# page and selector were found by AI.
+# 22:00 UTC: 93% of tracked projects' releases are published by then (measured over
+# 1,624 releases), so same-day releases reach the backend before EU/Asia mornings.
+# Needs repo secrets PATCHY_API_URL (public backend URL) and CRAWLER_API_KEY.
+name: Crawl release notes
+
+on:
+  schedule:
+    - cron: "0 22 * * *"
+  workflow_dispatch:
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm start
+        env:
+          PATCHY_API_URL: ${{ secrets.PATCHY_API_URL }}
+          CRAWLER_API_KEY: ${{ secrets.CRAWLER_API_KEY }}

@@ -1,0 +1,11 @@
+{
+  "name": "patchy",
+  "owner": { "name": "Barrcon" },
+  "plugins": [
+    {
+      "name": "patchy",
+      "source": "./integrations/mcp",
+      "description": "Patch notes and breaking-change checks for your project's dependencies."
+    }
+  ]
+}

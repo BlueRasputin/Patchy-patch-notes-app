@@ -67,19 +67,18 @@ async function submitPage(tech, tab) {
   }
 
   setStatus("Sending to Patchy for summarization…");
-  const response = await fetch(`${API_BASE}/api/process-crawled-notes`, {
+  // Uses the patchy website session cookie; summarizing requires being signed in
+  const response = await fetch(`${API_BASE}/api/patch-notes/submit`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify([{
-      techName: tech.name,
-      url: tab.url,
-      content,
-      releaseVersion: null,
-    }]),
+    credentials: "include",
+    body: JSON.stringify({ techName: tech.name, url: tab.url, content }),
   });
 
   if (!response.ok) {
-    setStatus("Patchy couldn't process this page.");
+    setStatus(response.status === 401
+      ? "Sign in on the Patchy website to summarize pages."
+      : "Patchy couldn't process this page.");
     summarizeBtn.disabled = false;
     return;
   }

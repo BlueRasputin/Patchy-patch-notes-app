@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import static java.util.Base64.getEncoder;
 //instantiates user table
 @Entity
 @Table(name = "users")
@@ -21,6 +20,15 @@ public class User extends AbstractEntity {
 
     @Column(unique = true, nullable = false)
     private String email;
+
+    // Stable provider ids (GitHub numeric id, Google "sub"); usernames can change hands
+    @JsonIgnore
+    @Column(unique = true)
+    private String githubId;
+
+    @JsonIgnore
+    @Column(unique = true)
+    private String googleId;
 
     @ManyToMany
     @JoinTable(
@@ -61,6 +69,22 @@ public class User extends AbstractEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getGithubId() {
+        return githubId;
+    }
+
+    public void setGithubId(String githubId) {
+        this.githubId = githubId;
+    }
+
+    public String getGoogleId() {
+        return googleId;
+    }
+
+    public void setGoogleId(String googleId) {
+        this.googleId = googleId;
     }
 
     public Set<Tech> getFavoriteTechs() {

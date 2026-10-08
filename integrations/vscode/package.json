@@ -1,0 +1,42 @@
+{
+  "name": "patchy",
+  "displayName": "Patchy",
+  "description": "Release notes and security advisories for every language, framework and library in your project, summarized by your own Copilot, Claude, Codex or Gemini.",
+  "version": "0.1.0",
+  "publisher": "barrcon",
+  "license": "MIT",
+  "engines": { "vscode": "^1.101.0" },
+  "categories": ["Other", "AI", "Chat"],
+  "main": "./extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      { "command": "patchy.showUpdates", "title": "Show Patch Notes", "category": "Patchy" },
+      { "command": "patchy.checkNow", "title": "Check for Updates", "category": "Patchy" },
+      { "command": "patchy.signIn", "title": "Sign In", "category": "Patchy" },
+      { "command": "patchy.signOut", "title": "Sign Out", "category": "Patchy" },
+      { "command": "patchy.connectAssistants", "title": "Connect AI Assistants (Claude, Codex, Gemini)", "category": "Patchy" }
+    ],
+    "configuration": {
+      "title": "Patchy",
+      "properties": {
+        "patchy.apiUrl": { "type": "string", "default": "http://localhost:8080", "description": "Patchy API URL." },
+        "patchy.websiteUrl": { "type": "string", "default": "http://localhost:5173", "description": "Patchy website URL (used for sign-in)." },
+        "patchy.pollMinutes": { "type": "number", "default": 60, "minimum": 5, "description": "How often to check for new releases." }
+      }
+    },
+    "chatParticipants": [
+      {
+        "id": "patchy.chat",
+        "name": "patchy",
+        "fullName": "Patchy",
+        "description": "Ask about release notes for your project's dependencies",
+        "commands": [{ "name": "breaking", "description": "Only breaking changes and security fixes" }]
+      }
+    ],
+    "mcpServerDefinitionProviders": [{ "id": "patchy.mcp", "label": "Patchy" }]
+  },
+  "dependencies": {
+    "patchy-mcp": "file:../mcp"
+  }
+}

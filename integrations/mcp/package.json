@@ -1,0 +1,28 @@
+{
+  "name": "patchy-mcp",
+  "version": "0.1.0",
+  "description": "Patchy MCP server: patch notes for your project's dependencies inside Claude, ChatGPT/Codex, Gemini and GitHub Copilot.",
+  "license": "MIT",
+  "main": "core.js",
+  "bin": {
+    "patchy-mcp": "server.js"
+  },
+  "files": [
+    "core.js",
+    "server.js",
+    ".claude-plugin",
+    ".mcp.json",
+    "gemini-extension.json",
+    "skills"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "zod": "^4.6.5"
+  }
+}

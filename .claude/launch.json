@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "api",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd server && SERVER_PORT=8081 ./mvnw -q spring-boot:run"
+      ],
+      "port": 8081
+    },
+    {
+      "name": "ui",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd ui && VITE_API_URL=http://localhost:8081 npm run dev"
+      ],
+      "port": 5173
+    }
+  ]
+}

@@ -1,11 +1,6 @@
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
 import { PlaywrightCrawler, Dataset } from 'crawlee';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const techCatalogPath = path.resolve(__dirname, '../../../server/src/main/resources/tech-catalog.json');
+const apiUrl = process.env.PATCHY_API_URL ?? 'http://localhost:8080';
 const targetTechs = new Set(
     (process.env.TARGET_TECHS ?? '')
         .split(',')
@@ -14,7 +9,13 @@ const targetTechs = new Set(
 );
 const skipBackendUpload = process.env.SKIP_BACKEND_UPLOAD === 'true';
 
-const sources = JSON.parse(readFileSync(techCatalogPath, 'utf8'))
+// The backend decides what needs a browser: catalog techs without GitHub releases
+// plus discovered techs whose page and selector were found by AI
+const targetsResponse = await fetch(`${apiUrl}/tech/crawl-targets`);
+if (!targetsResponse.ok) {
+    throw new Error(`Couldn't load crawl targets from ${apiUrl}: ${targetsResponse.status}`);
+}
+const sources = (await targetsResponse.json())
     .filter((entry) => targetTechs.size === 0 || targetTechs.has(entry.name.toLowerCase()))
     .map((entry) => ({
     techName: entry.name,
@@ -30,11 +31,7 @@ const crawler = new PlaywrightCrawler({
         try {
             log.info(`Scraping: ${request.loadedUrl}`);
 
-            const source = sources.find(s => request.loadedUrl.includes(new URL(s.url).hostname));
-            if (!source) {
-                log.warning(`Unknown source: ${request.loadedUrl}`);
-                return;
-            }
+            const { source } = request.userData;
 
             const extracted = await page.evaluate((sourceConfig) => {
                 //Remove formatting and scripts that may interfere with text extraction
@@ -183,6 +180,8 @@ const crawler = new PlaywrightCrawler({
                 
                 log.info(`Saved content for ${source.techName} (${extracted.content.length} chars)`);
             } else {
+                // An empty report tells the backend the selector broke, so it can relocate it
+                await pushData({ techName: source.techName, url: request.loadedUrl, content: '', releaseVersion: null });
                 log.warning(`Insufficient content found for ${source.techName} (${extracted.content ? extracted.content.length : 0} chars)`);
             }
 
@@ -195,7 +194,8 @@ const crawler = new PlaywrightCrawler({
 });
 
 console.log('Ahoy, starting to sail...');
-await crawler.run(sources.map(s => s.url));
+// uniqueKey per tech: two techs may share a page
+await crawler.run(sources.map((source) => ({ url: source.url, uniqueKey: source.techName, userData: { source } })));
 
 const dataset = await Dataset.open();
 const results = await dataset.getData();
@@ -206,9 +206,9 @@ if (results.items.length > 0 && !skipBackendUpload) {
     try {
         console.log('Sending data to backend...');
         // send data to backend
-        const response = await fetch('http://localhost:8080/api/process-crawled-notes', {
+        const response = await fetch(`${apiUrl}/api/process-crawled-notes`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-Crawler-Key': process.env.CRAWLER_API_KEY ?? '' },
             body: JSON.stringify(results.items)
         });
         

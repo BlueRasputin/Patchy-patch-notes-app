@@ -1,15 +1,22 @@
 import { useState } from 'react';
 import { useAuth } from '../../Services/authContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { apiFetch } from '../../Services/api';
+import OAuthButtons from './OAuthButtons';
 
 import './AuthPage.css';
+
+const OAUTH_ERRORS = {
+    'email-in-use': 'That email already has a Patchy account. Log in with yer password instead.',
+    oauth: 'Argh! Sign-in with that provider failed. Try again.',
+};
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [searchParams] = useSearchParams();
+    const [error, setError] = useState(OAUTH_ERRORS[searchParams.get('error')] ?? '');
     const { login } = useAuth();
     const redirect = useNavigate();
 
@@ -37,7 +44,7 @@ const LoginForm = () => {
 
      return (
         <div className="user-form">
-            <h2>Login</h2>
+            <h1>Log in</h1>
             {error && (
                 <div className="error-banner">
                     {error}
@@ -64,8 +71,9 @@ const LoginForm = () => {
                         required
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit">Log in</button>
             </form>
+            <OAuthButtons />
         </div>
     );
 };

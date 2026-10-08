@@ -1,0 +1,192 @@
+
+==============================================================================
+Starting the API on :8091 with database patchy_mock (separate from your dev data)
+==============================================================================
+API is up. Catalog techs seeded: 36
+
+==============================================================================
+PHASE 1: an editor scans five projects in languages Patchy has never seen
+==============================================================================
+
+elixir-api
+  matched existing techs: none
+  queued for discovery:   elixir, phoenix, ecto_sql, jason, plug, oban
+  security advisories:    phoenix 1.7.14 EEF-CVE-2026-32689 (fixed in 1.7.22); phoenix 1.7.14 EEF-CVE-2026-56811 (fixed in 1.7.24); phoenix 1.7.14 EEF-CVE-2026-56812 (fixed in 1.7.24); phoenix 1.7.14 GHSA-628h-q48j-jr6q (fixed in 1.7.22); phoenix 1.7.14 GHSA-63mc-hw7g-86rr (fixed in 1.7.24); phoenix 1.7.14 GHSA-6983-jfq8-485w (fixed in 1.7.24); plug 1.14.0 EEF-CVE-2026-56813 (fixed in 1.16.6); plug 1.14.0 EEF-CVE-2026-56814 (fixed in 1.16.6); plug 1.14.0 EEF-CVE-2026-8468 (fixed in 1.15.4); plug 1.14.0 GHSA-468c-vq7p-gh64 (fixed in 1.15.4)
+
+gleam-web
+  matched existing techs: none
+  queued for discovery:   gleam, gleam_stdlib, wisp, lustre
+  security advisories:    wisp 1.0.0 EEF-CVE-2026-32145 (fixed in 2.2.2); wisp 1.0.0 GHSA-8645-p2v4-73r2 (fixed in 2.2.2)
+
+scala-service
+  matched existing techs: none
+  queued for discovery:   scala
+  security advisories:    none
+
+julia-analysis
+  matched existing techs: none
+  queued for discovery:   julia
+  security advisories:    none
+
+flutter-app
+  matched existing techs: Flutter
+  queued for discovery:   dart, http, provider, go_router
+  security advisories:    none
+
+==============================================================================
+Waiting for discovery (registries -> GitHub / changelogs / endoflife.date) and summaries
+==============================================================================
+  8 new techs in the shared table, 6 waiting for a summary     14 new techs in the shared table, 14 waiting for a summary     15 new techs in the shared table, 15 waiting for a summary     15 new techs in the shared table, 15 waiting for a summary     15 new techs in the shared table, 15 waiting for a summary     15 new techs in the shared table, 15 waiting for a summary     15 new techs in the shared table, 15 waiting for a summary     15 new techs in the shared table, 15 waiting for a summary     15 new techs in the shared table, 15 waiting for a summary     15 new techs in the shared table, 9 waiting for a summary     15 new techs in the shared table, 9 waiting for a summary     15 new techs in the shared table, 9 waiting for a summary     15 new techs in the shared table, 9 waiting for a summary     15 new techs in the shared table, 3 waiting for a summary     15 new techs in the shared table, 3 waiting for a summary     15 new techs in the shared table, 1 waiting for a summary     15 new techs in the shared table, 0 waiting for a summary   
+
+Shared tech table, newly added rows:
+
+- Elixir  [language]  via endoflife.date release link
+    version 1.20.4 | urgency normal | New Requirements, New Features, Performance
+    [mock] Elixir 1.20.4 released 2026-08-28
+
+- phoenix  [hex]  via GitHub releases (phoenixframework/phoenix)
+    version v1.8.15 | urgency normal | New Features, Bug Fixes
+    [mock] [phx.gen.cert] Fix certificate not being accepted by Chromium ([#6847](https://github.com/phoenixfra
+
+- ecto_sql  [hex]  via changelog file
+    version v3.14.0 | urgency normal | New Features
+    [mock] Changelog for v3.x
+
+- jason  [hex]  via GitHub releases (michalmuskala/jason)
+    version v1.4.0 | urgency normal | New Features, Performance
+    [mock] Use the `:erlang.float_to_binary(_, [:short])` function, instead of `io_lib_format.fwrite_g/1`
+
+- Gleam  [language]  via GitHub releases (gleam-lang/gleam)
+    version v1.19.0 | urgency normal | New Features, Bug Fixes
+    [mock] SPDX-License-Identifier: Apache-2.0
+
+- plug  [hex]  via changelog file
+    version v1.21.0 | urgency high | Security, New Requirements, New Features, Bug Fixes
+    [mock] [Plug.Router] Add the `query/3` macro for routing HTTP QUERY (RFC 10008) requests
+
+- Scala  [language]  via GitHub releases (scala/scala3)
+    version 3.9.0 | urgency normal | New Features
+    [mock] Highlights of the release
+
+- Julia  [language]  via endoflife.date release link
+    version 1.13.1 | urgency normal | New Features
+    [mock] Julia 1.13.1 released 2026-09-25
+
+- oban  [hex]  via GitHub releases (oban-bg/oban)
+    version v2.24.0 | urgency normal | New Features
+    [mock] This release unifies configuration for queues, repos, and services, swaps opaque timing integers for
+
+- gleam_stdlib  [hex]  via changelog file
+    version 1.0 | urgency normal | New Features, Bug Fixes, Performance
+    [mock] Fixed a bug where `string.inspect` on the JavaScript target would incorrectly
+
+- wisp  [hex]  via changelog file
+    version v2.2.1 | urgency normal | New Features, Bug Fixes
+    [mock] Fixed a bug in the `static_file_handler` where valid requests were rejected
+
+- Dart  [language]  via changelog file
+    version 3.14.0 | urgency high | Breaking Changes, New Features
+    [mock] Released on:** Unreleased
+
+- lustre  [hex]  via changelog file
+    version 1.1.0 | urgency normal | New Requirements, New Features, Bug Fixes
+    [mock] All notable changes to this project will be documented in this file.
+
+- http  [pub]  via changelog file
+    version 1.7.0 | urgency normal | New Features, Bug Fixes
+    [mock] Update example to fetch and display scores of `package:http` from pub.dev.
+
+- go_router  [pub]  via changelog file
+    version 18.0.2 | urgency high | Breaking Changes, New Requirements, New Features, Bug Fixes
+    [mock] Fixes `ShellRoute`/`StatefulShellRoute` shell chrome (e.g. a side rail or app bar painted before the
+
+==============================================================================
+PHASE 2: second scan — techs are now matched, so nothing is queued again
+==============================================================================
+gleam-web matched: Gleam, gleam_stdlib, wisp, lustre | queued: none
+julia-analysis matched: Julia | queued: none
+new-release alerts on this scan: 0 (expected 0)
+
+==============================================================================
+PHASE 3: upstream ships new versions (injected into the mock)
+==============================================================================
+Gleam: new GitHub release v9.9.0 injected for gleam-lang/gleam (breaking + security)
+Julia: endoflife.date now reports 1.99.0 with a release-notes page (requirements + deprecation)
+
+==============================================================================
+Waiting for the release poller (every 30s here, daily 20-23 UTC in production) and summaries
+==============================================================================
+
+- Gleam  [language]  via GitHub releases (gleam-lang/gleam)
+    version v9.9.0 | urgency high | Breaking Changes, Security, New Features, Bug Fixes
+    [mock] Breaking changes
+
+- Julia  [language]  via endoflife.date release link
+    version 1.99.0 | urgency normal | Deprecations, New Requirements, New Features, Bug Fixes, Performance
+    [mock] Julia 1.99.0 released 2026-10-06
+
+==============================================================================
+PHASE 4: the user's editor scans again — what they see
+==============================================================================
+
+gleam-web: 1 new release(s)
+  ⚠ WARNING toast: "Patchy: breaking changes in Gleam v9.9.0"
+  + a 'Patchy: New releases' tab opens with:
+
+    ## Gleam v9.9.0 (high urgency)
+    
+    **⚠ Breaking Changes / Security**
+    
+    [mock] Breaking changes
+    
+    ## Breaking Changes
+    - **Breaking changes**: Breaking changes
+      - Migration: Follow the upgrade guide in the release notes.
+    - **Removed the deprecated `list**: Removed the deprecated `list.at` function; use `list.drop` and `list.first` instead.
+      - Migration: Follow the upgrade guide in the release notes.
+    - **The `gleam export` command no longer writes to the project r**: The `gleam export` command no longer writes to the project root by default.
+      - Migration: Follow the upgrade guide in the release notes.
+    
+    ## Security
+    - **Fixed CVE-2026-31337**: Fixed CVE-2026-31337: a path traversal in `gleam deps download` when unpacking tarballs. (CVE-2026-31337)
+    
+    ## New Features
+    - **Added a language server code action to inline variables**: Added a language server code action to inline variables.
+    
+    ## Bug Fixes
+    - **Fixed a crash when formatting files containing only comments**: Fixed a crash when formatting files containing only comments.
+    
+    [Release notes](https://github.com/gleam-lang/gleam/releases/tag/v9.9.0)
+
+julia-analysis: 1 new release(s)
+  ℹ info toast: "Patchy: new releases for Julia 1.99.0"
+  + a 'Patchy: New releases' tab opens with:
+
+    ## Julia 1.99.0
+    
+    [mock] Julia 1.99.0 released 2026-10-06
+    
+    ## Deprecations
+    - **The @async macro is deprecated in favor of Threads**: The @async macro is deprecated in favor of Threads.@spawn.
+    
+    ## New Requirements
+    - **Julia now requires a minimum of LLVM 20 to build from source**: Julia now requires a minimum of LLVM 20 to build from source.
+    
+    ## New Features
+    - **Julia 1**: Julia 1.99.0 released 2026-10-06
+    - **Julia 1**: Julia 1.99.0 release notes
+    
+    ## Bug Fixes
+    - **Fixed incorrect results from sum on empty ranges of BigInt**: Fixed incorrect results from sum on empty ranges of BigInt.
+    
+    ## Performance
+    - **Broadcasting over dictionaries is about 3x faster**: Broadcasting over dictionaries is about 3x faster.
+    
+    [Release notes](http://localhost:8099/mock/julia-1.99.html)
+
+Scan after the user has seen them: 0 new release(s) (expected 0)
+
+==============================================================================
+Mock upstream activity
+==============================================================================
+{ 'gemini(mock)': 51, 'github(mock)': 1, 'endoflife(mock)': 1 }

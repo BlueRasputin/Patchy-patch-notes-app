@@ -1,14 +1,64 @@
-.about-body {
-  max-width: 720px;
+.aboutpage {
+  max-width: 760px;
 }
 
-.about-body h2 {
-  margin-top: 1.5rem;
+.about-lede {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 65ch;
+  margin-bottom: 0.75rem;
 }
 
-.about-body h3 {
+.about-section {
+  margin-top: 2.25rem;
+}
+
+.about-section h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.about-section p {
   color: var(--fg-muted);
-  font-size: 1rem;
-  font-weight: 400;
   line-height: 1.6;
+  max-width: 65ch;
+  margin-bottom: 0.75rem;
+}
+
+.command {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.command code {
+  flex: 1;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0.6rem 0.85rem;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 13px;
+}
+
+.about-list {
+  display: grid;
+  gap: 0.25rem 0;
+}
+
+.about-list dt {
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+.about-list dd {
+  color: var(--fg-muted);
+  line-height: 1.6;
+  max-width: 65ch;
+}
+
+.aboutpage :not(pre) > code {
+  font-size: 0.9em;
 }

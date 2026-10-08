@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,27 @@ public class TechController {
     }
 
 
+    // What the daily Playwright crawler should scrape: catalog techs without
+    // GitHub releases, plus discovered techs whose locator was found by AI
+    @GetMapping("/crawl-targets")
+    public ResponseEntity<List<TechCatalogEntryDTO>> getCrawlTargets() {
+        List<TechCatalogEntryDTO> targets = new ArrayList<>(techCatalogService.loadCatalog().stream()
+                // Only techs with no other source; scraping a GitHub-release tech too would
+                // create duplicate notes from two sources and burn summary quota
+                .filter(entry -> entry.getPatchNotesUrl() != null && entry.getContentSelector() != null
+                        && entry.getGithubRepo() == null && entry.getChangelogUrl() == null && entry.getEndoflife() == null)
+                .toList());
+        for (Tech tech : techRepository.findByCrawlSelectorIsNotNull()) {
+            TechCatalogEntryDTO target = new TechCatalogEntryDTO();
+            target.setName(tech.getName());
+            target.setPatchNotesUrl(tech.getCrawlUrl());
+            target.setContentSelector(tech.getCrawlSelector());
+            target.setContentStrategy("default");
+            targets.add(target);
+        }
+        return ResponseEntity.ok(targets);
+    }
+
     //get tech by ID
     @GetMapping("/{id}")
     public ResponseEntity<Tech> getTechById(@PathVariable Long id) {
@@ -45,17 +67,5 @@ public class TechController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    //Add tech to repository
-    @PostMapping
-    public ResponseEntity<Tech> createTech(@RequestBody Tech tech) {
-        return ResponseEntity.ok(techRepository.save(tech));
-    }
-
-    //Delete tech from tech table
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTech(@PathVariable Long id) {
-        techRepository.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
 
 }

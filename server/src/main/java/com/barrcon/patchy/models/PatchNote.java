@@ -13,8 +13,22 @@ public class PatchNote extends AbstractEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    // Raw release text awaiting AI summary (cleared once summarized). Legacy rows
+    // from before content_hash existed hold the full scraped page here.
     @Column(name = "original_content", columnDefinition = "LONGTEXT")
     private String originalContent;
+
+    // SHA-256 of the scraped page; enough to detect changes without storing 40k+ chars per release
+    @Column(name = "content_hash", length = 64)
+    private String contentHash;
+
+    // True until SummaryService has summarized this note; null on legacy rows
+    private Boolean pendingSummary;
+
+    private String headline;
+
+    // critical | high | normal | low, from the AI summary
+    private String urgency;
 
     @Column(name = "release_version")
     private String releaseVersion;
@@ -89,6 +103,38 @@ public class PatchNote extends AbstractEntity {
 
     public void setOriginalContent(String originalContent) {
         this.originalContent = originalContent;
+    }
+
+    public boolean isPendingSummary() {
+        return Boolean.TRUE.equals(pendingSummary);
+    }
+
+    public void setPendingSummary(boolean pendingSummary) {
+        this.pendingSummary = pendingSummary;
+    }
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
+    }
+
+    public String getUrgency() {
+        return urgency;
+    }
+
+    public void setUrgency(String urgency) {
+        this.urgency = urgency;
+    }
+
+    public String getContentHash() {
+        return contentHash;
+    }
+
+    public void setContentHash(String contentHash) {
+        this.contentHash = contentHash;
     }
 
     public String getReleaseVersion() {

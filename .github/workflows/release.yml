@@ -1,0 +1,48 @@
+# Push a tag like v0.1.0 to publish the editor plugins as GitHub release assets.
+# Fixed asset names let install.sh use releases/latest/download/<name>.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: MCP server
+        working-directory: integrations/mcp
+        run: |
+          npm ci
+          npm test
+          npm pack
+          mv patchy-mcp-*.tgz ../../patchy-mcp.tgz
+
+      - name: VS Code extension
+        working-directory: integrations/vscode
+        run: |
+          npm ci
+          npx --yes @vscode/vsce@3 package --allow-missing-repository --skip-license -o ../../patchy.vsix
+
+      - name: IntelliJ plugin
+        working-directory: integrations/intellij
+        run: |
+          ./gradlew buildPlugin
+          cp build/distributions/*.zip ../../patchy-intellij.zip
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" patchy.vsix patchy-mcp.tgz patchy-intellij.zip --generate-notes

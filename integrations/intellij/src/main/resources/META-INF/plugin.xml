@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>com.barrcon.patchy</id>
+    <name>Patchy</name>
+    <vendor>Barrcon</vendor>
+    <description><![CDATA[
+        Watches your project's dependency manifests and alerts you in the IDE when a tracked
+        technology ships a new release, with breaking and security changes called out.
+        Powered by the Patchy AI patch-notes service.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.barrcon.patchy.PatchyScanner$Startup"/>
+        <applicationConfigurable parentId="tools" id="com.barrcon.patchy.settings" displayName="Patchy"
+                                 instance="com.barrcon.patchy.PatchySettings$Page"/>
+        <notificationGroup id="Patchy" displayType="BALLOON"/>
+    </extensions>
+
+    <actions>
+        <group id="Patchy.Tools" text="Patchy">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <separator/>
+            <action id="Patchy.Check" class="com.barrcon.patchy.PatchyActions$Check" text="Patchy: Check for Updates"/>
+            <action id="Patchy.SignIn" class="com.barrcon.patchy.PatchyActions$SignIn" text="Patchy: Sign In"/>
+            <action id="Patchy.SignOut" class="com.barrcon.patchy.PatchyActions$SignOut" text="Patchy: Sign Out"/>
+        </group>
+    </actions>
+</idea-plugin>

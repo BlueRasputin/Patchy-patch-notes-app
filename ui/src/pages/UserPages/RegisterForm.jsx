@@ -3,6 +3,7 @@ import { useAuth } from '../../Services/authContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { apiFetch } from '../../Services/api';
+import OAuthButtons from './OAuthButtons';
 
 import './AuthPage.css';
 
@@ -60,7 +61,7 @@ const RegisterForm = () => {
     };
     return (
         <div className="user-form">
-            <h2>Register</h2>
+            <h1>Create account</h1>
             {error && (
                 <div className="error-banner">
                     {error}
@@ -107,8 +108,9 @@ const RegisterForm = () => {
                         required
                     />
                 </div>
-                <button type="submit">Register</button>
+                <button type="submit">Create account</button>
             </form>
+            <OAuthButtons />
         </div>
     );
 

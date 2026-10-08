@@ -49,6 +49,11 @@ const Card = ({ patchNote, activeSectionFilters = [] }) => {
     <div className="tech-card">
       <div className="card-header">
         <h3 className="tech-title">{patchNote.techName}</h3>
+        {(patchNote.urgency === 'critical' || patchNote.urgency === 'high') && (
+          <span className={`urgency-badge urgency-${patchNote.urgency}`}>
+            {patchNote.urgency === 'critical' ? 'Critical' : 'High urgency'}
+          </span>
+        )}
         {patchNote.releaseVersion && (
           <span className="version-badge">{patchNote.releaseVersion}</span>
         )}

@@ -7,19 +7,26 @@ import com.barrcon.patchy.repositories.PatchNoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.HexFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+// Stores a new note whenever a source's content or version changes. The raw
+// release text is shown immediately and queued for SummaryService, which
+// replaces it with a categorized summary (Gemini free tier) shortly after.
 @Service
 public class PatchNoteService {
 
-    @Autowired
-    private PatchNoteRepository patchNoteRepository;
+    // Some projects publish 100k+ char notes (Kotlin); keep the head, link the rest
+    static final int MAX_NOTE_CHARS = 8_000;
 
     @Autowired
-    private SummaryService summaryService;
+    private PatchNoteRepository patchNoteRepository;
 
     @Autowired
     private PatchNoteCategoryService patchNoteCategoryService;
@@ -30,9 +37,8 @@ public class PatchNoteService {
     public ProcessResult processAndSave(Tech tech, String newContent, String sourceUrl, String releaseVersion) {
         Optional<PatchNote> latestNoteOpt = patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech);
 
-        String normalizedIncomingContent = normalize(newContent);
-        boolean contentChanged = latestNoteOpt.isEmpty()
-                || !Objects.equals(normalize(latestNoteOpt.get().getOriginalContent()), normalizedIncomingContent);
+        String incomingHash = sha256(normalize(newContent));
+        boolean contentChanged = latestNoteOpt.isEmpty() || !Objects.equals(storedHash(latestNoteOpt.get()), incomingHash);
 
         String existingVersion = latestNoteOpt.map(note -> normalize(note.getReleaseVersion())).orElse("");
         String incomingVersion = normalize(releaseVersion);
@@ -46,19 +52,14 @@ public class PatchNoteService {
         // Append a new note so per-tech release history is preserved
         PatchNote patchNote = new PatchNote(tech, sourceUrl);
 
-        SummaryService.SummaryResult summaryResult = summaryService.generateSummary(tech.getName(), newContent);
-        List<String> detectedCategories = summaryResult.sections().isEmpty()
-                ? patchNoteCategoryService.detectCategories(newContent)
-                : summaryResult.sections().stream()
-                .map(section -> section.getCategory())
-                .distinct()
-                .toList();
+        List<String> detectedCategories = patchNoteCategoryService.detectCategories(newContent);
 
-        patchNote.setContent(summaryResult.summary());
-        patchNote.setOriginalContent(newContent);
+        patchNote.setContent(excerpt(newContent));
+        patchNote.setOriginalContent(excerpt(newContent));
+        patchNote.setPendingSummary(true);
+        patchNote.setContentHash(incomingHash);
         patchNote.setReleaseVersion(releaseVersion);
         patchNote.setCategories(patchNoteCategoryService.serializeCategories(detectedCategories));
-        patchNote.setSummarySections(patchNoteSectionService.serialize(summaryResult.sections()));
         patchNote.setSourceUrl(sourceUrl);
         patchNote.setLastUpdated(LocalDateTime.now());
 
@@ -72,8 +73,9 @@ public class PatchNoteService {
                 patchNote.getId(),
                 patchNote.getTech().getName(),
                 patchNote.getContent(),
-                patchNote.getOriginalContent(),
                 patchNote.getReleaseVersion(),
+                patchNote.getHeadline(),
+                patchNote.getUrgency(),
                 resolveCategories(patchNote),
                 patchNoteSectionService.parse(patchNote.getSummarySections()),
                 patchNote.getSourceUrl(),
@@ -92,7 +94,29 @@ public class PatchNoteService {
         return patchNoteCategoryService.detectCategories(patchNote.getOriginalContent());
     }
 
-    private String normalize(String value) {
+    static String excerpt(String content) {
+        String trimmed = normalize(content);
+        if (trimmed.length() <= MAX_NOTE_CHARS) {
+            return trimmed;
+        }
+        int cut = trimmed.lastIndexOf('\n', MAX_NOTE_CHARS);
+        return trimmed.substring(0, cut > MAX_NOTE_CHARS / 2 ? cut : MAX_NOTE_CHARS).strip()
+                + "\n\n…*Truncated. See the full release notes via the source link.*";
+    }
+
+    private String storedHash(PatchNote note) {
+        return note.getContentHash() != null ? note.getContentHash() : sha256(normalize(note.getOriginalContent()));
+    }
+
+    private static String sha256(String value) {
+        try {
+            return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8)));
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static String normalize(String value) {
         return value == null ? "" : value.trim();
     }
 

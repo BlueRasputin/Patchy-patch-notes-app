@@ -4,3 +4,6 @@ storage/
 test-results/
 ui/dist/
 server/target/
+*.vsix
+mock-test/.home/
+mock-test/api.log

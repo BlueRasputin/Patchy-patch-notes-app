@@ -1,154 +1,187 @@
 package com.barrcon.patchy.services;
 
 import com.barrcon.patchy.dto.PatchNoteSectionDTO;
-import org.springframework.beans.factory.annotation.Value;
-import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.apache.hc.core5.http.io.entity.StringEntity;
+import com.barrcon.patchy.models.PatchNote;
+import com.barrcon.patchy.repositories.PatchNoteRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+// Turns raw release notes into structured, categorized summaries with Gemini's
+// free tier. Notes are queued (pendingSummary) when the crawler or release
+// poller detects a change; this drains the queue a few at a time, and on a
+// quota error simply stops until the next run. Nothing here can incur a charge.
 @Service
 public class SummaryService {
 
-    private final String claudeApiKey;
-    private static final String CLAUDE_API_URL = "https://api.anthropic.com/v1/messages";
+    private static final Logger log = LoggerFactory.getLogger(SummaryService.class);
 
-    // Crawled pages can run 40k+ chars, mostly site chrome; input tokens dominate
-    // cost, so cap what we send. ponytail: dumb truncation — smarter noise
-    // stripping in the crawler if summaries start missing late-page content.
-    private static final int MAX_CONTENT_CHARS = 30_000;
+    // Display order; also the only categories the model may use
+    static final List<String> CATEGORIES = List.of("Breaking Changes", "Security", "Deprecations", "New Requirements",
+            "New Features", "Bug Fixes", "Performance", "Known Issues", "Documentation");
 
-    private static final String SYSTEM_PROMPT = """
-            You summarize software release notes for developers. Produce a short \
-            markdown summary plus per-category sections covering only the categories \
-            actually present. Be concise and factual; skip site navigation noise.""";
+    static final String SYSTEM_PROMPT = """
+            You extract structured release information from software release notes for working developers.
 
-    // Structured-output schema: guarantees valid JSON and enforces category names
-    private static final JSONObject OUTPUT_SCHEMA = new JSONObject("""
+            Input: the tech name, the page URL, and the raw text of a release-notes page, changelog, or GitHub release.
+            The text may include site navigation, sponsor lists, contributor credits and several releases.
+
+            Rules:
+            - Describe only the NEWEST release in the text. If an expected version is given, describe that one.
+            - Skip sections marked Unreleased, upcoming, dev, nightly, beta or release-candidate unless they are
+              the only release present; developers need what has actually shipped.
+            - Use only facts stated in the text. Never invent versions, dates, CVE/GHSA IDs, APIs or numbers.
+            - If the text is not release notes (an index page, docs, a blog listing without details, an error page),
+              set isReleaseNotes=false and leave the other fields empty.
+            - One item per distinct change. Merge trivial items (typo fixes, dependency bumps, internal refactors)
+              into at most one item per category. Ignore contributor lists, links-only lines and marketing copy.
+            - Categories (use exactly one per item):
+              Breaking Changes: anything that can break existing code, configs, builds or behavior on upgrade,
+                including removed APIs, changed defaults and dropped platform/runtime support.
+                Put the concrete upgrade steps in `migration`.
+              Security: vulnerability fixes and hardening. Put every CVE-/GHSA- ID in `identifiers` and the stated
+                severity (critical/high/moderate/low) in `detail` if given.
+              Deprecations: features still working but scheduled for removal. Name the replacement and the removal
+                version in `detail` when stated.
+              New Requirements: new minimum versions of runtimes, compilers, OSes, browsers or peer dependencies.
+              New Features, Bug Fixes, Performance, Known Issues, Documentation: as named.
+            - `title`: a short phrase naming the affected API, command, option or component (use code names verbatim).
+            - `detail`: one or two plain sentences on what changed and who is affected.
+            - `headline`: one sentence a developer can scan, leading with the most important change.
+            - `urgency`:
+              critical = actively exploited or critical-severity vulnerability, data loss or corruption fix;
+              high = any security fix, or breaking changes most users will hit on upgrade;
+              normal = features and fixes; low = docs, tooling or internal-only changes.
+            - `releaseDate`: YYYY-MM-DD only if stated, else empty.""";
+
+    private static final JSONObject SCHEMA = new JSONObject("""
             {
-              "type": "object",
+              "type": "OBJECT",
               "properties": {
-                "summary": {"type": "string", "description": "Short markdown summary of the release"},
-                "sections": {
-                  "type": "array",
+                "isReleaseNotes": {"type": "BOOLEAN"},
+                "version": {"type": "STRING"},
+                "releaseDate": {"type": "STRING"},
+                "headline": {"type": "STRING"},
+                "urgency": {"type": "STRING", "enum": ["critical", "high", "normal", "low"]},
+                "items": {
+                  "type": "ARRAY",
                   "items": {
-                    "type": "object",
+                    "type": "OBJECT",
                     "properties": {
-                      "category": {"type": "string", "enum": ["New Features", "Bug Fixes", "Breaking Changes", "Security", "Deprecations", "Performance", "Known Issues", "Documentation"]},
-                      "content": {"type": "string", "description": "Concise markdown bullets for this category"}
+                      "category": {"type": "STRING", "enum": %s},
+                      "title": {"type": "STRING"},
+                      "detail": {"type": "STRING"},
+                      "migration": {"type": "STRING"},
+                      "identifiers": {"type": "ARRAY", "items": {"type": "STRING"}}
                     },
-                    "required": ["category", "content"],
-                    "additionalProperties": false
+                    "required": ["category", "title", "detail"]
                   }
                 }
               },
-              "required": ["summary", "sections"],
-              "additionalProperties": false
-            }""");
+              "required": ["isReleaseNotes", "version", "headline", "urgency", "items"]
+            }""".formatted(new JSONArray(CATEGORIES)));
 
-    public SummaryService(@Value("${claude.api.key:}") String claudeApiKey) {
-        this.claudeApiKey = claudeApiKey;
+    public record Summary(boolean isReleaseNotes, String version, String headline, String urgency,
+                          String markdown, List<PatchNoteSectionDTO> sections) {
     }
 
-    //Claude API call to generate summaries for patch notes
-    public SummaryResult generateSummary(String techName, String content) {
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPost request = new HttpPost(CLAUDE_API_URL);
+    private final GeminiClient gemini;
+    private final PatchNoteRepository patchNoteRepository;
+    private final PatchNoteCategoryService categoryService;
+    private final PatchNoteSectionService sectionService;
 
-            request.setHeader("x-api-key", claudeApiKey);
-            request.setHeader("anthropic-version", "2023-06-01");
-            request.setHeader("Content-Type", "application/json");
+    public SummaryService(GeminiClient gemini, PatchNoteRepository patchNoteRepository,
+                          PatchNoteCategoryService categoryService, PatchNoteSectionService sectionService) {
+        this.gemini = gemini;
+        this.patchNoteRepository = patchNoteRepository;
+        this.categoryService = categoryService;
+        this.sectionService = sectionService;
+    }
 
-            String trimmedContent = content.length() > MAX_CONTENT_CHARS
-                    ? content.substring(0, MAX_CONTENT_CHARS)
-                    : content;
-
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("model", "claude-sonnet-5");
-            requestBody.put("max_tokens", 2048);
-            // Summarization doesn't need reasoning; disabling thinking keeps
-            // token spend flat (Sonnet 5 runs it by default when omitted)
-            requestBody.put("thinking", new JSONObject().put("type", "disabled"));
-            requestBody.put("output_config", new JSONObject()
-                    .put("effort", "low")
-                    .put("format", new JSONObject()
-                            .put("type", "json_schema")
-                            .put("schema", OUTPUT_SCHEMA)));
-            requestBody.put("system", SYSTEM_PROMPT);
-
-            JSONArray messages = new JSONArray();
-            JSONObject message = new JSONObject();
-            message.put("role", "user");
-            message.put("content", "Tech: " + techName + "\n\nPatch notes:\n" + trimmedContent);
-            messages.put(message);
-            requestBody.put("messages", messages);
-
-            request.setEntity(new StringEntity(requestBody.toString()));
-
-            try (CloseableHttpResponse response = httpClient.execute(request)) {
-                String responseBody = EntityUtils.toString(response.getEntity());
-                JSONObject jsonResponse = new JSONObject(responseBody);
-                String responseText = jsonResponse.getJSONArray("content")
-                        .getJSONObject(0)
-                        .getString("text");
-
-                return parseSummaryResult(responseText);
+    @Scheduled(fixedDelayString = "${patchy.summary.interval:PT2M}", initialDelayString = "PT30S")
+    public void summarizePending() {
+        if (!gemini.enabled()) {
+            return;
+        }
+        for (PatchNote note : patchNoteRepository.findTop10ByPendingSummaryTrueOrderByCreatedAtAsc()) {
+            try {
+                apply(note, summarize(note.getTech().getName(), note.getSourceUrl(), note.getReleaseVersion(), note.getOriginalContent()));
+            } catch (GeminiClient.QuotaExceededException e) {
+                log.info("Gemini quota reached; {} will be summarized on a later run", note.getTech().getName());
+                return;
+            } catch (Exception e) {
+                log.warn("Summary failed for {}: {}", note.getTech().getName(), e.getMessage());
             }
-
-        } catch (Exception e) {
-            throw new RuntimeException("Claude API call failed", e);
         }
     }
 
-    private SummaryResult parseSummaryResult(String responseText) {
-        try {
-            String normalized = responseText.strip();
-            if (normalized.startsWith("```")) {
-                int firstBrace = normalized.indexOf('{');
-                int lastBrace = normalized.lastIndexOf('}');
-                normalized = normalized.substring(firstBrace, lastBrace + 1);
+    private void apply(PatchNote note, Summary summary) {
+        if (summary.isReleaseNotes()) {
+            note.setContent(summary.markdown());
+            note.setSummarySections(sectionService.serialize(summary.sections()));
+            note.setCategories(categoryService.serializeCategories(
+                    summary.sections().stream().map(PatchNoteSectionDTO::getCategory).toList()));
+            note.setHeadline(summary.headline());
+            note.setUrgency(summary.urgency());
+            if (note.getReleaseVersion() == null || note.getReleaseVersion().isBlank()) {
+                note.setReleaseVersion(summary.version());
             }
-
-            JSONObject summaryJson = new JSONObject(normalized);
-            String summary = summaryJson.optString("summary");
-            JSONArray sectionsJson = summaryJson.optJSONArray("sections");
-            List<PatchNoteSectionDTO> sections = new ArrayList<>();
-
-            if (sectionsJson != null) {
-                for (int index = 0; index < sectionsJson.length(); index++) {
-                    JSONObject sectionObject = sectionsJson.getJSONObject(index);
-                    String category = sectionObject.optString("category");
-                    String sectionContent = sectionObject.optString("content");
-
-                    if (category.isBlank() || sectionContent.isBlank()) {
-                        continue;
-                    }
-
-                    sections.add(new PatchNoteSectionDTO(category, sectionContent));
-                }
-            }
-
-            if (summary.isBlank()) {
-                summary = sections.stream()
-                        .map(section -> "## " + section.getCategory() + "\n" + section.getContent())
-                        .reduce((left, right) -> left + "\n\n" + right)
-                        .orElse("");
-            }
-
-            return new SummaryResult(summary, sections);
-        } catch (Exception exception) {
-            return new SummaryResult(responseText, List.of());
         }
+        // Not release notes: keep the raw excerpt rather than retrying forever
+        note.setPendingSummary(false);
+        note.setOriginalContent(null);
+        patchNoteRepository.save(note);
     }
 
-    public record SummaryResult(String summary, List<PatchNoteSectionDTO> sections) {
+    public Summary summarize(String techName, String sourceUrl, String expectedVersion, String content) throws Exception {
+        String input = "Tech: " + techName + "\nURL: " + sourceUrl
+                + (expectedVersion == null || expectedVersion.isBlank() ? "" : "\nExpected version: " + expectedVersion)
+                + "\n\nRelease notes:\n" + content;
+        return parse(gemini.generateJson(SYSTEM_PROMPT, input, SCHEMA));
+    }
+
+    static Summary parse(JSONObject json) {
+        if (!json.optBoolean("isReleaseNotes")) {
+            return new Summary(false, "", "", "", "", List.of());
+        }
+        Map<String, List<String>> bullets = new LinkedHashMap<>();
+        CATEGORIES.forEach(category -> bullets.put(category, new ArrayList<>()));
+        JSONArray items = json.optJSONArray("items", new JSONArray());
+        for (int i = 0; i < items.length(); i++) {
+            JSONObject item = items.getJSONObject(i);
+            List<String> target = bullets.get(item.optString("category"));
+            if (target == null || item.optString("title").isBlank()) {
+                continue;
+            }
+            StringBuilder bullet = new StringBuilder("- **" + item.optString("title").strip() + "**: " + item.optString("detail").strip());
+            JSONArray ids = item.optJSONArray("identifiers");
+            if (ids != null && !ids.isEmpty()) {
+                bullet.append(" (").append(String.join(", ", ids.toList().stream().map(String::valueOf).toList())).append(")");
+            }
+            if (!item.optString("migration").isBlank()) {
+                bullet.append("\n  - Migration: ").append(item.optString("migration").strip());
+            }
+            target.add(bullet.toString());
+        }
+
+        List<PatchNoteSectionDTO> sections = new ArrayList<>();
+        StringBuilder markdown = new StringBuilder(json.optString("headline").strip());
+        bullets.forEach((category, lines) -> {
+            if (!lines.isEmpty()) {
+                String body = String.join("\n", lines);
+                sections.add(new PatchNoteSectionDTO(category, body));
+                markdown.append("\n\n## ").append(category).append("\n").append(body);
+            }
+        });
+        return new Summary(true, json.optString("version").strip(), json.optString("headline").strip(),
+                json.optString("urgency", "normal"), markdown.toString(), sections);
     }
 }

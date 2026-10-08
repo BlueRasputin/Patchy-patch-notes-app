@@ -5,15 +5,22 @@ import com.barrcon.patchy.dto.PatchNoteResponseDTO;
 import com.barrcon.patchy.models.Tech;
 import com.barrcon.patchy.repositories.PatchNoteRepository;
 import com.barrcon.patchy.repositories.TechRepository;
-import com.barrcon.patchy.repositories.UserRepository;
 import com.barrcon.patchy.services.PatchNoteService;
+import com.barrcon.patchy.services.CurrentUserService;
+import com.barrcon.patchy.services.TechCatalogService;
+import com.barrcon.patchy.services.TechDiscoveryService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -26,14 +33,30 @@ public class PatchNoteController {
     private TechRepository techRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private PatchNoteService patchNoteService;
 
-    // Receives crawled patch note data from the crawler service
+    @Autowired
+    private CurrentUserService currentUserService;
+
+    @Autowired
+    private TechCatalogService techCatalogService;
+
+    @Autowired
+    private TechDiscoveryService techDiscoveryService;
+
+    @Value("${CRAWLER_API_KEY:}")
+    private String crawlerApiKey;
+
+    // Receives crawled patch note data from the crawler service. Each new note
+    // costs a Claude call and is shown to every user, so only the crawler may post.
     @PostMapping("/api/process-crawled-notes")
-    public ResponseEntity<String> processCrawledNotes(@RequestBody List<CrawledNoteDTO> crawledData) {
+    public ResponseEntity<String> processCrawledNotes(@RequestHeader(value = "X-Crawler-Key", required = false) String key,
+                                                      @RequestBody List<CrawledNoteDTO> crawledData) {
+        if (crawlerApiKey.isBlank() || !MessageDigest.isEqual(
+                crawlerApiKey.getBytes(StandardCharsets.UTF_8),
+                String.valueOf(key).getBytes(StandardCharsets.UTF_8))) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Missing or wrong X-Crawler-Key (set CRAWLER_API_KEY)");
+        }
         int updatedCount = 0;
         int skippedCount = 0;
 
@@ -41,6 +64,13 @@ public class PatchNoteController {
             for (CrawledNoteDTO item : crawledData) {
                 Optional<Tech> techOptional = techRepository.findByName(item.getTechName());
                 if (techOptional.isEmpty()) {
+                    skippedCount++;
+                    continue;
+                }
+                // The crawler reports an empty extraction when a selector stops matching
+                // (usually a site redesign); AI-found locators get rediscovered
+                if (item.getContent() == null || item.getContent().isBlank()) {
+                    techDiscoveryService.relocate(techOptional.get());
                     skippedCount++;
                     continue;
                 }
@@ -88,28 +118,33 @@ public class PatchNoteController {
         return ResponseEntity.ok(history);
     }
 
-    // Latest patch note for each of the user's favorite techs
-    @GetMapping("/api/users/{userId}/patch-notes")
-    public ResponseEntity<List<PatchNoteResponseDTO>> getUserPatchNotes(@PathVariable Long userId) {
+    // Browser extension "Summarize this page": signed-in users only, and the page
+    // must be on the tech's own patch-notes host so notes can't be pointed elsewhere.
+    // ponytail: the page text is still client-supplied; fetch it server-side if abuse shows up.
+    @PostMapping("/api/patch-notes/submit")
+    public ResponseEntity<String> submitPage(HttpServletRequest request, @RequestBody CrawledNoteDTO page) {
+        if (currentUserService.resolve(request).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sign in to Patchy to summarize pages");
+        }
+        Optional<String> catalogHost = techCatalogService.loadCatalog().stream()
+                .filter(entry -> entry.getName().equalsIgnoreCase(String.valueOf(page.getTechName())))
+                .map(entry -> host(entry.getPatchNotesUrl()))
+                .findFirst();
+        Optional<Tech> tech = techRepository.findByName(String.valueOf(page.getTechName()));
+        if (catalogHost.isEmpty() || tech.isEmpty() || !catalogHost.get().equals(host(page.getUrl()))
+                || page.getContent() == null || page.getContent().length() > 100_000) {
+            return ResponseEntity.badRequest().body("Page isn't on a tracked tech's patch notes site");
+        }
+        boolean updated = patchNoteService.processAndSave(tech.get(), page.getContent(), page.getUrl(), null).updated();
+        return ResponseEntity.ok(updated ? "Summarized" : "Unchanged");
+    }
+
+    private static String host(String url) {
         try {
-            Optional<com.barrcon.patchy.models.User> userOpt = userRepository.findById(userId);
-            if (userOpt.isEmpty()) {
-                return ResponseEntity.notFound().build();
-            }
-
-            Set<Tech> favoriteTechs = userOpt.get().getFavoriteTechs();
-
-            List<PatchNoteResponseDTO> userPatchNotes = favoriteTechs.stream()
-                    .map(tech -> patchNoteRepository.findFirstByTechOrderByCreatedAtDesc(tech))
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .map(patchNoteService::toResponseDTO)
-                    .toList();
-
-            return ResponseEntity.ok(userPatchNotes);
-
+            String host = URI.create(url).getHost();
+            return host == null ? "" : host.replaceFirst("^www\\.", "");
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+            return "";
         }
     }
 

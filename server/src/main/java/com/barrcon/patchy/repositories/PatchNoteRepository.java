@@ -23,4 +23,6 @@ public interface PatchNoteRepository extends CrudRepository<PatchNote, Long> {
             order by p.createdAt desc
             """)
     List<PatchNote> findLatestPerTech();
+
+    List<PatchNote> findTop10ByPendingSummaryTrueOrderByCreatedAtAsc();
 }

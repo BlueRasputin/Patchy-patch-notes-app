@@ -2,60 +2,56 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Card from "../../components/TechCards/Card";
 import { clearToolkitProfile, loadToolkitProfile, saveToolkitProfile } from "../../Services/toolkitProfile";
+import { Link } from "react-router-dom";
 import { apiFetch } from "../../Services/api";
 import "./PackageInsights.css";
 
+// Manifests the backend can parse (see ManifestParser)
+const MANIFEST_NAMES = ["package.json", "pom.xml", "build.gradle", "build.gradle.kts", "requirements.txt",
+  "pyproject.toml", "Pipfile", "go.mod", "Cargo.toml", "Gemfile", "composer.json", "Dockerfile",
+  "mix.exs", "gleam.toml", "pubspec.yaml", "build.sbt", "Project.toml", "App.csproj"];
+
 function PackageInsights() {
   const [packageJsonInput, setPackageJsonInput] = useState("");
+  const [manifestName, setManifestName] = useState("package.json");
+  const [discovering, setDiscovering] = useState([]);
   const [packageInsights, setPackageInsights] = useState([]);
   const [unmatchedPackages, setUnmatchedPackages] = useState([]);
   const [insightsLoading, setInsightsLoading] = useState(false);
   const [insightsError, setInsightsError] = useState("");
   const [savedProfile, setSavedProfile] = useState(loadToolkitProfile());
 
-  const parsePackageJson = (rawInput) => {
-    const parsed = JSON.parse(rawInput);
-    return {
-      dependencies: parsed.dependencies ?? {},
-      devDependencies: parsed.devDependencies ?? {},
-      peerDependencies: parsed.peerDependencies ?? {}
-    };
-  };
-
-  const fetchPackageInsights = async (rawInput) => {
+  const fetchPackageInsights = async (rawInput, fileName) => {
     try {
       setInsightsLoading(true);
       setInsightsError("");
 
-      const requestBody = parsePackageJson(rawInput);
-      const response = await apiFetch("/api/insights/package-json", {
+      const response = await apiFetch("/api/insights/project", {
         method: "POST",
-        body: JSON.stringify(requestBody)
+        body: JSON.stringify({ files: { [fileName]: rawInput } })
       });
 
       if (!response.ok) {
-        throw new Error("Failed to generate personalized patch notes.");
+        throw new Error("Couldn't read that file. Check it's a complete manifest and try again.");
       }
 
-      const { matches, unmatchedPackages: unmatched } = await response.json();
+      const { matches, unmatchedPackages: unmatched, discovering: queued } = await response.json();
       setPackageInsights(matches);
       setUnmatchedPackages(unmatched);
+      setDiscovering(queued);
       const profile = saveToolkitProfile(matches);
       setSavedProfile(profile);
 
       if (matches.length === 0) {
-        toast.info("No tracked tech matches were found in this package.json yet.");
+        toast.info(`No tracked techs found in this ${fileName} yet.`);
       } else {
         toast.success(`Generated ${matches.length} personalized patch note matches.`);
       }
     } catch (fetchError) {
       setPackageInsights([]);
       setUnmatchedPackages([]);
-      if (fetchError instanceof SyntaxError) {
-        setInsightsError("Invalid JSON format. Check your package.json and try again.");
-      } else {
-        setInsightsError(fetchError.message);
-      }
+      setDiscovering([]);
+      setInsightsError(fetchError.message);
     } finally {
       setInsightsLoading(false);
     }
@@ -68,13 +64,17 @@ function PackageInsights() {
     }
 
     const fileText = await selectedFile.text();
+    const fileName = MANIFEST_NAMES.includes(selectedFile.name) || /\.(cs|fs)proj$/.test(selectedFile.name)
+      ? selectedFile.name
+      : manifestName;
+    setManifestName(fileName);
     setPackageJsonInput(fileText);
-    await fetchPackageInsights(fileText);
+    await fetchPackageInsights(fileText, fileName);
   };
 
   const handlePackageSubmit = async (event) => {
     event.preventDefault();
-    await fetchPackageInsights(packageJsonInput);
+    await fetchPackageInsights(packageJsonInput, manifestName);
   };
 
   const handleClearProfile = () => {
@@ -87,9 +87,11 @@ function PackageInsights() {
 
   return (
     <div className="package-insights-page">
-      <h2>Package Insights</h2>
+      <h1>Project insights</h1>
       <p className="instruction">
-        Upload your package.json or paste it below to get summaries matched to your toolkit.
+        Upload or paste a project manifest to see the latest patch notes for every language,
+        framework and library in it. Packages Patchy hasn&apos;t seen yet are looked up and added
+        to the catalog. To get this automatically in your editor, <Link to="/About">install Patchy</Link>.
       </p>
 
       {savedProfile.matchedTechNames.length > 0 && (
@@ -104,36 +106,53 @@ function PackageInsights() {
       )}
 
       <form className="package-insights-form" onSubmit={handlePackageSubmit}>
-        <input
-          type="file"
-          accept="application/json,.json"
-          onChange={handlePackageFileUpload}
-        />
+        <div className="manifest-row">
+          <label>
+            Upload a manifest
+            <input type="file" onChange={handlePackageFileUpload} />
+          </label>
+          <label>
+            Or paste it as
+            <select value={manifestName} onChange={(event) => setManifestName(event.target.value)}>
+              {MANIFEST_NAMES.map((name) => <option key={name} value={name}>{name}</option>)}
+            </select>
+          </label>
+        </div>
+        <label className="visually-hidden" htmlFor="manifest-content">{manifestName} contents</label>
         <textarea
+          id="manifest-content"
           value={packageJsonInput}
           onChange={(event) => setPackageJsonInput(event.target.value)}
-          placeholder="Paste package.json content here..."
+          placeholder={`Paste your ${manifestName} here`}
           rows={12}
+          spellCheck={false}
         />
         <button type="submit" disabled={insightsLoading || !packageJsonInput.trim()}>
-          {insightsLoading ? "Generating..." : "Generate Personalized Summaries"}
+          {insightsLoading ? "Matching…" : "Show patch notes"}
         </button>
       </form>
 
       {insightsError && <div className="error-banner">{insightsError}</div>}
 
-      {unmatchedPackages.length > 0 && (
-        <p className="unmatched-packages">
-          Not tracked yet: {unmatchedPackages.join(", ")}. We use this to grow the catalog.
-        </p>
-      )}
+      <div aria-live="polite">
+        {discovering.length > 0 && (
+          <p className="unmatched-packages">
+            Looking up release notes for {discovering.join(", ")}. Check back in a few minutes.
+          </p>
+        )}
+        {unmatchedPackages.length > discovering.length && (
+          <p className="unmatched-packages">
+            Not tracked: {unmatchedPackages.filter((name) => !discovering.includes(name)).join(", ")}.
+          </p>
+        )}
+      </div>
 
       {packageInsights.length > 0 && (
         <div className="package-insight-results">
           {packageInsights.map((match, index) => (
             <div className="package-insight-item" key={`${match.packageName}-${index}`}>
               <p className="package-match-meta">
-                {match.packageName}@{match.packageVersion} ({match.dependencyType})
+                {match.packageName}{match.packageVersion ? `@${match.packageVersion}` : ""} ({match.dependencyType})
               </p>
               <Card patchNote={match.patchNote} />
             </div>
